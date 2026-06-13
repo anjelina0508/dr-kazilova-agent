@@ -92,11 +92,11 @@
 
 ## Моя команда — установленные скиллы
 
-| Скилл | Путь | Что умеет |
-|-------|------|-----------|
-| `content-creator` | `.claude/skills/content-creator/` | Создание контента: посты, тексты, сценарии Reels |
-| `fullstack-developer` | `.claude/skills/fullstack-developer/` | Fullstack разработка: сайты, боты, API |
-| `discovery-interview` | `.claude/skills/discovery-interview/` | Структурированное интервью по проекту, генерация ТЗ |
+| Скилл | Русское название | Путь | Что умеет |
+|-------|-----------------|------|-----------|
+| `content-creator` | Писатель | `.claude/skills/content-creator/` | Создание контента: посты, тексты, сценарии Reels |
+| `fullstack-developer` | Разработчик | `.claude/skills/fullstack-developer/` | Fullstack разработка: сайты, боты, API |
+| `discovery-interview` | Интервьюер | `.claude/skills/discovery-interview/` | Структурированное интервью по проекту, генерация ТЗ |
 
 Скиллы активируются командой `/название` в начале сообщения.
 
