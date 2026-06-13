@@ -25,5 +25,8 @@
     ],
     "defaultMode": "acceptEdits"
   },
-  "effortLevel": "xhigh"
+  "effortLevel": "xhigh",
+  "enabledPlugins": {
+    "superpowers@claude-plugins-official": true
+  }
 }
