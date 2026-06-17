@@ -223,6 +223,31 @@
 
   /* PORTFOLIO */
   #portfolio { background: var(--bg2); }
+  .reels-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 16px;
+  }
+  .reel-wrap {
+    position: relative;
+    width: 100%;
+    aspect-ratio: 9/16;
+    overflow: hidden;
+    border: 1px solid var(--border);
+  }
+  .reel-wrap iframe {
+    position: absolute;
+    top: 0; left: 0;
+    width: 100%;
+    height: 100%;
+    border: none;
+  }
+  @media (max-width: 900px) {
+    .reels-grid { grid-template-columns: repeat(2, 1fr); }
+  }
+  @media (max-width: 500px) {
+    .reels-grid { grid-template-columns: 1fr; }
+  }
   .portfolio-note {
     font-size: 12px; color: var(--text-muted); letter-spacing: 0.08em;
     margin-bottom: 48px; padding: 16px; border-left: 2px solid var(--gold-dim);
@@ -410,16 +435,16 @@
   </div>
   <div class="hero-stats">
     <div class="stat-item">
-      <span class="stat-num">500+</span>
-      <span class="stat-label">Операций</span>
+      <span class="stat-num">7000+</span>
+      <span class="stat-label">Пациентов</span>
     </div>
     <div class="stat-item">
-      <span class="stat-num">12</span>
-      <span class="stat-label">Лет опыта</span>
+      <span class="stat-num">61К</span>
+      <span class="stat-label">Подписчиков</span>
     </div>
     <div class="stat-item">
-      <span class="stat-num">98%</span>
-      <span class="stat-label">Довольных</span>
+      <span class="stat-num">1100+</span>
+      <span class="stat-label">Публикаций</span>
     </div>
   </div>
   <div class="scroll-hint">
@@ -523,68 +548,20 @@
 <section id="portfolio">
   <div class="section-label">Портфолио</div>
   <h2>Результаты<br>работы</h2>
-  <p class="portfolio-note">Все фотографии публикуются с письменного согласия пациентов. Результаты индивидуальны и зависят от особенностей организма.</p>
-  <div class="portfolio-grid">
-    <div class="portfolio-card">
-      <div class="portfolio-img">
-        <svg class="portfolio-img-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1" width="40" height="40"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg>
-        <div class="portfolio-img-label">Фото до / после</div>
-      </div>
-      <div class="portfolio-info">
-        <span class="portfolio-tag">Ринопластика</span>
-        <div class="portfolio-title">Коррекция горбинки и кончика</div>
-      </div>
-    </div>
-    <div class="portfolio-card">
-      <div class="portfolio-img">
-        <svg class="portfolio-img-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1" width="40" height="40"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg>
-        <div class="portfolio-img-label">Фото до / после</div>
-      </div>
-      <div class="portfolio-info">
-        <span class="portfolio-tag">Маммопластика</span>
-        <div class="portfolio-title">Увеличение с имплантами Motiva</div>
-      </div>
-    </div>
-    <div class="portfolio-card">
-      <div class="portfolio-img">
-        <svg class="portfolio-img-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1" width="40" height="40"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg>
-        <div class="portfolio-img-label">Фото до / после</div>
-      </div>
-      <div class="portfolio-info">
-        <span class="portfolio-tag">Блефаропластика</span>
-        <div class="portfolio-title">Верхние + нижние веки</div>
-      </div>
-    </div>
-    <div class="portfolio-card">
-      <div class="portfolio-img">
-        <svg class="portfolio-img-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1" width="40" height="40"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg>
-        <div class="portfolio-img-label">Фото до / после</div>
-      </div>
-      <div class="portfolio-info">
-        <span class="portfolio-tag">Абдоминопластика</span>
-        <div class="portfolio-title">Мини-абдоминопластика + липосакция</div>
-      </div>
-    </div>
-    <div class="portfolio-card">
-      <div class="portfolio-img">
-        <svg class="portfolio-img-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1" width="40" height="40"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg>
-        <div class="portfolio-img-label">Фото до / после</div>
-      </div>
-      <div class="portfolio-info">
-        <span class="portfolio-tag">Подтяжка лица</span>
-        <div class="portfolio-title">SMAS-лифтинг + шея</div>
-      </div>
-    </div>
-    <div class="portfolio-card">
-      <div class="portfolio-img">
-        <svg class="portfolio-img-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1" width="40" height="40"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg>
-        <div class="portfolio-img-label">Фото до / после</div>
-      </div>
-      <div class="portfolio-info">
-        <span class="portfolio-tag">Липосакция</span>
-        <div class="portfolio-title">Body sculpting — живот и бока</div>
-      </div>
-    </div>
+  <p class="portfolio-note">Все материалы публикуются с письменного согласия пациентов. Результаты индивидуальны и зависят от особенностей организма.</p>
+  <div class="reels-grid">
+    <div class="reel-wrap"><iframe src="https://www.instagram.com/reel/DZdLoDhOm-z/embed/" frameborder="0" scrolling="no" allowtransparency="true" allow="encrypted-media"></iframe></div>
+    <div class="reel-wrap"><iframe src="https://www.instagram.com/reel/DZnjJ7eOaNa/embed/" frameborder="0" scrolling="no" allowtransparency="true" allow="encrypted-media"></iframe></div>
+    <div class="reel-wrap"><iframe src="https://www.instagram.com/reel/DZo4kFnu0Wa/embed/" frameborder="0" scrolling="no" allowtransparency="true" allow="encrypted-media"></iframe></div>
+    <div class="reel-wrap"><iframe src="https://www.instagram.com/reel/DZVTDK6swXj/embed/" frameborder="0" scrolling="no" allowtransparency="true" allow="encrypted-media"></iframe></div>
+    <div class="reel-wrap"><iframe src="https://www.instagram.com/reel/DZZix25sv4R/embed/" frameborder="0" scrolling="no" allowtransparency="true" allow="encrypted-media"></iframe></div>
+    <div class="reel-wrap"><iframe src="https://www.instagram.com/reel/DZF8EAdOEVI/embed/" frameborder="0" scrolling="no" allowtransparency="true" allow="encrypted-media"></iframe></div>
+    <div class="reel-wrap"><iframe src="https://www.instagram.com/reel/DZDmD6nIZov/embed/" frameborder="0" scrolling="no" allowtransparency="true" allow="encrypted-media"></iframe></div>
+    <div class="reel-wrap"><iframe src="https://www.instagram.com/reel/DY9Ll8DOjbZ/embed/" frameborder="0" scrolling="no" allowtransparency="true" allow="encrypted-media"></iframe></div>
+    <div class="reel-wrap"><iframe src="https://www.instagram.com/reel/DY7L3GaM4Pg/embed/" frameborder="0" scrolling="no" allowtransparency="true" allow="encrypted-media"></iframe></div>
+    <div class="reel-wrap"><iframe src="https://www.instagram.com/reel/DYkdsV6qwEP/embed/" frameborder="0" scrolling="no" allowtransparency="true" allow="encrypted-media"></iframe></div>
+    <div class="reel-wrap"><iframe src="https://www.instagram.com/reel/DYh26_GMptZ/embed/" frameborder="0" scrolling="no" allowtransparency="true" allow="encrypted-media"></iframe></div>
+    <div class="reel-wrap"><iframe src="https://www.instagram.com/reel/DYP_VVXupX6/embed/" frameborder="0" scrolling="no" allowtransparency="true" allow="encrypted-media"></iframe></div>
   </div>
 </section>
 
