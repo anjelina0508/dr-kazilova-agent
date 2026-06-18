@@ -1,0 +1,549 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Персональный расчёт — Казилова М.А.</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400&family=Montserrat:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+:root {
+  --gold: #C9A96E; --gold-light: #E8D5B0; --gold-dim: #7a6340;
+  --bg: #080808; --bg2: #0f0f0f; --bg3: #161612;
+  --text: #F5F0E8; --text-muted: #9E9385; --border: rgba(201,169,110,0.2);
+}
+html { scroll-behavior: smooth; }
+body { background: var(--bg); color: var(--text); font-family: 'Montserrat', sans-serif; font-weight: 400; font-size: 15px; line-height: 1.8; min-height: 100vh; }
+
+/* NAV */
+nav {
+  position: fixed; top: 0; width: 100%; z-index: 100;
+  background: rgba(8,8,8,0.97); backdrop-filter: blur(12px);
+  border-bottom: 1px solid var(--border);
+  padding: 0 48px; display: flex; align-items: center; justify-content: space-between; height: 64px;
+}
+.nav-logo { font-family: 'Cormorant Garamond', serif; font-size: 20px; font-weight: 500; color: var(--gold-light); letter-spacing: 0.04em; text-decoration: none; }
+.nav-logo span { color: var(--text-muted); font-weight: 300; font-size: 13px; display: block; letter-spacing: 0.12em; text-transform: uppercase; }
+.nav-back { color: var(--text-muted); text-decoration: none; font-size: 12px; letter-spacing: 0.15em; text-transform: uppercase; transition: color 0.3s; }
+.nav-back:hover { color: var(--gold); }
+
+/* PROGRESS BAR */
+.progress-bar {
+  position: fixed; top: 64px; left: 0; right: 0; z-index: 99;
+  background: var(--bg3); border-bottom: 1px solid var(--border);
+  padding: 0 48px; display: flex; align-items: stretch; height: 52px;
+}
+.progress-step {
+  flex: 1; display: flex; align-items: center; justify-content: center; gap: 10px;
+  font-size: 11px; letter-spacing: 0.15em; text-transform: uppercase;
+  color: var(--text-muted); cursor: pointer; position: relative;
+  transition: color 0.4s; border-right: 1px solid var(--border);
+  padding: 0 12px;
+}
+.progress-step:last-child { border-right: none; }
+.progress-step .p-dot {
+  width: 7px; height: 7px; border-radius: 50%;
+  background: transparent; border: 1px solid var(--gold-dim);
+  flex-shrink: 0; transition: all 0.4s;
+}
+.progress-step.active { color: var(--gold); }
+.progress-step.active .p-dot {
+  background: var(--gold);
+  box-shadow: 0 0 8px rgba(201,169,110,0.8);
+  animation: pulse-step 1.8s infinite;
+}
+.progress-step.done { color: var(--text-muted); }
+.progress-step.done .p-dot { background: var(--gold-dim); border-color: var(--gold-dim); }
+.progress-step.done::after {
+  content: '✓'; position: absolute; right: 12px; top: 50%; transform: translateY(-50%);
+  font-size: 10px; color: var(--gold-dim);
+}
+@keyframes pulse-step {
+  0%   { box-shadow: 0 0 0 0 rgba(201,169,110,0.7); }
+  70%  { box-shadow: 0 0 0 6px rgba(201,169,110,0); }
+  100% { box-shadow: 0 0 0 0 rgba(201,169,110,0); }
+}
+
+/* LAYOUT */
+.page-wrap {
+  max-width: 840px; margin: 0 auto;
+  padding: 140px 48px 80px;
+}
+.step-panel { display: none; animation: fadeIn 0.4s ease; }
+.step-panel.active { display: block; }
+@keyframes fadeIn { from { opacity: 0; transform: translateY(12px); } to { opacity: 1; transform: none; } }
+
+.step-label { font-size: 11px; letter-spacing: 0.25em; text-transform: uppercase; color: var(--gold); margin-bottom: 14px; display: flex; align-items: center; gap: 12px; }
+.step-label::before { content: ''; width: 24px; height: 1px; background: var(--gold); display: inline-block; }
+.step-title { font-family: 'Cormorant Garamond', serif; font-size: clamp(28px, 3.5vw, 46px); font-weight: 400; line-height: 1.1; margin-bottom: 12px; }
+.step-sub { font-size: 14px; color: var(--text-muted); margin-bottom: 40px; line-height: 1.8; }
+
+/* PHOTO UPLOAD */
+.upload-zone {
+  border: 1px dashed rgba(201,169,110,0.4); background: var(--bg3);
+  padding: 64px 32px; text-align: center; cursor: pointer;
+  transition: border-color 0.3s, background 0.3s;
+  position: relative; overflow: hidden;
+}
+.upload-zone:hover, .upload-zone.dragover { border-color: var(--gold); background: rgba(201,169,110,0.04); }
+.upload-icon { font-size: 40px; color: rgba(201,169,110,0.3); margin-bottom: 16px; }
+.upload-text { font-family: 'Cormorant Garamond', serif; font-size: 22px; font-weight: 400; margin-bottom: 8px; }
+.upload-hint { font-size: 12px; color: var(--text-muted); letter-spacing: 0.1em; }
+#photoInput { position: absolute; inset: 0; opacity: 0; cursor: pointer; width: 100%; height: 100%; }
+
+.photo-preview-wrap {
+  display: none; flex-direction: column; align-items: center; gap: 24px;
+  padding: 32px; background: var(--bg3); border: 1px solid var(--border);
+}
+.photo-preview-wrap.visible { display: flex; }
+.photo-preview-img {
+  width: 220px; height: 280px; object-fit: cover;
+  border: 1px solid var(--border); filter: brightness(0.95);
+}
+.photo-preview-info { text-align: center; }
+.photo-preview-info .file-name { font-size: 13px; color: var(--text-muted); margin-bottom: 8px; }
+.photo-change { font-size: 11px; letter-spacing: 0.15em; text-transform: uppercase; color: var(--text-muted); background: none; border: none; cursor: pointer; padding: 6px 0; border-bottom: 1px solid rgba(201,169,110,0.3); transition: color 0.3s; }
+.photo-change:hover { color: var(--gold); }
+.privacy-note { display: flex; gap: 12px; align-items: flex-start; padding: 20px; background: var(--bg3); border: 1px solid var(--border); margin-top: 24px; font-size: 12px; color: var(--text-muted); line-height: 1.7; }
+.privacy-note .lock-icon { font-size: 18px; color: var(--gold-dim); flex-shrink: 0; margin-top: 2px; }
+
+/* ZONES */
+.zones-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; margin-bottom: 32px; }
+.zone-card {
+  padding: 20px 16px; background: var(--bg3); border: 1px solid var(--border);
+  cursor: pointer; transition: all 0.3s; text-align: center; position: relative;
+}
+.zone-card:hover { border-color: rgba(201,169,110,0.4); }
+.zone-card.selected { border-color: var(--gold); background: rgba(201,169,110,0.07); }
+.zone-card input[type=checkbox] { position: absolute; opacity: 0; pointer-events: none; }
+.zone-icon { font-size: 28px; margin-bottom: 8px; }
+.zone-name { font-size: 13px; color: var(--text); margin-bottom: 4px; }
+.zone-price { font-size: 11px; color: var(--text-muted); letter-spacing: 0.05em; }
+.zone-check {
+  position: absolute; top: 10px; right: 10px;
+  width: 16px; height: 16px; border-radius: 50%; border: 1px solid var(--gold-dim);
+  display: flex; align-items: center; justify-content: center;
+  font-size: 9px; color: transparent; transition: all 0.3s;
+}
+.zone-card.selected .zone-check { background: var(--gold); border-color: var(--gold); color: var(--bg); }
+
+/* FORM */
+.form-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-bottom: 24px; }
+.fg { display: flex; flex-direction: column; gap: 6px; }
+.fg label { font-size: 11px; letter-spacing: 0.15em; text-transform: uppercase; color: var(--text-muted); }
+.fg input, .fg select {
+  background: var(--bg3); border: 1px solid var(--border); color: var(--text);
+  padding: 12px 16px; font-family: 'Montserrat', sans-serif; font-size: 14px;
+  outline: none; transition: border-color 0.3s; -webkit-appearance: none;
+}
+.fg input:focus, .fg select:focus { border-color: var(--gold); }
+.fg select option { background: var(--bg3); }
+.fg.full { grid-column: 1 / -1; }
+.anest-row { display: flex; align-items: center; gap: 12px; padding: 16px; background: var(--bg3); border: 1px solid var(--border); cursor: pointer; margin-bottom: 24px; }
+.anest-row input[type=checkbox] { width: 16px; height: 16px; accent-color: var(--gold); cursor: pointer; flex-shrink: 0; }
+.anest-row label { font-size: 14px; color: var(--text-muted); cursor: pointer; }
+.anest-row label span { color: var(--gold); }
+
+/* RESULT */
+.result-card { background: var(--bg3); border: 1px solid var(--gold); padding: 40px 36px; margin-bottom: 32px; }
+.result-row { display: flex; justify-content: space-between; align-items: baseline; padding: 14px 0; border-bottom: 1px solid var(--border); font-size: 14px; }
+.result-row:last-of-type { border-bottom: none; }
+.result-row .rr-label { color: var(--text-muted); }
+.result-row .rr-val { font-family: 'Cormorant Garamond', serif; font-size: 18px; color: var(--text); }
+.result-total { margin-top: 28px; padding-top: 28px; border-top: 1px solid var(--border); }
+.result-total-label { font-size: 11px; letter-spacing: 0.2em; text-transform: uppercase; color: var(--text-muted); margin-bottom: 8px; }
+.result-total-sum { font-family: 'Cormorant Garamond', serif; font-size: 48px; font-weight: 400; color: var(--gold-light); line-height: 1; }
+.result-note { font-size: 12px; color: var(--text-muted); margin-top: 12px; line-height: 1.7; }
+.photo-thumb { width: 80px; height: 100px; object-fit: cover; border: 1px solid var(--border); float: right; margin-left: 24px; }
+
+.result-actions { display: flex; flex-direction: column; gap: 12px; }
+.btn-wa {
+  display: flex; align-items: center; justify-content: center; gap: 12px;
+  background: var(--gold); color: var(--bg); padding: 18px 32px;
+  font-family: 'Montserrat', sans-serif; font-size: 12px; font-weight: 600;
+  letter-spacing: 0.2em; text-transform: uppercase; text-decoration: none;
+  border: none; cursor: pointer; transition: background 0.3s;
+}
+.btn-wa:hover { background: var(--gold-light); }
+.btn-wa svg { width: 20px; height: 20px; fill: currentColor; flex-shrink: 0; }
+.btn-secondary {
+  display: flex; align-items: center; justify-content: center;
+  padding: 16px 32px; border: 1px solid var(--border); color: var(--text-muted);
+  background: none; font-family: 'Montserrat', sans-serif; font-size: 12px;
+  letter-spacing: 0.15em; text-transform: uppercase; text-decoration: none; cursor: pointer; transition: all 0.3s;
+}
+.btn-secondary:hover { border-color: var(--gold); color: var(--gold); }
+
+/* NAV BUTTONS */
+.step-nav { display: flex; justify-content: space-between; align-items: center; margin-top: 40px; padding-top: 32px; border-top: 1px solid var(--border); }
+.btn-next {
+  background: var(--gold); color: var(--bg); padding: 14px 36px;
+  font-family: 'Montserrat', sans-serif; font-size: 12px; font-weight: 600;
+  letter-spacing: 0.2em; text-transform: uppercase; border: none; cursor: pointer;
+  transition: background 0.3s;
+}
+.btn-next:hover { background: var(--gold-light); }
+.btn-next:disabled { background: var(--gold-dim); cursor: not-allowed; }
+.btn-prev { font-size: 12px; letter-spacing: 0.15em; text-transform: uppercase; color: var(--text-muted); background: none; border: none; cursor: pointer; padding: 14px 0; transition: color 0.3s; }
+.btn-prev:hover { color: var(--gold); }
+
+/* ERROR */
+.field-error { font-size: 11px; color: #c46b6b; letter-spacing: 0.1em; margin-top: 4px; display: none; }
+
+/* RESPONSIVE */
+@media (max-width: 700px) {
+  nav { padding: 0 20px; }
+  .progress-bar { padding: 0 20px; }
+  .progress-step { font-size: 9px; gap: 6px; padding: 0 6px; }
+  .progress-step.done::after { display: none; }
+  .page-wrap { padding: 130px 20px 60px; }
+  .zones-grid { grid-template-columns: repeat(2, 1fr); }
+  .form-grid { grid-template-columns: 1fr; }
+  .result-total-sum { font-size: 36px; }
+  .photo-thumb { display: none; }
+}
+@media (max-width: 400px) {
+  .zones-grid { grid-template-columns: 1fr; }
+}
+</style>
+</head>
+<body>
+
+<nav>
+  <a href="index.html" class="nav-logo">Казилова М.А. <span>Пластический хирург</span></a>
+  <a href="index.html" class="nav-back">← На главную</a>
+</nav>
+
+<div class="progress-bar" id="progressBar">
+  <div class="progress-step active" id="ps1"><span class="p-dot"></span>Фото</div>
+  <div class="progress-step" id="ps2"><span class="p-dot"></span>Зоны</div>
+  <div class="progress-step" id="ps3"><span class="p-dot"></span>О вас</div>
+  <div class="progress-step" id="ps4"><span class="p-dot"></span>Расчёт</div>
+</div>
+
+<div class="page-wrap">
+
+  <!-- STEP 1: Photo -->
+  <div class="step-panel active" id="step1">
+    <div class="step-label">Шаг 1 из 4</div>
+    <h1 class="step-title">Загрузите ваше фото</h1>
+    <p class="step-sub">Это поможет доктору дать точную оценку на консультации. Фото остаётся у вас — мы получим его только когда вы сами отправите заявку.</p>
+
+    <div class="upload-zone" id="uploadZone">
+      <input type="file" id="photoInput" accept="image/*">
+      <div class="upload-icon">⊕</div>
+      <div class="upload-text">Нажмите или перетащите фото</div>
+      <div class="upload-hint">JPG, PNG или HEIC · до 20 МБ</div>
+    </div>
+
+    <div class="photo-preview-wrap" id="photoPreview">
+      <img id="previewImg" class="photo-preview-img" src="" alt="Ваше фото">
+      <div class="photo-preview-info">
+        <div class="file-name" id="fileName"></div>
+        <button class="photo-change" onclick="resetPhoto()">Изменить фото</button>
+      </div>
+    </div>
+
+    <div class="privacy-note">
+      <div class="lock-icon">🔒</div>
+      <div>Фото не отправляется автоматически. Оно хранится только в вашем браузере и будет прикреплено к заявке только если вы нажмёте «Отправить» в конце. Никаких посторонних глаз.</div>
+    </div>
+
+    <div class="step-nav">
+      <span></span>
+      <button class="btn-next" id="btnNext1" onclick="goStep(2)">Далее →</button>
+    </div>
+  </div>
+
+  <!-- STEP 2: Zones -->
+  <div class="step-panel" id="step2">
+    <div class="step-label">Шаг 2 из 4</div>
+    <h1 class="step-title">Выберите зоны</h1>
+    <p class="step-sub">Отметьте всё что вас интересует — можно несколько. Цены ориентировочные, точная стоимость определяется на консультации.</p>
+
+    <div class="zones-grid" id="zonesGrid">
+      <label class="zone-card" onclick="toggleZone(this)">
+        <input type="checkbox" name="zone" value="Живот" data-min="120000" data-max="200000">
+        <div class="zone-check">✓</div>
+        <div class="zone-icon">🫃</div>
+        <div class="zone-name">Живот</div>
+        <div class="zone-price">от 120 000 ₽</div>
+      </label>
+      <label class="zone-card" onclick="toggleZone(this)">
+        <input type="checkbox" name="zone" value="Бока" data-min="100000" data-max="150000">
+        <div class="zone-check">✓</div>
+        <div class="zone-icon">🌿</div>
+        <div class="zone-name">Бока</div>
+        <div class="zone-price">от 100 000 ₽</div>
+      </label>
+      <label class="zone-card" onclick="toggleZone(this)">
+        <input type="checkbox" name="zone" value="Бёдра (галифе)" data-min="100000" data-max="150000">
+        <div class="zone-check">✓</div>
+        <div class="zone-icon">🦵</div>
+        <div class="zone-name">Бёдра (галифе)</div>
+        <div class="zone-price">от 100 000 ₽</div>
+      </label>
+      <label class="zone-card" onclick="toggleZone(this)">
+        <input type="checkbox" name="zone" value="Спина" data-min="80000" data-max="120000">
+        <div class="zone-check">✓</div>
+        <div class="zone-icon">🔄</div>
+        <div class="zone-name">Спина</div>
+        <div class="zone-price">от 80 000 ₽</div>
+      </label>
+      <label class="zone-card" onclick="toggleZone(this)">
+        <input type="checkbox" name="zone" value="Руки" data-min="80000" data-max="100000">
+        <div class="zone-check">✓</div>
+        <div class="zone-icon">💪</div>
+        <div class="zone-name">Руки</div>
+        <div class="zone-price">от 80 000 ₽</div>
+      </label>
+      <label class="zone-card" onclick="toggleZone(this)">
+        <input type="checkbox" name="zone" value="Внутренняя часть бёдер" data-min="80000" data-max="80000">
+        <div class="zone-check">✓</div>
+        <div class="zone-icon">⬡</div>
+        <div class="zone-name">Внутр. бёдра</div>
+        <div class="zone-price">80 000 ₽</div>
+      </label>
+      <label class="zone-card" onclick="toggleZone(this)">
+        <input type="checkbox" name="zone" value="Абдоминопластика" data-min="300000" data-max="600000">
+        <div class="zone-check">✓</div>
+        <div class="zone-icon">✦</div>
+        <div class="zone-name">Абдоминопластика</div>
+        <div class="zone-price">от 300 000 ₽</div>
+      </label>
+      <label class="zone-card" onclick="toggleZone(this)">
+        <input type="checkbox" name="zone" value="Блефаропластика" data-min="45000" data-max="55000">
+        <div class="zone-check">✓</div>
+        <div class="zone-icon">👁</div>
+        <div class="zone-name">Блефаропластика</div>
+        <div class="zone-price">от 45 000 ₽</div>
+      </label>
+      <label class="zone-card" onclick="toggleZone(this)">
+        <input type="checkbox" name="zone" value="Комки Биша" data-min="60000" data-max="60000">
+        <div class="zone-check">✓</div>
+        <div class="zone-icon">◈</div>
+        <div class="zone-name">Комки Биша</div>
+        <div class="zone-price">60 000 ₽</div>
+      </label>
+    </div>
+
+    <p id="zoneError" style="font-size:12px;color:#c46b6b;display:none;margin-bottom:12px;">Выберите хотя бы одну зону</p>
+
+    <div class="step-nav">
+      <button class="btn-prev" onclick="goStep(1)">← Назад</button>
+      <button class="btn-next" onclick="goStep(3)">Далее →</button>
+    </div>
+  </div>
+
+  <!-- STEP 3: About you -->
+  <div class="step-panel" id="step3">
+    <div class="step-label">Шаг 3 из 4</div>
+    <h1 class="step-title">О вас</h1>
+    <p class="step-sub">Несколько вопросов для точного расчёта. Доктор учитывает эти параметры при составлении плана операции.</p>
+
+    <div class="form-grid">
+      <div class="fg">
+        <label for="f_name">Ваше имя</label>
+        <input type="text" id="f_name" placeholder="Как к вам обращаться">
+        <div class="field-error" id="err_name">Пожалуйста, введите имя</div>
+      </div>
+      <div class="fg">
+        <label for="f_phone">Телефон</label>
+        <input type="tel" id="f_phone" placeholder="+7 (___) ___-__-__">
+        <div class="field-error" id="err_phone">Введите номер телефона</div>
+      </div>
+      <div class="fg">
+        <label for="f_weight">Вес</label>
+        <select id="f_weight">
+          <option value="">Выберите</option>
+          <option value="до 55 кг">до 55 кг</option>
+          <option value="55–68 кг">55–68 кг</option>
+          <option value="68–80 кг">68–80 кг</option>
+          <option value="80–95 кг">80–95 кг</option>
+          <option value="более 95 кг">более 95 кг</option>
+        </select>
+      </div>
+      <div class="fg">
+        <label for="f_height">Рост</label>
+        <select id="f_height">
+          <option value="">Выберите</option>
+          <option value="до 155 см">до 155 см</option>
+          <option value="155–165 см">155–165 см</option>
+          <option value="165–175 см">165–175 см</option>
+          <option value="выше 175 см">выше 175 см</option>
+        </select>
+      </div>
+      <div class="fg full">
+        <label for="f_comment">Ваш запрос (необязательно)</label>
+        <input type="text" id="f_comment" placeholder="Что хотите изменить, ваши пожелания">
+      </div>
+    </div>
+
+    <label class="anest-row">
+      <input type="checkbox" id="f_anest">
+      <label for="f_anest">Добавить наркоз (+25 000 ₽) — <span>рекомендуется для операций дольше 1 часа</span></label>
+    </label>
+
+    <div class="step-nav">
+      <button class="btn-prev" onclick="goStep(2)">← Назад</button>
+      <button class="btn-next" onclick="goStep(4)">Рассчитать →</button>
+    </div>
+  </div>
+
+  <!-- STEP 4: Result -->
+  <div class="step-panel" id="step4">
+    <div class="step-label">Ваш персональный расчёт</div>
+    <h1 class="step-title">Предварительная<br>стоимость</h1>
+    <p class="step-sub" style="margin-bottom:32px;">Расчёт составлен на основе ваших данных. Точная цена определяется на очной консультации — она бесплатна.</p>
+
+    <div class="result-card" id="resultCard">
+      <img id="resultThumb" class="photo-thumb" src="" alt="" style="display:none">
+      <div id="resultZonesList"></div>
+      <div class="result-total">
+        <div class="result-total-label">Итоговый диапазон</div>
+        <div class="result-total-sum" id="resultSum">—</div>
+        <div class="result-note">* Итоговая стоимость зависит от объёма работ, сложности и индивидуальных особенностей. Цены без учёта анестезиолога если не выбрали.</div>
+      </div>
+    </div>
+
+    <div class="result-actions">
+      <a href="#" id="btnWA" class="btn-wa" target="_blank">
+        <svg viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+        Отправить заявку доктору
+      </a>
+      <button class="btn-secondary" onclick="window.location.href='index.html#booking'">Записаться на консультацию</button>
+    </div>
+  </div>
+
+</div><!-- /page-wrap -->
+
+<script>
+var state = { step: 1, photo: null, photoName: '' };
+var WA_NUMBER = '79286600005'; // ← номер WhatsApp доктора
+
+function goStep(n) {
+  // Validation
+  if (n === 3) {
+    var zones = document.querySelectorAll('#zonesGrid input:checked');
+    if (!zones.length) {
+      document.getElementById('zoneError').style.display = 'block';
+      return;
+    }
+    document.getElementById('zoneError').style.display = 'none';
+  }
+  if (n === 4) {
+    var name = document.getElementById('f_name').value.trim();
+    var phone = document.getElementById('f_phone').value.trim();
+    var ok = true;
+    if (!name) { document.getElementById('err_name').style.display = 'block'; ok = false; } else { document.getElementById('err_name').style.display = 'none'; }
+    if (!phone) { document.getElementById('err_phone').style.display = 'block'; ok = false; } else { document.getElementById('err_phone').style.display = 'none'; }
+    if (!ok) return;
+    buildResult();
+  }
+
+  // Hide all
+  document.querySelectorAll('.step-panel').forEach(function(p){ p.classList.remove('active'); });
+  document.getElementById('step' + n).classList.add('active');
+
+  // Update progress dots
+  ['ps1','ps2','ps3','ps4'].forEach(function(id, i) {
+    var el = document.getElementById(id);
+    el.className = 'progress-step';
+    if (i + 1 < n) el.classList.add('done');
+    else if (i + 1 === n) el.classList.add('active');
+  });
+
+  state.step = n;
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+function toggleZone(card) {
+  var cb = card.querySelector('input[type=checkbox]');
+  cb.checked = !cb.checked;
+  card.classList.toggle('selected', cb.checked);
+}
+
+// Photo upload
+var photoInput = document.getElementById('photoInput');
+photoInput.addEventListener('change', function() {
+  var file = this.files[0];
+  if (!file) return;
+  if (file.size > 20 * 1024 * 1024) { alert('Файл слишком большой. Максимум 20 МБ.'); return; }
+  var reader = new FileReader();
+  reader.onload = function(e) {
+    state.photo = e.target.result;
+    state.photoName = file.name;
+    document.getElementById('previewImg').src = e.target.result;
+    document.getElementById('fileName').textContent = file.name;
+    document.getElementById('uploadZone').style.display = 'none';
+    document.getElementById('photoPreview').classList.add('visible');
+  };
+  reader.readAsDataURL(file);
+});
+
+// Drag & drop
+var zone = document.getElementById('uploadZone');
+zone.addEventListener('dragover', function(e) { e.preventDefault(); zone.classList.add('dragover'); });
+zone.addEventListener('dragleave', function() { zone.classList.remove('dragover'); });
+zone.addEventListener('drop', function(e) {
+  e.preventDefault(); zone.classList.remove('dragover');
+  var f = e.dataTransfer.files[0];
+  if (f) { photoInput.files = e.dataTransfer.files; photoInput.dispatchEvent(new Event('change')); }
+});
+
+function resetPhoto() {
+  state.photo = null; state.photoName = '';
+  document.getElementById('photoInput').value = '';
+  document.getElementById('uploadZone').style.display = '';
+  document.getElementById('photoPreview').classList.remove('visible');
+}
+
+function fmt(n) { return n.toLocaleString('ru-RU') + ' ₽'; }
+
+function buildResult() {
+  var zones = document.querySelectorAll('#zonesGrid input:checked');
+  var anest = document.getElementById('f_anest').checked;
+  var name = document.getElementById('f_name').value.trim();
+  var weight = document.getElementById('f_weight').value;
+  var height = document.getElementById('f_height').value;
+  var comment = document.getElementById('f_comment').value.trim();
+
+  // Build zones list for result card
+  var minTotal = 0, maxTotal = 0;
+  var zoneLines = '';
+  var zoneNames = [];
+  zones.forEach(function(z) {
+    var mn = parseInt(z.dataset.min), mx = parseInt(z.dataset.max);
+    minTotal += mn; maxTotal += mx;
+    zoneLines += '<div class="result-row"><span class="rr-label">' + z.value + '</span><span class="rr-val">' + (mn === mx ? fmt(mn) : 'от ' + fmt(mn)) + '</span></div>';
+    zoneNames.push(z.value);
+  });
+  if (anest) { minTotal += 25000; maxTotal += 25000; zoneLines += '<div class="result-row"><span class="rr-label">Наркоз</span><span class="rr-val">' + fmt(25000) + '</span></div>'; zoneNames.push('Наркоз'); }
+
+  document.getElementById('resultZonesList').innerHTML = zoneLines;
+  document.getElementById('resultSum').textContent = minTotal === maxTotal ? fmt(minTotal) : 'от ' + fmt(minTotal) + ' до ' + fmt(maxTotal);
+
+  // Photo thumb
+  if (state.photo) {
+    var thumb = document.getElementById('resultThumb');
+    thumb.src = state.photo; thumb.style.display = 'block';
+  }
+
+  // Build WhatsApp message
+  var msg = 'Здравствуйте! Заявка с сайта.' +
+    '\n\nИмя: ' + name +
+    '\nТелефон: ' + document.getElementById('f_phone').value.trim() +
+    (weight ? '\nВес: ' + weight : '') +
+    (height ? '\nРост: ' + height : '') +
+    '\n\nИнтересующие зоны:\n— ' + zoneNames.join('\n— ') +
+    '\n\nОриентировочная стоимость: ' + (minTotal === maxTotal ? fmt(minTotal) : 'от ' + fmt(minTotal) + ' до ' + fmt(maxTotal)) +
+    (comment ? '\n\nКомментарий: ' + comment : '') +
+    (state.photo ? '\n\n[Фото приложено к сообщению]' : '');
+
+  document.getElementById('btnWA').href = 'https://wa.me/' + WA_NUMBER + '?text=' + encodeURIComponent(msg);
+}
+</script>
+</body>
+</html>
