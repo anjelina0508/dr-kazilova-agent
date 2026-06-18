@@ -573,6 +573,46 @@
     .hero-line { display: none; }
     footer { flex-direction: column; gap: 24px; text-align: center; }
   }
+
+  /* Calculator step indicator */
+  .calc-steps { display:flex; gap:0; margin-bottom:48px; align-items:center; }
+  .calc-step {
+    display:flex; align-items:center; gap:10px;
+    padding:10px 20px;
+    background:var(--bg3); border:1px solid var(--border);
+    font-size:11px; letter-spacing:0.15em; text-transform:uppercase; color:var(--text-muted);
+    transition: all 0.4s;
+  }
+  .calc-step:not(:last-child) { border-right:none; }
+  .calc-step .step-dot {
+    width:8px; height:8px; border-radius:50%;
+    background:var(--border); border:1px solid var(--gold-dim);
+    flex-shrink:0; transition: background 0.4s, box-shadow 0.4s;
+  }
+  .calc-step.active { color:var(--gold); background:rgba(201,169,110,0.06); border-color:rgba(201,169,110,0.4); }
+  .calc-step.active .step-dot {
+    background:var(--gold);
+    box-shadow: 0 0 8px rgba(201,169,110,0.7);
+    animation: pulse-gold 1.8s infinite;
+  }
+  .calc-step.done { color:var(--text-muted); }
+  .calc-step.done .step-dot { background:var(--gold-dim); }
+  @media (max-width:600px) { .calc-steps { flex-direction:column; align-items:flex-start; } .calc-step { border-right:1px solid var(--border) !important; width:100%; } }
+
+  /* Blog preview section */
+  .blog-preview-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:1px; background:var(--border); border:1px solid var(--border); }
+  .blog-preview-card {
+    background:var(--bg2); padding:36px 28px;
+    text-decoration:none; color:inherit; display:block;
+    transition:background 0.3s;
+  }
+  .blog-preview-card:hover { background:var(--bg3); }
+  .blog-preview-num { font-family:'Cormorant Garamond',serif; font-size:12px; color:var(--gold-dim); letter-spacing:0.2em; margin-bottom:16px; }
+  .blog-preview-title { font-family:'Cormorant Garamond',serif; font-size:20px; line-height:1.3; margin-bottom:12px; }
+  .blog-preview-desc { font-size:12px; color:var(--text-muted); line-height:1.8; margin-bottom:20px; }
+  .blog-preview-link { font-size:11px; letter-spacing:0.15em; text-transform:uppercase; color:var(--gold); }
+  @media(max-width:900px){ .blog-preview-grid{grid-template-columns:1fr;} }
+
 </style>
 </head>
 <body>
@@ -589,6 +629,7 @@
     <li><a href="#portfolio">Портфолио</a></li>
     <li><a href="#reviews">Отзывы</a></li>
     <li><a href="#booking">Контакты</a></li>
+    <li><a href="blog.html">Блог</a></li>
   </ul>
   <a class="nav-cta" href="#booking">Записаться</a>
 </nav>
@@ -1058,6 +1099,17 @@ document.addEventListener('DOMContentLoaded', function() {
   <div class="section-label">Калькулятор</div>
   <h2>Рассчитать<br>стоимость</h2>
   <p style="color:var(--text-muted);font-size:14px;max-width:480px;margin-bottom:48px;line-height:1.9;">Выберите процедуры — получите предварительную стоимость. Точная цена определяется на консультации.</p>
+    <div class="calc-steps" id="calcSteps">
+    <div class="calc-step active" id="cstep1">
+      <span class="step-dot"></span>Выберите зоны
+    </div>
+    <div class="calc-step" id="cstep2">
+      <span class="step-dot"></span>Наркоз
+    </div>
+    <div class="calc-step" id="cstep3">
+      <span class="step-dot"></span>Ваш расчёт
+    </div>
+  </div>
   <div class="calc-grid">
     <div>
       <div class="calc-group-title">Липосакция</div>
@@ -1094,7 +1146,17 @@ document.addEventListener('DOMContentLoaded', function() {
 </section>
 
 <script>
+
+function updateCalcSteps() {
+  var zones = document.querySelectorAll('#calculator input[type=checkbox]:checked:not([data-min="25000"])');
+  var anest = document.querySelector('#calculator input[data-min="25000"]:checked');
+  var hasResult = document.getElementById('calc-result').style.display !== 'none';
+  document.getElementById('cstep1').className = 'calc-step' + (zones.length > 0 ? ' done' : ' active');
+  document.getElementById('cstep2').className = 'calc-step' + (anest ? ' done' : (zones.length > 0 ? ' active' : ''));
+  document.getElementById('cstep3').className = 'calc-step' + (hasResult ? ' active' : '');
+}
 function calcTotal() {
+  updateCalcSteps();
   var checks = document.querySelectorAll("#calculator input[type=checkbox]:checked");
   if (!checks.length) { document.getElementById("calc-result").style.display="none"; return; }
   var min=0, max=0;
@@ -1273,5 +1335,36 @@ window.addEventListener('scroll', function() {
   nav.style.background = window.scrollY > 50 ? 'rgba(8,8,8,0.98)' : 'rgba(8,8,8,0.92)';
 });
 </script>
+
+<section id="blog-preview" style="background:var(--bg2);padding:100px 48px 80px;">
+  <div style="max-width:1140px;margin:0 auto;">
+    <div class="section-label">Блог</div>
+    <div style="display:flex;justify-content:space-between;align-items:flex-end;margin-bottom:48px;flex-wrap:wrap;gap:16px;">
+      <h2 style="font-family:'Cormorant Garamond',serif;font-size:clamp(28px,3vw,44px);font-weight:400;">Статьи о пластической хирургии</h2>
+      <a href="blog.html" style="font-size:11px;letter-spacing:0.2em;text-transform:uppercase;color:var(--gold);text-decoration:none;border-bottom:1px solid rgba(201,169,110,0.3);padding-bottom:3px;">Все статьи →</a>
+    </div>
+    <div class="blog-preview-grid">
+      <a href="blog.html" onclick="setTimeout(()=>openArticle&&openArticle('lipo'),100)" class="blog-preview-card">
+        <div class="blog-preview-num">01</div>
+        <div class="blog-preview-title">Липоскульптура или липосакция — в чём разница</div>
+        <div class="blog-preview-desc">Разбираем два понятия которые часто путают. Кому что подходит и каких результатов ожидать.</div>
+        <span class="blog-preview-link">Читать →</span>
+      </a>
+      <a href="blog.html" class="blog-preview-card">
+        <div class="blog-preview-num">02</div>
+        <div class="blog-preview-title">Как подготовиться к операции: что важно знать</div>
+        <div class="blog-preview-desc">Подготовка влияет на результат не меньше чем сама операция. За 2 недели, за день, в день операции.</div>
+        <span class="blog-preview-link">Читать →</span>
+      </a>
+      <a href="blog.html" class="blog-preview-card">
+        <div class="blog-preview-num">03</div>
+        <div class="blog-preview-title">Реабилитация: чего ожидать и как ускорить результат</div>
+        <div class="blog-preview-desc">Первые дни после операции — самые важные. Что нормально, что должно насторожить.</div>
+        <span class="blog-preview-link">Читать →</span>
+      </a>
+    </div>
+  </div>
+</section>
+
 </body>
 </html>

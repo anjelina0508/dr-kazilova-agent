@@ -1,0 +1,313 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Статьи о пластической хирургии — Казилова М.А.</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400&family=Montserrat:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  :root {
+    --gold: #C9A96E; --gold-light: #E8D5B0; --gold-dim: #7a6340;
+    --bg: #080808; --bg2: #0f0f0f; --bg3: #161612;
+    --text: #F5F0E8; --text-muted: #9E9385; --border: rgba(201,169,110,0.2);
+  }
+  html { scroll-behavior: smooth; }
+  body { background: var(--bg); color: var(--text); font-family: 'Montserrat', sans-serif; font-weight: 400; font-size: 15px; line-height: 1.8; }
+
+  nav {
+    position: fixed; top: 0; width: 100%; z-index: 100;
+    background: rgba(8,8,8,0.95); backdrop-filter: blur(12px);
+    border-bottom: 1px solid var(--border);
+    padding: 0 48px; display: flex; align-items: center; justify-content: space-between; height: 64px;
+  }
+  .nav-logo { font-family: 'Cormorant Garamond', serif; font-size: 20px; font-weight: 500; color: var(--gold-light); letter-spacing: 0.04em; text-decoration: none; }
+  .nav-logo span { color: var(--text-muted); font-weight: 300; font-size: 13px; display: block; letter-spacing: 0.12em; text-transform: uppercase; }
+  .nav-back { color: var(--text-muted); text-decoration: none; font-size: 12px; letter-spacing: 0.15em; text-transform: uppercase; transition: color 0.3s; }
+  .nav-back:hover { color: var(--gold); }
+
+  .blog-hero {
+    padding: 120px 48px 80px;
+    border-bottom: 1px solid var(--border);
+  }
+  .blog-hero .section-label { font-size: 11px; letter-spacing: 0.25em; text-transform: uppercase; color: var(--gold); margin-bottom: 16px; display: flex; align-items: center; gap: 14px; }
+  .blog-hero .section-label::before { content: ''; width: 32px; height: 1px; background: var(--gold); display: inline-block; }
+  .blog-hero h1 { font-family: 'Cormorant Garamond', serif; font-size: clamp(36px, 4vw, 60px); font-weight: 400; line-height: 1.1; margin-bottom: 16px; }
+
+  .articles-grid {
+    display: grid; grid-template-columns: repeat(3, 1fr); gap: 1px;
+    background: var(--border); border: 1px solid var(--border);
+    margin: 48px;
+  }
+  .article-card {
+    background: var(--bg2); padding: 40px 36px;
+    text-decoration: none; color: inherit;
+    transition: background 0.3s; cursor: pointer;
+  }
+  .article-card:hover { background: var(--bg3); }
+  .article-num { font-family: 'Cormorant Garamond', serif; font-size: 13px; color: var(--gold-dim); letter-spacing: 0.2em; margin-bottom: 20px; }
+  .article-title { font-family: 'Cormorant Garamond', serif; font-size: 22px; font-weight: 400; line-height: 1.3; margin-bottom: 16px; }
+  .article-excerpt { font-size: 13px; color: var(--text-muted); line-height: 1.8; margin-bottom: 24px; }
+  .article-read { font-size: 11px; letter-spacing: 0.18em; text-transform: uppercase; color: var(--gold); border-bottom: 1px solid rgba(201,169,110,0.3); padding-bottom: 3px; display: inline-block; }
+
+  /* Article content */
+  .article-content {
+    max-width: 720px; margin: 0 auto; padding: 80px 48px;
+    display: none;
+  }
+  .article-content.active { display: block; }
+  .article-content h1 { font-family: 'Cormorant Garamond', serif; font-size: clamp(32px, 3.5vw, 52px); font-weight: 400; line-height: 1.15; margin-bottom: 32px; }
+  .article-content h2 { font-family: 'Cormorant Garamond', serif; font-size: 28px; font-weight: 400; margin: 48px 0 20px; color: var(--gold-light); }
+  .article-content p { color: var(--text-muted); margin-bottom: 20px; line-height: 1.95; font-size: 15px; }
+  .article-content p strong { color: var(--text); font-weight: 500; }
+  .article-content .lead { font-size: 17px; color: var(--text); line-height: 1.85; margin-bottom: 40px; }
+  .article-content ul { list-style: none; margin: 0 0 24px; }
+  .article-content ul li { padding: 10px 0; border-bottom: 1px solid var(--border); color: var(--text-muted); padding-left: 20px; position: relative; }
+  .article-content ul li::before { content: '—'; position: absolute; left: 0; color: var(--gold); }
+  .article-meta { font-size: 12px; color: var(--text-muted); letter-spacing: 0.12em; text-transform: uppercase; margin-bottom: 40px; padding-bottom: 32px; border-bottom: 1px solid var(--border); }
+  .back-btn { display: inline-block; margin-bottom: 48px; font-size: 12px; letter-spacing: 0.15em; text-transform: uppercase; color: var(--text-muted); text-decoration: none; cursor: pointer; background: none; border: none; transition: color 0.3s; }
+  .back-btn:hover { color: var(--gold); }
+
+  footer { padding: 40px 48px; border-top: 1px solid var(--border); display: flex; justify-content: space-between; align-items: center; }
+  .footer-copy { font-size: 12px; color: var(--text-muted); letter-spacing: 0.08em; }
+  .footer-link { color: var(--gold); text-decoration: none; font-size: 12px; letter-spacing: 0.12em; text-transform: uppercase; }
+
+  @media (max-width: 900px) {
+    nav { padding: 0 24px; }
+    .articles-grid { grid-template-columns: 1fr; margin: 24px; }
+    .blog-hero { padding: 100px 24px 60px; }
+    .article-content { padding: 60px 24px; }
+    footer { padding: 32px 24px; flex-direction: column; gap: 16px; text-align: center; }
+  }
+</style>
+</head>
+<body>
+
+<nav>
+  <a href="index.html" class="nav-logo">Казилова М.А. <span>Пластический хирург</span></a>
+  <a href="index.html" class="nav-back">← На главную</a>
+</nav>
+
+<!-- Articles list -->
+<div id="articlesList">
+  <div class="blog-hero">
+    <div class="section-label">Блог</div>
+    <h1>Статьи о<br>пластической хирургии</h1>
+  </div>
+
+  <div class="articles-grid">
+    <div class="article-card" onclick="openArticle('lipo')">
+      <div class="article-num">01</div>
+      <div class="article-title">Что такое липоскульптура и чем она отличается от липосакции</div>
+      <div class="article-excerpt">Многие путают эти два понятия. Разбираем в чём разница, кому подходит каждая процедура и на что обратить внимание.</div>
+      <span class="article-read">Читать →</span>
+    </div>
+    <div class="article-card" onclick="openArticle('prep')">
+      <div class="article-num">02</div>
+      <div class="article-title">Как подготовиться к операции: что важно знать заранее</div>
+      <div class="article-excerpt">Подготовка влияет на результат не меньше, чем сама операция. Рассказываем что делать за две недели, за день и в день операции.</div>
+      <span class="article-read">Читать →</span>
+    </div>
+    <div class="article-card" onclick="openArticle('recovery')">
+      <div class="article-num">03</div>
+      <div class="article-title">Реабилитация после пластики: чего ожидать и как ускорить результат</div>
+      <div class="article-excerpt">Первые дни после операции — самые важные. Что нормально, а что должно насторожить. Как выглядит правильное восстановление.</div>
+      <span class="article-read">Читать →</span>
+    </div>
+    <div class="article-card" onclick="openArticle('choose')">
+      <div class="article-num">04</div>
+      <div class="article-title">Как выбрать хирурга: на что смотреть кроме красивых фото</div>
+      <div class="article-excerpt">Портфолио — это только начало. Рассказываем на что обратить внимание на консультации и какие вопросы обязательно задать.</div>
+      <span class="article-read">Читать →</span>
+    </div>
+    <div class="article-card" onclick="openArticle('abdo')">
+      <div class="article-num">05</div>
+      <div class="article-title">Абдоминопластика: кому нужна и когда без неё не обойтись</div>
+      <div class="article-excerpt">После родов или сильного похудения живот часто не приходит в форму даже при тренировках. Объясняем почему и что с этим делать.</div>
+      <span class="article-read">Читать →</span>
+    </div>
+    <div class="article-card" onclick="openArticle('myths')">
+      <div class="article-num">06</div>
+      <div class="article-title">5 мифов о пластической хирургии, в которые пора перестать верить</div>
+      <div class="article-excerpt">«Это навсегда», «будет видно», «только для богатых» — разбираем самые распространённые заблуждения.</div>
+      <span class="article-read">Читать →</span>
+    </div>
+  </div>
+</div>
+
+<!-- Article: Liposculpture -->
+<div id="art-lipo" class="article-content">
+  <button class="back-btn" onclick="closeArticle()">← Все статьи</button>
+  <div class="article-meta">Пластическая хирургия &nbsp;·&nbsp; 5 минут чтения</div>
+  <h1>Что такое липоскульптура и чем она отличается от липосакции</h1>
+  <p class="lead">Оба слова часто используются как синонимы, но это не одно и то же. Разница — в цели и в подходе к телу.</p>
+  <h2>Липосакция — это удаление</h2>
+  <p>Классическая липосакция убирает жировые отложения с конкретной зоны. Живот, бока, бёдра. Хирург вводит канюлю и откачивает жир. Результат — меньше объёма в этом месте.</p>
+  <p>Это рабочий инструмент, но он решает только одну задачу: <strong>убрать лишнее</strong>.</p>
+  <h2>Липоскульптура — это моделирование</h2>
+  <p>Липоскульптура идёт дальше. Жир не просто удаляется — хирург работает с контуром тела как скульптор. Убирает где лишнее, оставляет или перемещает туда, где нужно добавить. Например, жир с живота можно перенести в ягодичную область.</p>
+  <p><strong>Цель липоскульптуры — не просто «меньше»</strong>, а красивый, гармоничный контур. Подчёркнутая талия, плоский живот, женственные линии.</p>
+  <h2>Кому подходит что</h2>
+  <ul>
+    <li>Липосакция — если цель убрать конкретную зону, общий вес близок к норме</li>
+    <li>Липоскульптура — если хочется изменить пропорции тела целиком, создать силуэт</li>
+    <li>Круговая липоскульптура — работа со всеми зонами сразу за одну операцию</li>
+  </ul>
+  <h2>Важно понимать</h2>
+  <p>Ни липосакция, ни липоскульптура — не способ похудеть. Это коррекция формы там, куда диета и спорт не добираются. При наборе веса после операции жир вернётся — в другие зоны тела.</p>
+  <p>Стойкий результат держится при стабильном весе и здоровом образе жизни.</p>
+  <p style="margin-top:48px;padding-top:32px;border-top:1px solid var(--border);"><a href="index.html#booking" style="color:var(--gold);text-decoration:none;letter-spacing:0.1em;text-transform:uppercase;font-size:12px;">Записаться на консультацию →</a></p>
+</div>
+
+<!-- Article: Preparation -->
+<div id="art-prep" class="article-content">
+  <button class="back-btn" onclick="closeArticle()">← Все статьи</button>
+  <div class="article-meta">Пластическая хирургия &nbsp;·&nbsp; 4 минуты чтения</div>
+  <h1>Как подготовиться к операции: что важно знать заранее</h1>
+  <p class="lead">Хорошая подготовка — половина результата. Это не преувеличение. Хирург делает своё, а остальное зависит от того, как организм подошёл к операции.</p>
+  <h2>За 2 недели</h2>
+  <ul>
+    <li>Сдать анализы и пройти обследования которые назначит врач</li>
+    <li>Отказаться от алкоголя — он влияет на свёртываемость крови</li>
+    <li>Прекратить приём препаратов разжижающих кровь (аспирин, ибупрофен) — только по согласованию с врачом</li>
+    <li>Сообщить хирургу обо всех лекарствах которые принимаете</li>
+  </ul>
+  <h2>За неделю</h2>
+  <ul>
+    <li>Не менять питание резко — это не время для голодания</li>
+    <li>Высыпаться и избегать стресса насколько возможно</li>
+    <li>Приобрести компрессионное бельё заранее — оно понадобится сразу после операции</li>
+    <li>Подготовить место для восстановления дома: удобная кровать, всё нужное под рукой</li>
+  </ul>
+  <h2>За день</h2>
+  <ul>
+    <li>Последний приём пищи — не позднее полуночи перед операцией</li>
+    <li>Принять душ, не использовать кремы и лосьоны в день операции</li>
+    <li>Одежда должна быть свободной — вы будете в ней возвращаться домой</li>
+  </ul>
+  <h2>Что взять с собой</h2>
+  <ul>
+    <li>Документы и результаты анализов</li>
+    <li>Компрессионное бельё</li>
+    <li>Кого-то кто заберёт вас домой — самостоятельно ехать нельзя</li>
+  </ul>
+  <p style="margin-top:48px;padding-top:32px;border-top:1px solid var(--border);"><a href="index.html#booking" style="color:var(--gold);text-decoration:none;letter-spacing:0.1em;text-transform:uppercase;font-size:12px;">Записаться на консультацию →</a></p>
+</div>
+
+<!-- Article: Recovery -->
+<div id="art-recovery" class="article-content">
+  <button class="back-btn" onclick="closeArticle()">← Все статьи</button>
+  <div class="article-meta">Пластическая хирургия &nbsp;·&nbsp; 5 минут чтения</div>
+  <h1>Реабилитация после пластики: чего ожидать и как ускорить результат</h1>
+  <p class="lead">Первые недели после операции — это не просто «ждать пока заживёт». Это активная часть лечения. То как вы восстанавливаетесь, напрямую влияет на финальный результат.</p>
+  <h2>Первые 3 дня</h2>
+  <p>Отёки, синяки, дискомфорт — это норма. Тело реагирует на вмешательство. <strong>Боли как таковой обычно нет</strong> — есть ощущение напряжения и чувствительности.</p>
+  <p>В этот период важно: лежать в правильном положении (врач скажет каком), носить компрессию, пить достаточно воды, не делать резких движений.</p>
+  <h2>Первые 2 недели</h2>
+  <ul>
+    <li>Компрессионное бельё носить постоянно</li>
+    <li>Не поднимать тяжести, не заниматься спортом</li>
+    <li>Обрабатывать швы как назначено</li>
+    <li>Лимфодренажный массаж — если назначил врач, начинать по его рекомендации</li>
+    <li>Спать на спине или в позиции которую одобрил хирург</li>
+  </ul>
+  <h2>Через месяц</h2>
+  <p>Основной отёк спадает. Начинает проявляться результат — но ещё не окончательный. Можно возвращаться к лёгкой активности.</p>
+  <h2>Через 3–6 месяцев</h2>
+  <p>Вот тогда можно смотреть на финальный результат. Тело окончательно перестраивается, рубцы светлеют, контур стабилизируется.</p>
+  <p>Именно поэтому фото «после» снимают минимум через 3 месяца — раньше нет смысла оценивать.</p>
+  <p style="margin-top:48px;padding-top:32px;border-top:1px solid var(--border);"><a href="index.html#booking" style="color:var(--gold);text-decoration:none;letter-spacing:0.1em;text-transform:uppercase;font-size:12px;">Записаться на консультацию →</a></p>
+</div>
+
+<!-- Article: Choosing a surgeon -->
+<div id="art-choose" class="article-content">
+  <button class="back-btn" onclick="closeArticle()">← Все статьи</button>
+  <div class="article-meta">Пластическая хирургия &nbsp;·&nbsp; 4 минуты чтения</div>
+  <h1>Как выбрать хирурга: на что смотреть кроме красивых фото</h1>
+  <p class="lead">Портфолио — важно, но этого мало. Расскажем на что ещё обращать внимание, и какие вопросы обязательно задать на консультации.</p>
+  <h2>Образование и специализация</h2>
+  <p>Пластический хирург должен иметь специализацию именно в пластической хирургии — не просто общую хирургию. Спросите где учился и где проходил практику. Это нормальный вопрос, хороший врач ответит без проблем.</p>
+  <h2>Портфолио — смотрите внимательно</h2>
+  <p>Не просто «красиво». Смотрите на <strong>похожие случаи</strong> — ваш тип фигуры, ваша процедура. Если хирург специализируется на носах, а вы пришли за липосакцией — это разные специализации.</p>
+  <p>Хорошее портфолио показывает результаты через 3–6 месяцев, а не только сразу после операции.</p>
+  <h2>Консультация</h2>
+  <ul>
+    <li>Врач должен задавать вопросы — о здоровье, об ожиданиях, о образе жизни</li>
+    <li>Хороший хирург скажет если ваши ожидания нереалистичны — и объяснит почему</li>
+    <li>Должен объяснить риски — не напугать, а информировать</li>
+    <li>У вас должно быть время подумать. Никакого давления «запишитесь сегодня»</li>
+  </ul>
+  <h2>Тревожные знаки</h2>
+  <ul>
+    <li>Отказ показать дипломы и сертификаты</li>
+    <li>Обещания идеального результата без оговорок</li>
+    <li>Сильно заниженная цена без объяснений</li>
+    <li>Операция в не сертифицированном учреждении</li>
+  </ul>
+  <p style="margin-top:48px;padding-top:32px;border-top:1px solid var(--border);"><a href="index.html#booking" style="color:var(--gold);text-decoration:none;letter-spacing:0.1em;text-transform:uppercase;font-size:12px;">Записаться на консультацию →</a></p>
+</div>
+
+<!-- Article: Abdominoplasty -->
+<div id="art-abdo" class="article-content">
+  <button class="back-btn" onclick="closeArticle()">← Все статьи</button>
+  <div class="article-meta">Пластическая хирургия &nbsp;·&nbsp; 4 минуты чтения</div>
+  <h1>Абдоминопластика: кому нужна и когда без неё не обойтись</h1>
+  <p class="lead">После беременности или большого похудения живот часто не возвращается в прежнюю форму — даже при регулярных тренировках. Это не вопрос силы воли. Это физиология.</p>
+  <h2>Почему живот не уходит от тренировок</h2>
+  <p>Во время беременности мышцы живота расходятся — это называется диастаз. Кожа растягивается. После родов мышцы не всегда возвращаются на место самостоятельно, а растянутая кожа не подтягивается — это просто не в её возможностях.</p>
+  <p><strong>Никакие упражнения не уберут лишнюю кожу и не закроют диастаз.</strong> Это можно исправить только хирургически.</p>
+  <h2>Что делает абдоминопластика</h2>
+  <ul>
+    <li>Убирает излишки кожи и жировой ткани</li>
+    <li>Восстанавливает мышечный корсет при диастазе</li>
+    <li>Формирует плоский, подтянутый живот</li>
+    <li>Часто сочетается с липосакцией для лучшего контура</li>
+  </ul>
+  <h2>Кому подходит</h2>
+  <p>Женщинам после беременности или похудения, у которых есть избыток кожи на животе или диастаз мышц. Вес должен быть стабильным — операция не для похудения.</p>
+  <h2>Важно</h2>
+  <p>Если планируете ещё беременность — лучше отложить операцию. Беременность после абдоминопластики возможна, но результат операции изменится.</p>
+  <p style="margin-top:48px;padding-top:32px;border-top:1px solid var(--border);"><a href="index.html#booking" style="color:var(--gold);text-decoration:none;letter-spacing:0.1em;text-transform:uppercase;font-size:12px;">Записаться на консультацию →</a></p>
+</div>
+
+<!-- Article: Myths -->
+<div id="art-myths" class="article-content">
+  <button class="back-btn" onclick="closeArticle()">← Все статьи</button>
+  <div class="article-meta">Пластическая хирургия &nbsp;·&nbsp; 3 минуты чтения</div>
+  <h1>5 мифов о пластической хирургии, в которые пора перестать верить</h1>
+  <p class="lead">Страхи вокруг пластики часто основаны на историях десятилетней давности или случаях с непрофессиональными врачами. Разбираем по одному.</p>
+  <h2>«Сразу будет видно что что-то сделала»</h2>
+  <p>Видно плохую работу. Хорошая пластика выглядит как «что-то изменилось, но что — непонятно». Цель профессионального хирурга — естественный результат, а не «переделанный» вид.</p>
+  <h2>«Это навсегда — потом не исправишь»</h2>
+  <p>Большинство операций при необходимости поддаётся коррекции. Да, это сложнее чем первичная операция — но возможно. Именно поэтому важно выбирать хирурга тщательно.</p>
+  <h2>«После липосакции жир вернётся ещё хуже»</h2>
+  <p>Жировые клетки в зоне операции удалены — они не возвращаются. При наборе веса жир распределяется по другим зонам тела. Это другое.</p>
+  <h2>«Пластика — это для богатых»</h2>
+  <p>Цены на операции сильно варьируются. Многие клиники предлагают рассрочку. Важнее не найти самое дешёвое, а найти надёжное — разница в цене между хорошим и плохим хирургом не такая большая, как разница в последствиях.</p>
+  <h2>«После операции долго нельзя жить нормально»</h2>
+  <p>Зависит от операции. После блефаропластики многие возвращаются к работе через 5–7 дней. После липосакции — через 1–2 недели. Восстановление после более сложных операций дольше, но это не «лежать полгода».</p>
+  <p style="margin-top:48px;padding-top:32px;border-top:1px solid var(--border);"><a href="index.html#booking" style="color:var(--gold);text-decoration:none;letter-spacing:0.1em;text-transform:uppercase;font-size:12px;">Записаться на консультацию →</a></p>
+</div>
+
+<footer>
+  <span class="footer-copy">© 2025 Казилова Муминат Ахмедовна</span>
+  <a href="index.html" class="footer-link">← На главную</a>
+</footer>
+
+<script>
+function openArticle(id) {
+  document.getElementById('articlesList').style.display = 'none';
+  document.querySelectorAll('.article-content').forEach(function(el){ el.classList.remove('active'); });
+  var art = document.getElementById('art-' + id);
+  if (art) { art.classList.add('active'); window.scrollTo(0,0); }
+}
+function closeArticle() {
+  document.querySelectorAll('.article-content').forEach(function(el){ el.classList.remove('active'); });
+  document.getElementById('articlesList').style.display = 'block';
+  window.scrollTo(0,0);
+}
+</script>
+</body>
+</html>
