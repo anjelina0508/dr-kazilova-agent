@@ -268,6 +268,80 @@
     border: none;
   }
 
+
+  /* ATMOSPHERIC BACKGROUNDS */
+
+  /* Services — dark surgical aesthetic */
+  #services {
+    background-image: url('https://images.unsplash.com/photo-1631217868264-e5b90bb7e133?w=1920&q=80&auto=format&fit=crop');
+    background-size: cover;
+    background-position: center;
+    background-attachment: fixed;
+    position: relative;
+  }
+  #services::before {
+    content: '';
+    position: absolute; inset: 0;
+    background: rgba(8,8,8,0.91);
+    pointer-events: none;
+  }
+  #services > * { position: relative; z-index: 1; }
+
+  /* Reviews — dark elegant interior */
+  #reviews {
+    background-image: url('https://images.unsplash.com/photo-1540555700478-4be289fbecef?w=1920&q=80&auto=format&fit=crop');
+    background-size: cover;
+    background-position: center top;
+    background-attachment: fixed;
+    position: relative;
+  }
+  #reviews::before {
+    content: '';
+    position: absolute; inset: 0;
+    background: rgba(8,8,8,0.89);
+    pointer-events: none;
+  }
+  #reviews > * { position: relative; z-index: 1; }
+
+  /* Booking — dark luxury */
+  #booking {
+    background-image: url('https://images.unsplash.com/photo-1616394584738-fc6e612e71b9?w=1920&q=80&auto=format&fit=crop');
+    background-size: cover;
+    background-position: center;
+    background-attachment: fixed;
+    position: relative;
+  }
+  #booking::before {
+    content: '';
+    position: absolute; inset: 0;
+    background: rgba(8,8,8,0.88);
+    pointer-events: none;
+  }
+  #booking > * { position: relative; z-index: 1; }
+
+  /* Pricing — subtle texture */
+  #pricing {
+    background-image: url('https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=1920&q=80&auto=format&fit=crop');
+    background-size: cover;
+    background-position: center;
+    background-attachment: fixed;
+    position: relative;
+  }
+  #pricing::before {
+    content: '';
+    position: absolute; inset: 0;
+    background: rgba(8,8,8,0.92);
+    pointer-events: none;
+  }
+  #pricing > * { position: relative; z-index: 1; }
+
+  /* Disable fixed attachment on mobile (performance) */
+  @media (max-width: 768px) {
+    #services, #reviews, #booking, #pricing {
+      background-attachment: scroll;
+    }
+  }
+
   /* RESPONSIVE ADDITIONS */
   .pricing-grid { display:grid; grid-template-columns:1fr 1fr; gap:64px; max-width:960px; }
   .calc-grid { display:grid; grid-template-columns:1fr 1fr; gap:48px; max-width:900px; }
