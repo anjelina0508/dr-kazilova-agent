@@ -16,8 +16,8 @@
     --bg: #080808;
     --bg2: #0f0f0f;
     --bg3: #161612;
-    --text: #F0EBE0;
-    --text-muted: #8A7F70;
+    --text: #F5F0E8;
+    --text-muted: #9E9385;
     --border: rgba(201,169,110,0.2);
   }
   html { scroll-behavior: smooth; }
@@ -25,7 +25,7 @@
     background: var(--bg);
     color: var(--text);
     font-family: 'Montserrat', sans-serif;
-    font-weight: 300;
+    font-weight: 400;
     font-size: 15px;
     line-height: 1.8;
     overflow-x: hidden;
@@ -49,7 +49,7 @@
   }
   .nav-logo span { color: var(--text-muted); font-weight: 300; font-size: 13px; display: block; letter-spacing: 0.12em; text-transform: uppercase; margin-top: -2px; }
   .nav-links { display: flex; gap: 36px; list-style: none; }
-  .nav-links a { color: var(--text-muted); text-decoration: none; font-size: 12px; letter-spacing: 0.15em; text-transform: uppercase; transition: color 0.3s; }
+  .nav-links a { color: #9E9385; text-decoration: none; font-size: 12px; letter-spacing: 0.15em; text-transform: uppercase; transition: color 0.3s; }
   .nav-links a:hover { color: var(--gold); }
   .nav-cta {
     background: transparent; border: 1px solid var(--gold); color: var(--gold);
@@ -58,6 +58,21 @@
     cursor: pointer; transition: all 0.3s; text-decoration: none;
   }
   .nav-cta:hover { background: var(--gold); color: var(--bg); }
+
+
+  @keyframes pulse-gold {
+    0%   { box-shadow: 0 0 0 0 rgba(201,169,110,0.7); }
+    70%  { box-shadow: 0 0 0 10px rgba(201,169,110,0); }
+    100% { box-shadow: 0 0 0 0 rgba(201,169,110,0); }
+  }
+  .nav-cta {
+    animation: pulse-gold 2s infinite;
+  }
+  .nav-cta:hover {
+    animation: none;
+    background: var(--gold) !important;
+    color: var(--bg) !important;
+  }
 
   /* HERO */
   #hero {
@@ -110,7 +125,7 @@
   }
   h1 em { font-style: italic; color: var(--gold-light); }
   .hero-desc {
-    color: var(--text-muted); font-size: 14px;
+    color: #b0a898; font-size: 14px;
     max-width: 420px; margin-bottom: 48px; line-height: 1.9;
   }
   .hero-btns { display: flex; gap: 16px; align-items: center; }
@@ -181,7 +196,7 @@
     border: 1px solid rgba(201,169,110,0.15);
     pointer-events: none;
   }
-  .about-text p { color: var(--text-muted); margin-bottom: 20px; line-height: 1.9; }
+  .about-text p { color: var(--text); margin-bottom: 20px; line-height: 1.9; font-size: 15px; }
   .credentials { margin-top: 40px; }
   .cred-item {
     display: flex; gap: 16px; align-items: flex-start;
@@ -191,7 +206,7 @@
     font-family: 'Cormorant Garamond', serif;
     font-size: 13px; color: var(--gold); min-width: 48px; margin-top: 2px;
   }
-  .cred-text { font-size: 13px; color: var(--text-muted); line-height: 1.7; }
+  .cred-text { font-size: 13px; color: #a09488; line-height: 1.7; }
   .cred-text strong { color: var(--text); font-weight: 500; display: block; font-size: 14px; margin-bottom: 2px; }
 
   /* SERVICES */
@@ -252,6 +267,78 @@
     height: 100%;
     border: none;
   }
+
+  /* RESPONSIVE ADDITIONS */
+  .pricing-grid { display:grid; grid-template-columns:1fr 1fr; gap:64px; max-width:960px; }
+  .calc-grid { display:grid; grid-template-columns:1fr 1fr; gap:48px; max-width:900px; }
+  .nav-burger { display:none; background:none; border:none; color:var(--gold); font-size:22px; cursor:pointer; padding:4px 8px; }
+
+  @media (max-width: 768px) {
+    /* NAV */
+    .nav-burger { display:block; }
+    .nav-links {
+      display: none; position: fixed; top: 64px; left: 0; right: 0;
+      background: rgba(8,8,8,0.98); border-bottom: 1px solid var(--border);
+      flex-direction: column; padding: 24px; gap: 0;
+    }
+    .nav-links.open { display: flex; }
+    .nav-links li { border-bottom: 1px solid var(--border); }
+    .nav-links a { display: block; padding: 16px 0; font-size: 14px; letter-spacing: 0.1em; }
+
+    /* HERO */
+    h1 { font-size: 36px !important; }
+    .hero-desc { font-size: 13px; }
+    .hero-btns { flex-direction: column; align-items: flex-start; gap: 12px; }
+    .hero-stats { gap: 24px; flex-wrap: wrap; }
+    .stat-num { font-size: 36px; }
+
+    /* SECTIONS */
+    section { padding: 64px 20px; }
+    h2 { font-size: 28px !important; }
+
+    /* ABOUT */
+    .about-grid { grid-template-columns: 1fr !important; gap: 40px; }
+    .about-photo { aspect-ratio: 4/3; }
+
+    /* SERVICES */
+    .services-grid { grid-template-columns: 1fr !important; }
+
+    /* PRICING */
+    .pricing-grid { grid-template-columns: 1fr !important; gap: 0; }
+
+    /* CALCULATOR */
+    .calc-grid { grid-template-columns: 1fr !important; gap: 0; }
+
+    /* PORTFOLIO */
+    .portfolio-grid { grid-template-columns: repeat(2, 1fr) !important; }
+    .portfolio-card { min-height: 140px; padding: 24px 20px; }
+    .pc-num { font-size: 36px; }
+
+    /* PORTFOLIO TELEGRAM BLOCK */
+    #portfolio > div[style*="flex"] { flex-direction: column !important; }
+
+    /* REVIEWS */
+    .reviews-grid { grid-template-columns: 1fr !important; }
+
+    /* BOOKING */
+    .booking-grid { grid-template-columns: 1fr !important; }
+    .form-row { grid-template-columns: 1fr !important; }
+
+    /* FOOTER */
+    footer { flex-direction: column; gap: 24px; text-align: center; }
+    .footer-links { flex-direction: column; gap: 12px; }
+
+    /* CALC RESULT */
+    #calc-result { margin-top: 24px; }
+    #calc-total { font-size: 32px !important; }
+  }
+
+  @media (max-width: 400px) {
+    .portfolio-grid { grid-template-columns: 1fr !important; }
+    nav { padding: 0 16px; }
+    section { padding: 56px 16px; }
+  }
+
   @media (max-width: 900px) {
     .reels-grid { grid-template-columns: repeat(2, 1fr); }
   }
@@ -421,6 +508,7 @@
     Казилова М.А.
     <span>Пластический хирург</span>
   </div>
+  <button class="nav-burger" onclick="document.querySelector('.nav-links').classList.toggle('open')" aria-label="Меню">&#9776;</button>
   <ul class="nav-links">
     <li><a href="#about">Обо мне</a></li>
     <li><a href="#services">Услуги</a></li>
@@ -560,76 +648,30 @@
   <h2>Результаты<br>работы</h2>
   <p class="portfolio-note">Все материалы публикуются с письменного согласия пациентов. Результаты индивидуальны и зависят от особенностей организма.</p>
 
-  <div class="portfolio-grid">
-    <a class="portfolio-card" href="https://www.instagram.com/reel/DZdLoDhOm-z/" target="_blank" rel="noopener">
-      <div class="pc-num">01</div>
-      <div class="pc-tag">Липоскульптура тела</div>
-      <div class="pc-btn">Смотреть ↗</div>
-    </a>
-    <a class="portfolio-card" href="https://www.instagram.com/reel/DZnjJ7eOaNa/" target="_blank" rel="noopener">
-      <div class="pc-num">02</div>
-      <div class="pc-tag">Липосакция живота</div>
-      <div class="pc-btn">Смотреть ↗</div>
-    </a>
-    <a class="portfolio-card" href="https://www.instagram.com/reel/DZo4kFnu0Wa/" target="_blank" rel="noopener">
-      <div class="pc-num">03</div>
-      <div class="pc-tag">Абдоминопластика</div>
-      <div class="pc-btn">Смотреть ↗</div>
-    </a>
-    <a class="portfolio-card" href="https://www.instagram.com/reel/DZVTDK6swXj/" target="_blank" rel="noopener">
-      <div class="pc-num">04</div>
-      <div class="pc-tag">Липосакция боков</div>
-      <div class="pc-btn">Смотреть ↗</div>
-    </a>
-    <a class="portfolio-card" href="https://www.instagram.com/reel/DZZix25sv4R/" target="_blank" rel="noopener">
-      <div class="pc-num">05</div>
-      <div class="pc-tag">Блефаропластика</div>
-      <div class="pc-btn">Смотреть ↗</div>
-    </a>
-    <a class="portfolio-card" href="https://www.instagram.com/reel/DZF8EAdOEVI/" target="_blank" rel="noopener">
-      <div class="pc-num">06</div>
-      <div class="pc-tag">Липосакция спины</div>
-      <div class="pc-btn">Смотреть ↗</div>
-    </a>
-    <a class="portfolio-card" href="https://www.instagram.com/reel/DZDmD6nIZov/" target="_blank" rel="noopener">
-      <div class="pc-num">07</div>
-      <div class="pc-tag">Круговая липосакция</div>
-      <div class="pc-btn">Смотреть ↗</div>
-    </a>
-    <a class="portfolio-card" href="https://www.instagram.com/reel/DY9Ll8DOjbZ/" target="_blank" rel="noopener">
-      <div class="pc-num">08</div>
-      <div class="pc-tag">Липофилинг ягодиц</div>
-      <div class="pc-btn">Смотреть ↗</div>
-    </a>
-    <a class="portfolio-card" href="https://www.instagram.com/reel/DY7L3GaM4Pg/" target="_blank" rel="noopener">
-      <div class="pc-num">09</div>
-      <div class="pc-tag">Брахиопластика</div>
-      <div class="pc-btn">Смотреть ↗</div>
-    </a>
-    <a class="portfolio-card" href="https://www.instagram.com/reel/DYkdsV6qwEP/" target="_blank" rel="noopener">
-      <div class="pc-num">10</div>
-      <div class="pc-tag">Феморопластика</div>
-      <div class="pc-btn">Смотреть ↗</div>
-    </a>
-    <a class="portfolio-card" href="https://www.instagram.com/reel/DYh26_GMptZ/" target="_blank" rel="noopener">
-      <div class="pc-num">11</div>
-      <div class="pc-tag">Липосакция бёдер</div>
-      <div class="pc-btn">Смотреть ↗</div>
-    </a>
-    <a class="portfolio-card" href="https://www.instagram.com/reel/DYP_VVXupX6/" target="_blank" rel="noopener">
-      <div class="pc-num">12</div>
-      <div class="pc-tag">Комплексная операция</div>
-      <div class="pc-btn">Смотреть ↗</div>
-    </a>
+  <div class="tg-gallery">
+    <script async src="https://telegram.org/js/telegram-widget.js?22" data-telegram-post="kazilova/502" data-width="100%" data-userpic="false" data-color="C9A96E" data-dark-color="C9A96E" data-dark="1"></script>
+    <script async src="https://telegram.org/js/telegram-widget.js?22" data-telegram-post="kazilova/498" data-width="100%" data-userpic="false" data-color="C9A96E" data-dark-color="C9A96E" data-dark="1"></script>
+    <script async src="https://telegram.org/js/telegram-widget.js?22" data-telegram-post="kazilova/495" data-width="100%" data-userpic="false" data-color="C9A96E" data-dark-color="C9A96E" data-dark="1"></script>
+    <script async src="https://telegram.org/js/telegram-widget.js?22" data-telegram-post="kazilova/490" data-width="100%" data-userpic="false" data-color="C9A96E" data-dark-color="C9A96E" data-dark="1"></script>
+    <script async src="https://telegram.org/js/telegram-widget.js?22" data-telegram-post="kazilova/485" data-width="100%" data-userpic="false" data-color="C9A96E" data-dark-color="C9A96E" data-dark="1"></script>
+    <script async src="https://telegram.org/js/telegram-widget.js?22" data-telegram-post="kazilova/480" data-width="100%" data-userpic="false" data-color="C9A96E" data-dark-color="C9A96E" data-dark="1"></script>
   </div>
 
-  <div style="margin-top:64px;padding:48px;border:1px solid var(--border);background:var(--bg3);display:flex;align-items:center;justify-content:space-between;gap:32px;flex-wrap:wrap;">
-    <div>
-      <div style="font-family:'Cormorant Garamond',serif;font-size:28px;font-weight:400;margin-bottom:8px;">731 работа в Telegram-канале</div>
-      <p style="color:var(--text-muted);font-size:14px;line-height:1.8;">231 фото и 502 видео — результаты липосакции, абдоминопластики, блефаропластики и других операций</p>
-    </div>
-    <a href="https://t.me/kazilova" target="_blank" rel="noopener" class="btn-primary" style="white-space:nowrap;">Смотреть все работы ↗</a>
+  <div style="margin-top:48px;text-align:center;">
+    <a href="https://t.me/kazilova" target="_blank" rel="noopener" class="btn-primary">Смотреть все 731 работу в Telegram ↗</a>
   </div>
+
+<style>
+  .tg-gallery {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 24px;
+    align-items: start;
+  }
+  .tg-gallery > * { min-width: 0; }
+  @media (max-width: 768px) { .tg-gallery { grid-template-columns: 1fr; } }
+</style>
+
 </section>
 
 <style>
@@ -684,7 +726,7 @@
 <section id="pricing" style="background:var(--bg2);">
   <div class="section-label">Прайс-лист</div>
   <h2>Стоимость<br>процедур</h2>
-  <div style="display:grid;grid-template-columns:1fr 1fr;gap:64px;max-width:960px;">
+  <div class="pricing-grid">
     <div>
       <div style="font-family:'Cormorant Garamond',serif;font-size:13px;letter-spacing:0.2em;text-transform:uppercase;color:var(--gold);margin-bottom:24px;">Лицо</div>
       <div class="price-item"><span>Блефаропластика верхняя</span><span>45 000 ₽</span></div>
@@ -728,7 +770,7 @@
   <div class="section-label">Калькулятор</div>
   <h2>Рассчитать<br>стоимость</h2>
   <p style="color:var(--text-muted);font-size:14px;max-width:480px;margin-bottom:48px;line-height:1.9;">Выберите процедуры — получите предварительную стоимость. Точная цена определяется на консультации.</p>
-  <div style="display:grid;grid-template-columns:1fr 1fr;gap:48px;max-width:900px;">
+  <div class="calc-grid">
     <div>
       <div class="calc-group-title">Липосакция</div>
       <label class="calc-item"><input type="checkbox" data-min="120000" data-max="200000" onchange="calcTotal()"> Живот</label>
