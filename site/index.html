@@ -648,31 +648,175 @@
   <h2>Результаты<br>работы</h2>
   <p class="portfolio-note">Все материалы публикуются с письменного согласия пациентов. Результаты индивидуальны и зависят от особенностей организма.</p>
 
-  <div class="tg-gallery">
-    <script async src="https://telegram.org/js/telegram-widget.js?22" data-telegram-post="kazilova/502" data-width="100%" data-userpic="false" data-color="C9A96E" data-dark-color="C9A96E" data-dark="1"></script>
-    <script async src="https://telegram.org/js/telegram-widget.js?22" data-telegram-post="kazilova/498" data-width="100%" data-userpic="false" data-color="C9A96E" data-dark-color="C9A96E" data-dark="1"></script>
-    <script async src="https://telegram.org/js/telegram-widget.js?22" data-telegram-post="kazilova/495" data-width="100%" data-userpic="false" data-color="C9A96E" data-dark-color="C9A96E" data-dark="1"></script>
-    <script async src="https://telegram.org/js/telegram-widget.js?22" data-telegram-post="kazilova/490" data-width="100%" data-userpic="false" data-color="C9A96E" data-dark-color="C9A96E" data-dark="1"></script>
-    <script async src="https://telegram.org/js/telegram-widget.js?22" data-telegram-post="kazilova/485" data-width="100%" data-userpic="false" data-color="C9A96E" data-dark-color="C9A96E" data-dark="1"></script>
-    <script async src="https://telegram.org/js/telegram-widget.js?22" data-telegram-post="kazilova/480" data-width="100%" data-userpic="false" data-color="C9A96E" data-dark-color="C9A96E" data-dark="1"></script>
+  <!-- Filter buttons -->
+  <div class="gallery-filters">
+    <button class="gf-btn active" onclick="filterGallery('all', this)">Все работы</button>
+    <button class="gf-btn" onclick="filterGallery('lipo', this)">Липосакция</button>
+    <button class="gf-btn" onclick="filterGallery('abdo', this)">Абдоминопластика</button>
+    <button class="gf-btn" onclick="filterGallery('blef', this)">Блефаропластика</button>
+    <button class="gf-btn" onclick="filterGallery('other', this)">Другое</button>
   </div>
 
-  <div style="margin-top:48px;text-align:center;">
-    <a href="https://t.me/kazilova" target="_blank" rel="noopener" class="btn-primary">Смотреть все 731 работу в Telegram ↗</a>
+  <!-- Gallery grid -->
+  <div class="gallery-grid" id="galleryGrid">
+
+    <!-- Liposuction -->
+    <a class="gallery-item" data-cat="lipo" data-glightbox="description: Липосакция живота — результат через 3 месяца" href="img/gallery/lipo-01.jpg">
+      <img src="img/gallery/lipo-01.jpg" alt="Липосакция живота" loading="lazy">
+      <div class="gi-overlay"><span>Липосакция живота</span></div>
+    </a>
+    <a class="gallery-item" data-cat="lipo" data-glightbox="description: Липосакция боков" href="img/gallery/lipo-02.jpg">
+      <img src="img/gallery/lipo-02.jpg" alt="Липосакция боков" loading="lazy">
+      <div class="gi-overlay"><span>Липосакция боков</span></div>
+    </a>
+    <a class="gallery-item" data-cat="lipo" data-glightbox="description: Круговая липосакция" href="img/gallery/lipo-03.jpg">
+      <img src="img/gallery/lipo-03.jpg" alt="Круговая липосакция" loading="lazy">
+      <div class="gi-overlay"><span>Круговая липосакция</span></div>
+    </a>
+    <a class="gallery-item" data-cat="lipo" data-glightbox="description: Липосакция спины" href="img/gallery/lipo-04.jpg">
+      <img src="img/gallery/lipo-04.jpg" alt="Липосакция спины" loading="lazy">
+      <div class="gi-overlay"><span>Липосакция спины</span></div>
+    </a>
+    <a class="gallery-item" data-cat="lipo" data-glightbox="description: Липосакция бёдер" href="img/gallery/lipo-05.jpg">
+      <img src="img/gallery/lipo-05.jpg" alt="Липосакция бёдер" loading="lazy">
+      <div class="gi-overlay"><span>Липосакция бёдер</span></div>
+    </a>
+    <a class="gallery-item" data-cat="lipo" data-glightbox="description: Липосакция рук" href="img/gallery/lipo-06.jpg">
+      <img src="img/gallery/lipo-06.jpg" alt="Липосакция рук" loading="lazy">
+      <div class="gi-overlay"><span>Липосакция рук</span></div>
+    </a>
+
+    <!-- Abdominoplasty -->
+    <a class="gallery-item" data-cat="abdo" data-glightbox="description: Абдоминопластика — до и после" href="img/gallery/abdo-01.jpg">
+      <img src="img/gallery/abdo-01.jpg" alt="Абдоминопластика" loading="lazy">
+      <div class="gi-overlay"><span>Абдоминопластика</span></div>
+    </a>
+    <a class="gallery-item" data-cat="abdo" data-glightbox="description: Абдоминопластика после родов" href="img/gallery/abdo-02.jpg">
+      <img src="img/gallery/abdo-02.jpg" alt="Абдоминопластика после родов" loading="lazy">
+      <div class="gi-overlay"><span>Абдоминопластика</span></div>
+    </a>
+    <a class="gallery-item" data-cat="abdo" data-glightbox="description: Абдоминопластика с липосакцией" href="img/gallery/abdo-03.jpg">
+      <img src="img/gallery/abdo-03.jpg" alt="Абдоминопластика + липосакция" loading="lazy">
+      <div class="gi-overlay"><span>Абдоминопластика + липосакция</span></div>
+    </a>
+
+    <!-- Blepharoplasty -->
+    <a class="gallery-item" data-cat="blef" data-glightbox="description: Блефаропластика верхняя" href="img/gallery/blef-01.jpg">
+      <img src="img/gallery/blef-01.jpg" alt="Блефаропластика" loading="lazy">
+      <div class="gi-overlay"><span>Блефаропластика верхняя</span></div>
+    </a>
+    <a class="gallery-item" data-cat="blef" data-glightbox="description: Блефаропластика нижняя" href="img/gallery/blef-02.jpg">
+      <img src="img/gallery/blef-02.jpg" alt="Блефаропластика нижняя" loading="lazy">
+      <div class="gi-overlay"><span>Блефаропластика нижняя</span></div>
+    </a>
+
+    <!-- Other -->
+    <a class="gallery-item" data-cat="other" data-glightbox="description: Брахиопластика" href="img/gallery/other-01.jpg">
+      <img src="img/gallery/other-01.jpg" alt="Брахиопластика" loading="lazy">
+      <div class="gi-overlay"><span>Брахиопластика</span></div>
+    </a>
+    <a class="gallery-item" data-cat="other" data-glightbox="description: Феморопластика" href="img/gallery/other-02.jpg">
+      <img src="img/gallery/other-02.jpg" alt="Феморопластика" loading="lazy">
+      <div class="gi-overlay"><span>Феморопластика</span></div>
+    </a>
+    <a class="gallery-item" data-cat="other" data-glightbox="description: Липофилинг ягодиц" href="img/gallery/other-03.jpg">
+      <img src="img/gallery/other-03.jpg" alt="Липофилинг ягодиц" loading="lazy">
+      <div class="gi-overlay"><span>Липофилинг ягодиц</span></div>
+    </a>
   </div>
+
+  <div style="margin-top:48px;text-align:center;display:flex;gap:16px;justify-content:center;flex-wrap:wrap;">
+    <a href="https://t.me/kazilova" target="_blank" rel="noopener" class="btn-primary">Telegram — 731 работа ↗</a>
+    <a href="https://www.instagram.com/dr_kazilovaa/" target="_blank" rel="noopener" class="btn-ghost">Instagram @dr_kazilovaa ↗</a>
+  </div>
+</section>
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/glightbox/dist/css/glightbox.min.css">
+<script src="https://cdn.jsdelivr.net/npm/glightbox/dist/js/glightbox.min.js"></script>
 
 <style>
-  .tg-gallery {
+  .gallery-filters {
+    display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 32px;
+  }
+  .gf-btn {
+    background: transparent; border: 1px solid var(--border);
+    color: var(--text-muted); padding: 8px 20px;
+    font-family: 'Montserrat', sans-serif; font-size: 11px;
+    letter-spacing: 0.15em; text-transform: uppercase;
+    cursor: pointer; transition: all 0.25s;
+  }
+  .gf-btn:hover, .gf-btn.active {
+    background: var(--gold); border-color: var(--gold);
+    color: var(--bg);
+  }
+  .gallery-grid {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
-    gap: 24px;
-    align-items: start;
+    gap: 3px;
   }
-  .tg-gallery > * { min-width: 0; }
-  @media (max-width: 768px) { .tg-gallery { grid-template-columns: 1fr; } }
+  .gallery-item {
+    position: relative; overflow: hidden;
+    aspect-ratio: 3/4; display: block;
+    background: var(--bg3);
+  }
+  .gallery-item img {
+    width: 100%; height: 100%; object-fit: cover;
+    filter: brightness(0.9) contrast(1.05);
+    transition: filter 0.4s, transform 0.4s;
+    pointer-events: none;
+  }
+  .gallery-item:hover img {
+    filter: brightness(1) contrast(1.1);
+    transform: scale(1.03);
+  }
+  .gi-overlay {
+    position: absolute; inset: 0;
+    background: linear-gradient(to top, rgba(8,8,8,0.75) 0%, transparent 50%);
+    display: flex; align-items: flex-end; padding: 16px;
+    opacity: 0; transition: opacity 0.3s;
+  }
+  .gallery-item:hover .gi-overlay { opacity: 1; }
+  .gi-overlay span {
+    font-size: 12px; letter-spacing: 0.12em; text-transform: uppercase;
+    color: var(--gold-light);
+  }
+  .gallery-item.hidden { display: none; }
+  @media (max-width: 768px) {
+    .gallery-grid { grid-template-columns: repeat(2, 1fr); }
+    .gallery-filters { gap: 6px; }
+    .gf-btn { font-size: 10px; padding: 6px 14px; }
+  }
+  @media (max-width: 400px) {
+    .gallery-grid { grid-template-columns: 1fr; }
+  }
+
+  /* GLightbox dark theme override */
+  .glightbox-clean .gslide-description { background: var(--bg3); }
+  .glightbox-clean .gdesc-inner { color: var(--text-muted); font-family: 'Montserrat',sans-serif; font-size: 13px; letter-spacing: 0.08em; }
+  .gnext, .gprev { background: rgba(201,169,110,0.15); }
+  .gnext svg, .gprev svg { color: var(--gold); }
 </style>
 
-</section>
+<script>
+// Filter gallery
+function filterGallery(cat, btn) {
+  document.querySelectorAll('.gf-btn').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+  document.querySelectorAll('.gallery-item').forEach(item => {
+    if (cat === 'all' || item.dataset.cat === cat) {
+      item.classList.remove('hidden');
+    } else {
+      item.classList.add('hidden');
+    }
+  });
+}
+
+// Init lightbox
+document.addEventListener('DOMContentLoaded', function() {
+  GLightbox({ touchNavigation: true, loop: true, autoplayVideos: false });
+});
+</script>
+
 
 <style>
   .portfolio-grid {
