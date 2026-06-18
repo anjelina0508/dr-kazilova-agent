@@ -646,31 +646,40 @@
 <section id="portfolio" style="background:var(--bg);">
   <div class="section-label">Портфолио</div>
   <h2>Результаты<br>работы</h2>
-  <p class="portfolio-note">Реальные результаты операций — публикуются с согласия пациентов. Без регистрации, прямо из Telegram-канала доктора.</p>
+  <p class="portfolio-note">Реальные результаты операций — публикуются с согласия пациентов. Без регистрации.</p>
 
-  <div class="tg-feed">
-    <div class="tg-col">
-      <div class="tg-wrap">
+  <div class="port-slider-wrap">
+    <button class="port-arrow port-prev" onclick="portSlide(-1)">&#8592;</button>
+    <button class="port-arrow port-next" onclick="portSlide(1)">&#8594;</button>
+
+    <div class="port-track" id="portTrack">
+      <div class="port-slide">
         <script async src="https://telegram.org/js/telegram-widget.js?22" data-telegram-post="kazilova/1045" data-width="100%" data-userpic="false" data-color="C9A96E" data-dark-color="C9A96E" data-dark="1"></script>
       </div>
-      <div class="tg-wrap">
-        <script async src="https://telegram.org/js/telegram-widget.js?22" data-telegram-post="kazilova/1042" data-width="100%" data-userpic="false" data-color="C9A96E" data-dark-color="C9A96E" data-dark="1"></script>
-      </div>
-      <div class="tg-wrap">
-        <script async src="https://telegram.org/js/telegram-widget.js?22" data-telegram-post="kazilova/1038" data-width="100%" data-userpic="false" data-color="C9A96E" data-dark-color="C9A96E" data-dark="1"></script>
-      </div>
-    </div>
-    <div class="tg-col">
-      <div class="tg-wrap">
+      <div class="port-slide">
         <script async src="https://telegram.org/js/telegram-widget.js?22" data-telegram-post="kazilova/1044" data-width="100%" data-userpic="false" data-color="C9A96E" data-dark-color="C9A96E" data-dark="1"></script>
       </div>
-      <div class="tg-wrap">
+      <div class="port-slide">
+        <script async src="https://telegram.org/js/telegram-widget.js?22" data-telegram-post="kazilova/1042" data-width="100%" data-userpic="false" data-color="C9A96E" data-dark-color="C9A96E" data-dark="1"></script>
+      </div>
+      <div class="port-slide">
         <script async src="https://telegram.org/js/telegram-widget.js?22" data-telegram-post="kazilova/1041" data-width="100%" data-userpic="false" data-color="C9A96E" data-dark-color="C9A96E" data-dark="1"></script>
       </div>
-      <div class="tg-wrap">
+      <div class="port-slide">
         <script async src="https://telegram.org/js/telegram-widget.js?22" data-telegram-post="kazilova/1040" data-width="100%" data-userpic="false" data-color="C9A96E" data-dark-color="C9A96E" data-dark="1"></script>
       </div>
+      <div class="port-slide">
+        <script async src="https://telegram.org/js/telegram-widget.js?22" data-telegram-post="kazilova/1038" data-width="100%" data-userpic="false" data-color="C9A96E" data-dark-color="C9A96E" data-dark="1"></script>
+      </div>
+      <div class="port-slide">
+        <script async src="https://telegram.org/js/telegram-widget.js?22" data-telegram-post="kazilova/1032" data-width="100%" data-userpic="false" data-color="C9A96E" data-dark-color="C9A96E" data-dark="1"></script>
+      </div>
+      <div class="port-slide">
+        <script async src="https://telegram.org/js/telegram-widget.js?22" data-telegram-post="kazilova/1028" data-width="100%" data-userpic="false" data-color="C9A96E" data-dark-color="C9A96E" data-dark="1"></script>
+      </div>
     </div>
+
+    <div class="port-dots" id="portDots"></div>
   </div>
 
   <div style="margin-top:48px;text-align:center;display:flex;gap:16px;justify-content:center;flex-wrap:wrap;">
@@ -678,6 +687,98 @@
     <a href="https://www.instagram.com/dr_kazilovaa/" target="_blank" rel="noopener" class="btn-ghost">Instagram ↗</a>
   </div>
 </section>
+
+<style>
+  .port-slider-wrap {
+    position: relative;
+    overflow: hidden;
+  }
+  .port-track {
+    display: flex;
+    transition: transform 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  }
+  .port-slide {
+    min-width: calc(33.333% - 16px);
+    margin-right: 24px;
+    background: var(--bg3);
+    border: 1px solid var(--border);
+    overflow: hidden;
+    flex-shrink: 0;
+  }
+  .port-arrow {
+    position: absolute; top: 50%; z-index: 10;
+    transform: translateY(-50%);
+    background: var(--bg3); border: 1px solid var(--gold);
+    color: var(--gold); width: 48px; height: 48px;
+    font-size: 18px; cursor: pointer;
+    transition: all 0.25s; display: flex;
+    align-items: center; justify-content: center;
+  }
+  .port-arrow:hover { background: var(--gold); color: var(--bg); }
+  .port-prev { left: 0; }
+  .port-next { right: 0; }
+  .port-dots {
+    display: flex; justify-content: center; gap: 8px; margin-top: 24px;
+  }
+  .port-dot {
+    width: 6px; height: 6px; background: var(--border);
+    cursor: pointer; transition: background 0.3s;
+    border: none; padding: 0;
+  }
+  .port-dot.active { background: var(--gold); width: 24px; }
+  @media (max-width: 900px) {
+    .port-slide { min-width: calc(50% - 12px); }
+  }
+  @media (max-width: 600px) {
+    .port-slide { min-width: calc(100% - 0px); margin-right: 0; }
+    .port-track { gap: 0; }
+    .port-arrow { width: 36px; height: 36px; font-size: 14px; }
+  }
+</style>
+
+<script>
+(function(){
+  var track = document.getElementById('portTrack');
+  var dotsEl = document.getElementById('portDots');
+  if (!track) return;
+  var slides = track.querySelectorAll('.port-slide');
+  var current = 0;
+  var perView = window.innerWidth > 900 ? 3 : window.innerWidth > 600 ? 2 : 1;
+  var total = slides.length;
+  var maxIdx = total - perView;
+
+  // Create dots
+  for (var i = 0; i <= maxIdx; i++) {
+    var dot = document.createElement('button');
+    dot.className = 'port-dot' + (i === 0 ? ' active' : '');
+    dot.onclick = (function(idx){ return function(){ goTo(idx); }; })(i);
+    dotsEl.appendChild(dot);
+  }
+
+  function getSlideWidth() {
+    return slides[0] ? slides[0].offsetWidth + 24 : 0;
+  }
+
+  function goTo(idx) {
+    current = Math.max(0, Math.min(idx, maxIdx));
+    track.style.transform = 'translateX(-' + (current * getSlideWidth()) + 'px)';
+    dotsEl.querySelectorAll('.port-dot').forEach(function(d, i){ d.classList.toggle('active', i === current); });
+  }
+
+  window.portSlide = function(dir) { goTo(current + dir); };
+
+  // Autoplay
+  var timer = setInterval(function(){
+    goTo(current >= maxIdx ? 0 : current + 1);
+  }, 5000);
+
+  track.addEventListener('mouseenter', function(){ clearInterval(timer); });
+  track.addEventListener('mouseleave', function(){
+    timer = setInterval(function(){ goTo(current >= maxIdx ? 0 : current + 1); }, 5000);
+  });
+})();
+</script>
+
 
 <style>
   .tg-feed {
