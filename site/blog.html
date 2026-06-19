@@ -338,18 +338,15 @@ function closeArticle() {
 </script>
 
 <script>
-// Scroll reveal
+// Scroll reveal for blog — only visible card elements
 (function() {
-  var tags = ['h1','h2','h3','p','a.article-card','a.blog-preview-card',
-    '.article-read','.step-panel > *','.zone-card','.result-card',
-    '.article-content h2','.article-content p','.article-content ul',
-    '.fg','.anest-row','.progress-step','.btn-wa','.btn-secondary',
-    '.article-num','.article-title','.article-excerpt'];
+  // Don't touch article-content internals (they start hidden via display:none)
+  var tags = ['.article-card', '.article-num', '.article-title', '.article-excerpt'];
   tags.forEach(function(sel){
     document.querySelectorAll(sel).forEach(function(el,i){
       if(!el.classList.contains('reveal')){
         el.classList.add('reveal');
-        el.style.transitionDelay = (i % 5) * 0.08 + 's';
+        el.style.transitionDelay = (i % 3) * 0.1 + 's';
       }
     });
   });
@@ -357,12 +354,20 @@ function closeArticle() {
     entries.forEach(function(e){
       if(e.isIntersecting){ e.target.classList.add('visible'); obs.unobserve(e.target); }
     });
-  },{threshold:0.1,rootMargin:'0px 0px -30px 0px'});
+  },{threshold:0, rootMargin:'0px 0px 0px 0px'});
   document.querySelectorAll('.reveal').forEach(function(el){ obs.observe(el); });
-  // Pulse all gold buttons
-  document.querySelectorAll('.btn-next,.btn-wa,.article-read').forEach(function(el){
-    el.style.animation='pulse-gold 2s infinite';
-  });
+  // Make article content visible when opened (override reveal)
+  var origOpen = window.openArticle;
+  window.openArticle = function(id) {
+    if(origOpen) origOpen(id);
+    setTimeout(function(){
+      document.querySelectorAll('.article-content.active *').forEach(function(el){
+        el.classList.add('visible');
+        el.style.opacity='1';
+        el.style.transform='none';
+      });
+    }, 50);
+  };
 })();
 </script>
 
