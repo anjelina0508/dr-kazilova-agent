@@ -659,42 +659,94 @@
   }
 
 
-  .port-gallery-grid {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 2px;
-    background: rgba(201,169,110,0.15);
-  }
-  .port-item {
+  
+
+  /* Portfolio Slider */
+  .port-slider-new {
     position: relative;
+    width: 100%;
+    max-width: 600px;
+    margin: 0 auto;
     aspect-ratio: 3/4;
     overflow: hidden;
-    background: var(--bg3);
+    background: #0a0a0a;
   }
-  .port-item img {
+  .port-slide {
+    position: absolute;
+    inset: 0;
+    opacity: 0;
+    transform: translateX(60px);
+    transition: opacity 0.7s cubic-bezier(.4,0,.2,1), transform 0.7s cubic-bezier(.4,0,.2,1);
+    pointer-events: none;
+  }
+  .port-slide.active {
+    opacity: 1;
+    transform: translateX(0);
+    pointer-events: auto;
+  }
+  .port-slide.out-left {
+    opacity: 0;
+    transform: translateX(-60px);
+  }
+  .port-slide img {
     width: 100%; height: 100%;
     object-fit: cover;
     object-position: center top;
-    transition: transform 0.6s ease;
     display: block;
   }
-  .port-item:hover img { transform: scale(1.04); }
-  .port-item-overlay {
-    position: absolute; inset: 0;
-    background: linear-gradient(to top, rgba(8,8,8,0.7) 0%, transparent 50%);
-    display: flex; align-items: flex-end; padding: 20px;
-    opacity: 0; transition: opacity 0.3s;
+  .port-slider-nav {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 16px;
+    pointer-events: none;
   }
-  .port-item:hover .port-item-overlay { opacity: 1; }
-  .port-item-overlay span {
-    font-size: 11px; letter-spacing: 0.15em; text-transform: uppercase;
+  .port-nav-btn {
+    pointer-events: auto;
+    width: 44px; height: 44px;
+    background: rgba(8,8,8,0.55);
+    border: 1px solid var(--gold);
     color: var(--gold);
+    font-size: 18px;
+    cursor: pointer;
+    display: flex; align-items: center; justify-content: center;
+    transition: background 0.3s;
+    backdrop-filter: blur(4px);
+    flex-shrink: 0;
   }
-  @media (max-width: 768px) {
-    .port-gallery-grid { grid-template-columns: repeat(2, 1fr); }
+  .port-nav-btn:hover { background: rgba(212,168,67,0.15); }
+  .port-counter {
+    position: absolute;
+    top: 16px; right: 20px;
+    font-size: 10px; letter-spacing: 0.2em;
+    color: var(--gold); opacity: 0.7;
+    pointer-events: none;
   }
-  @media (max-width: 480px) {
-    .port-gallery-grid { grid-template-columns: 1fr; }
+  .port-dots {
+    display: flex;
+    justify-content: center;
+    gap: 8px;
+    margin-top: 20px;
+  }
+  .port-dot {
+    width: 20px; height: 2px;
+    background: rgba(212,168,67,0.25);
+    border: none; cursor: pointer;
+    transition: background 0.3s, width 0.3s;
+    padding: 0;
+  }
+  .port-dot.active {
+    background: var(--gold);
+    width: 36px;
+  }
+  .port-slider-wrap-new {
+    padding: 0 24px;
+  }
+  @media(max-width: 600px) {
+    .port-slider-new { max-width: 100%; }
+    .port-slider-wrap-new { padding: 0; }
   }
 </style>
 </head>
@@ -846,62 +898,86 @@
 
   <div class="section-label">Портфолио</div>
   <h2 style="margin-bottom:16px;">Доктор<br>за работой</h2>
-  <p class="portfolio-note" style="margin-bottom:48px;">Реальные фото из операционной и клиники</p>
+  <p class="portfolio-note" style="margin-bottom:40px;">Реальные фото из операционной и клиники</p>
 
-  <div class="port-gallery-grid">
-      <div class="port-item">
-        <img src="img/gallery/IMG_2876_1.jpg" alt="Консультация" loading="lazy">
-        <div class="port-item-overlay"><span>Консультация</span></div>
+  <div class="port-slider-wrap-new">
+    <div class="port-slider-new" id="portSlider">
+      
+        <div class="port-slide active" data-index="0">
+          <img src="img/gallery/IMG_2876_1.jpg" alt="Dr. Kazilova" loading="eager">
+        </div>
+        <div class="port-slide" data-index="1">
+          <img src="img/gallery/IMG_2876_2.jpg" alt="Dr. Kazilova" loading="eager">
+        </div>
+        <div class="port-slide" data-index="2">
+          <img src="img/gallery/IMG_2876_3.jpg" alt="Dr. Kazilova" loading="lazy">
+        </div>
+        <div class="port-slide" data-index="3">
+          <img src="img/gallery/IMG_3776_1.jpg" alt="Dr. Kazilova" loading="lazy">
+        </div>
+        <div class="port-slide" data-index="4">
+          <img src="img/gallery/IMG_3776_2.jpg" alt="Dr. Kazilova" loading="lazy">
+        </div>
+        <div class="port-slide" data-index="5">
+          <img src="img/gallery/IMG_3776_3.jpg" alt="Dr. Kazilova" loading="lazy">
+        </div>
+        <div class="port-slide" data-index="6">
+          <img src="img/gallery/IMG_3778_1.jpg" alt="Dr. Kazilova" loading="lazy">
+        </div>
+        <div class="port-slide" data-index="7">
+          <img src="img/gallery/IMG_3778_2.jpg" alt="Dr. Kazilova" loading="lazy">
+        </div>
+        <div class="port-slide" data-index="8">
+          <img src="img/gallery/IMG_3778_3.jpg" alt="Dr. Kazilova" loading="lazy">
+        </div>
+        <div class="port-slide" data-index="9">
+          <img src="img/gallery/IMG_3901_1.jpg" alt="Dr. Kazilova" loading="lazy">
+        </div>
+        <div class="port-slide" data-index="10">
+          <img src="img/gallery/IMG_3901_2.jpg" alt="Dr. Kazilova" loading="lazy">
+        </div>
+        <div class="port-slide" data-index="11">
+          <img src="img/gallery/IMG_3901_3.jpg" alt="Dr. Kazilova" loading="lazy">
+        </div>
+        <div class="port-slide" data-index="12">
+          <img src="img/gallery/photo_2026-06-19_22-43-00.jpg" alt="Dr. Kazilova" loading="lazy">
+        </div>
+        <div class="port-slide" data-index="13">
+          <img src="img/gallery/photo_2026-06-19_22-45-11.jpg" alt="Dr. Kazilova" loading="lazy">
+        </div>
+        <div class="port-slide" data-index="14">
+          <img src="img/gallery/photo_2026-06-19_22-47-57.jpg" alt="Dr. Kazilova" loading="lazy">
+        </div>
+        <div class="port-slide" data-index="15">
+          <img src="img/gallery/photo_2026-06-19_22-48-12.jpg" alt="Dr. Kazilova" loading="lazy">
+        </div>
+        <div class="port-slide" data-index="16">
+          <img src="img/gallery/photo_2026-06-19_22-48-22.jpg" alt="Dr. Kazilova" loading="lazy">
+        </div>
+        <div class="port-slide" data-index="17">
+          <img src="img/gallery/photo_2026-06-19_22-48-42.jpg" alt="Dr. Kazilova" loading="lazy">
+        </div>
+        <div class="port-slide" data-index="18">
+          <img src="img/gallery/photo_2026-06-19_22-48-51.jpg" alt="Dr. Kazilova" loading="lazy">
+        </div>
+        <div class="port-slide" data-index="19">
+          <img src="img/gallery/photo_2026-06-19_22-49-01.jpg" alt="Dr. Kazilova" loading="lazy">
+        </div>
+        <div class="port-slide" data-index="20">
+          <img src="img/gallery/photo_2026-06-19_22-49-15.jpg" alt="Dr. Kazilova" loading="lazy">
+        </div>
+      <div class="port-slider-nav">
+        <button class="port-nav-btn" id="portPrev">&#8592;</button>
+        <button class="port-nav-btn" id="portNext">&#8594;</button>
       </div>
-      <div class="port-item">
-        <img src="img/gallery/IMG_2876_2.jpg" alt="Консультация" loading="lazy">
-        <div class="port-item-overlay"><span>Консультация</span></div>
-      </div>
-      <div class="port-item">
-        <img src="img/gallery/IMG_2876_3.jpg" alt="Консультация" loading="lazy">
-        <div class="port-item-overlay"><span>Консультация</span></div>
-      </div>
-      <div class="port-item">
-        <img src="img/gallery/IMG_3776_1.jpg" alt="Подготовка к операции" loading="lazy">
-        <div class="port-item-overlay"><span>Подготовка к операции</span></div>
-      </div>
-      <div class="port-item">
-        <img src="img/gallery/IMG_3776_2.jpg" alt="Подготовка к операции" loading="lazy">
-        <div class="port-item-overlay"><span>Подготовка к операции</span></div>
-      </div>
-      <div class="port-item">
-        <img src="img/gallery/IMG_3776_3.jpg" alt="Подготовка к операции" loading="lazy">
-        <div class="port-item-overlay"><span>Подготовка к операции</span></div>
-      </div>
-      <div class="port-item">
-        <img src="img/gallery/IMG_3778_1.jpg" alt="В операционной" loading="lazy">
-        <div class="port-item-overlay"><span>В операционной</span></div>
-      </div>
-      <div class="port-item">
-        <img src="img/gallery/IMG_3778_2.jpg" alt="В операционной" loading="lazy">
-        <div class="port-item-overlay"><span>В операционной</span></div>
-      </div>
-      <div class="port-item">
-        <img src="img/gallery/IMG_3778_3.jpg" alt="В операционной" loading="lazy">
-        <div class="port-item-overlay"><span>В операционной</span></div>
-      </div>
-      <div class="port-item">
-        <img src="img/gallery/IMG_3901_1.jpg" alt="Доктор Казилова" loading="lazy">
-        <div class="port-item-overlay"><span>Доктор Казилова</span></div>
-      </div>
-      <div class="port-item">
-        <img src="img/gallery/IMG_3901_2.jpg" alt="Доктор Казилова" loading="lazy">
-        <div class="port-item-overlay"><span>Доктор Казилова</span></div>
-      </div>
-      <div class="port-item">
-        <img src="img/gallery/IMG_3901_3.jpg" alt="Доктор Казилова" loading="lazy">
-        <div class="port-item-overlay"><span>Доктор Казилова</span></div>
-      </div>
+      <div class="port-counter" id="portCounter">1 / 21</div>
+    </div>
+    <div class="port-dots" id="portDots"><button class="port-dot active" data-idx="0" aria-label="Фото 1"></button><button class="port-dot" data-idx="1" aria-label="Фото 2"></button><button class="port-dot" data-idx="2" aria-label="Фото 3"></button><button class="port-dot" data-idx="3" aria-label="Фото 4"></button><button class="port-dot" data-idx="4" aria-label="Фото 5"></button><button class="port-dot" data-idx="5" aria-label="Фото 6"></button><button class="port-dot" data-idx="6" aria-label="Фото 7"></button><button class="port-dot" data-idx="7" aria-label="Фото 8"></button><button class="port-dot" data-idx="8" aria-label="Фото 9"></button><button class="port-dot" data-idx="9" aria-label="Фото 10"></button><button class="port-dot" data-idx="10" aria-label="Фото 11"></button><button class="port-dot" data-idx="11" aria-label="Фото 12"></button><button class="port-dot" data-idx="12" aria-label="Фото 13"></button><button class="port-dot" data-idx="13" aria-label="Фото 14"></button><button class="port-dot" data-idx="14" aria-label="Фото 15"></button><button class="port-dot" data-idx="15" aria-label="Фото 16"></button><button class="port-dot" data-idx="16" aria-label="Фото 17"></button><button class="port-dot" data-idx="17" aria-label="Фото 18"></button><button class="port-dot" data-idx="18" aria-label="Фото 19"></button><button class="port-dot" data-idx="19" aria-label="Фото 20"></button><button class="port-dot" data-idx="20" aria-label="Фото 21"></button></div>
   </div>
+
   <div style="text-align:center;margin-top:40px;">
     <a href="https://t.me/kazilova" target="_blank" style="display:inline-block;border:1px solid var(--gold);color:var(--gold);padding:14px 36px;font-size:11px;letter-spacing:0.2em;text-transform:uppercase;text-decoration:none;">Результаты операций в Telegram →</a>
   </div>
-
 </section>
 
 <style>
@@ -1554,5 +1630,52 @@ window.addEventListener('scroll', function() {
   </div>
 </section>
 
+<script>
+  // Portfolio slider
+  (function() {
+    const slides = document.querySelectorAll('.port-slide');
+    const dots = document.querySelectorAll('.port-dot');
+    const counter = document.getElementById('portCounter');
+    let current = 0;
+    let timer;
+
+    function goTo(next, dir) {
+      if (next === current) return;
+      slides[current].classList.add(dir === 1 ? 'out-left' : '');
+      slides[current].classList.remove('active');
+      setTimeout(() => slides[current < slides.length ? current : 0].classList.remove('out-left'), 700);
+      current = (next + slides.length) % slides.length;
+      slides[current].style.transform = dir === 1 ? 'translateX(60px)' : 'translateX(-60px)';
+      requestAnimationFrame(() => {
+        requestAnimationFrame(() => {
+          slides[current].classList.add('active');
+          slides[current].style.transform = '';
+        });
+      });
+      dots.forEach((d,i) => d.classList.toggle('active', i === current));
+      counter.textContent = (current+1) + ' / ' + slides.length;
+      resetTimer();
+    }
+
+    function resetTimer() {
+      clearInterval(timer);
+      timer = setInterval(() => goTo(current + 1, 1), 4000);
+    }
+
+    document.getElementById('portNext').onclick = () => goTo(current + 1, 1);
+    document.getElementById('portPrev').onclick = () => goTo(current - 1, -1);
+    dots.forEach((d, i) => d.onclick = () => goTo(i, i > current ? 1 : -1));
+
+    // Swipe
+    let touchX = 0;
+    const slider = document.getElementById('portSlider');
+    slider.addEventListener('touchstart', e => touchX = e.touches[0].clientX, {passive:true});
+    slider.addEventListener('touchend', e => {
+      const dx = e.changedTouches[0].clientX - touchX;
+      if (Math.abs(dx) > 40) goTo(current + (dx < 0 ? 1 : -1), dx < 0 ? 1 : -1);
+    }, {passive:true});
+
+    resetTimer();
+  })();</script>
 </body>
 </html>
