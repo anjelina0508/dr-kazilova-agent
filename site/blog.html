@@ -338,35 +338,43 @@ function closeArticle() {
 </script>
 
 <script>
-// Scroll reveal for blog — only visible card elements
 (function() {
-  // Don't touch article-content internals (they start hidden via display:none)
-  var tags = ['.article-card', '.article-num', '.article-title', '.article-excerpt'];
-  tags.forEach(function(sel){
-    document.querySelectorAll(sel).forEach(function(el,i){
-      if(!el.classList.contains('reveal')){
-        el.classList.add('reveal');
-        el.style.transitionDelay = (i % 3) * 0.1 + 's';
+  // Animate article cards on scroll
+  var cards = document.querySelectorAll('.article-card');
+  cards.forEach(function(el, i) {
+    el.style.opacity = '0';
+    el.style.transform = 'translateY(24px)';
+    el.style.transition = 'opacity 0.6s ease ' + (i * 0.1) + 's, transform 0.6s ease ' + (i * 0.1) + 's';
+  });
+  var obs = new IntersectionObserver(function(entries) {
+    entries.forEach(function(e) {
+      if (e.isIntersecting) {
+        e.target.style.opacity = '1';
+        e.target.style.transform = 'translateY(0)';
+        obs.unobserve(e.target);
       }
     });
-  });
-  var obs = new IntersectionObserver(function(entries){
-    entries.forEach(function(e){
-      if(e.isIntersecting){ e.target.classList.add('visible'); obs.unobserve(e.target); }
-    });
-  },{threshold:0, rootMargin:'0px 0px 0px 0px'});
-  document.querySelectorAll('.reveal').forEach(function(el){ obs.observe(el); });
-  // Make article content visible when opened (override reveal)
+  }, { threshold: 0 });
+  cards.forEach(function(el) { obs.observe(el); });
+
+  // When article opens — animate its paragraphs and headings
   var origOpen = window.openArticle;
   window.openArticle = function(id) {
-    if(origOpen) origOpen(id);
-    setTimeout(function(){
-      document.querySelectorAll('.article-content.active *').forEach(function(el){
-        el.classList.add('visible');
-        el.style.opacity='1';
-        el.style.transform='none';
+    if (origOpen) origOpen(id);
+    setTimeout(function() {
+      var active = document.querySelector('.article-content.active');
+      if (!active) return;
+      var els = active.querySelectorAll('h1,h2,p,li,.article-meta,.back-btn');
+      els.forEach(function(el, i) {
+        el.style.opacity = '0';
+        el.style.transform = 'translateY(20px)';
+        el.style.transition = 'opacity 0.5s ease ' + (i * 0.06) + 's, transform 0.5s ease ' + (i * 0.06) + 's';
+        setTimeout(function() {
+          el.style.opacity = '1';
+          el.style.transform = 'translateY(0)';
+        }, 50);
       });
-    }, 50);
+    }, 30);
   };
 })();
 </script>
