@@ -61,8 +61,7 @@
   .nav-cta:hover { background: var(--gold); color: var(--bg); }
 
 
-  @keyframes pulse-gold {
-    0%   { box-shadow: 0 0 6px 0 rgba(212,170,95,1), 0 0 0 0 rgba(212,170,95,0.9); }
+  
     50%  { box-shadow: 0 0 18px 4px rgba(212,170,95,0.6), 0 0 0 14px rgba(212,170,95,0); }
     100% { box-shadow: 0 0 6px 0 rgba(212,170,95,1), 0 0 0 0 rgba(212,170,95,0); }
   }
@@ -756,16 +755,23 @@
   .price-item span:last-child { color: rgba(255,255,255,0.55); }
 
   /* Pulse glow on CTA buttons */
-  @keyframes pulse-gold {
-    0%   { box-shadow: 0 0 0 0 rgba(212,168,67,0.55); }
+  
     60%  { box-shadow: 0 0 0 10px rgba(212,168,67,0); }
     100% { box-shadow: 0 0 0 0 rgba(212,168,67,0); }
   }
-  .btn-cta, .nav-cta, a[href*="wa.me"], a[href*="t.me/kazilova"] {
-    animation: pulse-gold 2.2s ease-out infinite;
-  }
+  .btn-cta, .nav-cta, 
   .port-nav-btn:hover, .port-arrow-left:hover, .port-arrow-right:hover {
     box-shadow: 0 0 12px rgba(212,168,67,0.4);
+  }
+
+  @keyframes pulse-gold {
+    0%   { box-shadow: 0 0 6px 0 rgba(212,170,95,1), 0 0 0 0 rgba(212,170,95,0.9); }
+    50%  { box-shadow: 0 0 18px 4px rgba(212,170,95,0.6), 0 0 0 14px rgba(212,170,95,0); }
+    100% { box-shadow: 0 0 6px 0 rgba(212,170,95,1), 0 0 0 0 rgba(212,170,95,0); }
+  }
+  .nav-cta { animation: pulse-gold 2s infinite; }
+  .btn-primary, .form-submit, a[style*="background:var(--gold)"], button[style*="background:var(--gold)"] {
+    animation: pulse-gold 2s infinite;
   }
 </style>
 </head>
@@ -960,32 +966,20 @@
         </div>
         
         <div class="port-slide" data-type="video" data-group="video">
-          <video src="video/IMG_3778.mp4" autoplay muted playsinline loop preload="auto" poster="img/hero-bg.jpg"></video>
-          <button class="port-play-btn" aria-label="Play">
-            <svg class="icon-play" viewBox="0 0 24 24" fill="currentColor"><polygon points="5,3 19,12 5,21"/></svg>
-            <svg class="icon-pause" viewBox="0 0 24 24" fill="currentColor"><rect x="6" y="4" width="4" height="16"/><rect x="14" y="4" width="4" height="16"/></svg>
-          </button>
+          <video src="video/IMG_3778.mp4" controls playsinline muted poster="img/hero-bg.jpg" style="width:100%;height:100%;object-fit:cover;object-position:center top;display:block;"></video>
+          
         </div>
         <div class="port-slide" data-type="video" data-group="video">
-          <video src="video/IMG_3901.mp4" autoplay muted playsinline loop preload="auto" poster="img/gallery/photo_2026-06-19_22-47-57.jpg"></video>
-          <button class="port-play-btn" aria-label="Play">
-            <svg class="icon-play" viewBox="0 0 24 24" fill="currentColor"><polygon points="5,3 19,12 5,21"/></svg>
-            <svg class="icon-pause" viewBox="0 0 24 24" fill="currentColor"><rect x="6" y="4" width="4" height="16"/><rect x="14" y="4" width="4" height="16"/></svg>
-          </button>
+          <video src="video/IMG_3901.mp4" controls playsinline muted poster="img/gallery/photo_2026-06-19_22-47-57.jpg" style="width:100%;height:100%;object-fit:cover;object-position:center top;display:block;"></video>
+          
         </div>
         <div class="port-slide" data-type="video" data-group="video">
-          <video src="video/IMG_2876.mp4" autoplay muted playsinline loop preload="auto" poster="img/gallery/photo_2026-06-19_22-45-11.jpg"></video>
-          <button class="port-play-btn" aria-label="Play">
-            <svg class="icon-play" viewBox="0 0 24 24" fill="currentColor"><polygon points="5,3 19,12 5,21"/></svg>
-            <svg class="icon-pause" viewBox="0 0 24 24" fill="currentColor"><rect x="6" y="4" width="4" height="16"/><rect x="14" y="4" width="4" height="16"/></svg>
-          </button>
+          <video src="video/IMG_2876.mp4" controls playsinline muted poster="img/gallery/photo_2026-06-19_22-45-11.jpg" style="width:100%;height:100%;object-fit:cover;object-position:center top;display:block;"></video>
+          
         </div>
         <div class="port-slide" data-type="video" data-group="video">
-          <video src="video/IMG_3776.mp4" autoplay muted playsinline loop preload="auto" poster="img/gallery/photo_2026-06-19_22-43-00.jpg"></video>
-          <button class="port-play-btn" aria-label="Play">
-            <svg class="icon-play" viewBox="0 0 24 24" fill="currentColor"><polygon points="5,3 19,12 5,21"/></svg>
-            <svg class="icon-pause" viewBox="0 0 24 24" fill="currentColor"><rect x="6" y="4" width="4" height="16"/><rect x="14" y="4" width="4" height="16"/></svg>
-          </button>
+          <video src="video/IMG_3776.mp4" controls playsinline muted poster="img/gallery/photo_2026-06-19_22-43-00.jpg" style="width:100%;height:100%;object-fit:cover;object-position:center top;display:block;"></video>
+          
         </div>
         <button class="port-arrow-left" id="portPrev">&#8592;</button>
         <button class="port-arrow-right" id="portNext">&#8594;</button>
