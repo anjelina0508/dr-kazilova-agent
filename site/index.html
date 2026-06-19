@@ -778,6 +778,17 @@
     60%  { box-shadow: 0 0 16px 4px rgba(212,170,95,0.5), 0 0 0 14px rgba(212,170,95,0); }
     100% { box-shadow: 0 0 8px 2px rgba(212,170,95,0.8), 0 0 0 0 rgba(212,170,95,0.6); }
   }
+
+  .mute-btn {
+    position: absolute; top: 14px; left: 14px; z-index: 5;
+    width: 36px; height: 36px; border-radius: 50%;
+    background: rgba(8,8,8,0.6); border: 1px solid var(--gold);
+    color: var(--gold); font-size: 16px; cursor: pointer;
+    display: flex; align-items: center; justify-content: center;
+    backdrop-filter: blur(4px); transition: background 0.2s;
+  }
+  .mute-btn:hover { background: rgba(212,168,67,0.2); }
+
 </style>
 </head>
 <body>
@@ -1556,6 +1567,18 @@ function calcTotal() {
   }
 
   resetTimer();
+
+  // Mute toggle buttons
+  document.querySelectorAll('.mute-btn').forEach(function(btn) {
+    btn.addEventListener('click', function(e) {
+      e.stopPropagation();
+      var slide = btn.closest('.port-slide');
+      var v = slide && slide.querySelector('video');
+      if (!v) return;
+      v.muted = !v.muted;
+      btn.textContent = v.muted ? '🔇' : '🔊';
+    });
+  });
 })();
 </script>
 
