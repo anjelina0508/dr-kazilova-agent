@@ -207,6 +207,33 @@ nav {
 @media (max-width: 400px) {
   .zones-grid { grid-template-columns: 1fr; }
 }
+
+  /* === SHARED ENHANCEMENTS === */
+  :root {
+    --gold: #D4A843 !important;
+    --gold-light: #F0CC60 !important;
+    --gold-dim: #A08040 !important;
+    --text: #FDFAF5 !important;
+    --text-muted: #C4B8AC !important;
+    --border: rgba(212,168,67,0.28) !important;
+  }
+
+  @keyframes pulse-gold {
+    0%   { box-shadow: 0 0 6px 0 rgba(212,168,67,1), 0 0 0 0 rgba(212,168,67,0.9); }
+    50%  { box-shadow: 0 0 18px 4px rgba(212,168,67,0.6), 0 0 0 14px rgba(212,168,67,0); }
+    100% { box-shadow: 0 0 6px 0 rgba(212,168,67,1), 0 0 0 0 rgba(212,168,67,0); }
+  }
+
+  .reveal {
+    opacity: 0;
+    transform: translateY(28px);
+    transition: opacity 0.65s ease, transform 0.65s ease;
+  }
+  .reveal.visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
 </style>
 </head>
 <body>
@@ -545,5 +572,35 @@ function buildResult() {
   document.getElementById('btnWA').href = 'https://wa.me/' + WA_NUMBER + '?text=' + encodeURIComponent(msg);
 }
 </script>
+
+<script>
+// Scroll reveal
+(function() {
+  var tags = ['h1','h2','h3','p','a.article-card','a.blog-preview-card',
+    '.article-read','.step-panel > *','.zone-card','.result-card',
+    '.article-content h2','.article-content p','.article-content ul',
+    '.fg','.anest-row','.progress-step','.btn-wa','.btn-secondary',
+    '.article-num','.article-title','.article-excerpt'];
+  tags.forEach(function(sel){
+    document.querySelectorAll(sel).forEach(function(el,i){
+      if(!el.classList.contains('reveal')){
+        el.classList.add('reveal');
+        el.style.transitionDelay = (i % 5) * 0.08 + 's';
+      }
+    });
+  });
+  var obs = new IntersectionObserver(function(entries){
+    entries.forEach(function(e){
+      if(e.isIntersecting){ e.target.classList.add('visible'); obs.unobserve(e.target); }
+    });
+  },{threshold:0.1,rootMargin:'0px 0px -30px 0px'});
+  document.querySelectorAll('.reveal').forEach(function(el){ obs.observe(el); });
+  // Pulse all gold buttons
+  document.querySelectorAll('.btn-next,.btn-wa,.article-read').forEach(function(el){
+    el.style.animation='pulse-gold 2s infinite';
+  });
+})();
+</script>
+
 </body>
 </html>
