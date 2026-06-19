@@ -790,8 +790,19 @@
   .mute-btn:hover { background: rgba(212,168,67,0.2); }
 
 
-  #pricing .price-item span { color: rgba(255,255,255,0.7) !important; text-decoration: none !important; }
-  #pricing .price-item span:last-child { color: var(--gold) !important; }
+
+  /* Kill iOS blue detection on prices */
+  #pricing .price-item { -webkit-user-select: none; }
+  #pricing .price-item span { 
+    color: #C4B8AC !important; 
+    text-decoration: none !important;
+    -webkit-text-decoration: none !important;
+    pointer-events: none !important;
+  }
+  #pricing .price-item span:last-child { 
+    color: #D4A843 !important;
+  }
+  #pricing a { color: inherit !important; text-decoration: none !important; }
 </style>
 </head>
 <body>
