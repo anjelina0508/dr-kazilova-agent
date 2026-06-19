@@ -1499,15 +1499,13 @@ function calcTotal() {
 
   function resetTimer() {
     clearInterval(timer);
-    // Don't auto-advance if video is playing
-    timer = setInterval(function() {
-      var cur = activeSlides[current];
-      if (cur && cur.dataset.type === 'video') {
-        var v = cur.querySelector('video');
-        if (v && !v.paused) return; // let video finish
-      }
-      showSlide(current + 1);
-    }, 5000);
+    var cur = activeSlides[current];
+    if (cur && cur.dataset.type === 'video') {
+      // For videos: don't set timer, let 'ended' event handle it
+      return;
+    }
+    timer = setInterval(function() { showSlide(current + 1); }, 5000);
+  }, 5000);
   }
 
   // Tab filter
@@ -1545,6 +1543,17 @@ function calcTotal() {
       } else {
         v.pause(); slide.classList.remove('playing'); resetTimer();
       }
+    });
+  });
+
+  
+  // Auto-advance when video ends
+  allSlides.forEach(function(slide) {
+    if (slide.dataset.type !== 'video') return;
+    var v = slide.querySelector('video');
+    if (!v) return;
+    v.addEventListener('ended', function() {
+      showSlide(current + 1);
     });
   });
 
