@@ -619,6 +619,24 @@
   a[style*="background:var(--gold)"], button[style*="background:var(--gold)"] {
     animation: pulse-gold 2s infinite;
   }
+
+  /* Scroll reveal */
+  .reveal {
+    opacity: 0;
+    transform: translateY(32px);
+    transition: opacity 0.7s ease, transform 0.7s ease;
+  }
+  .reveal.from-left {
+    transform: translateX(-32px);
+  }
+  .reveal.from-right {
+    transform: translateX(32px);
+  }
+  .reveal.visible {
+    opacity: 1;
+    transform: translate(0, 0);
+  }
+
 </style>
 </head>
 <body>
@@ -1376,6 +1394,56 @@ window.addEventListener('scroll', function() {
     });
   }, { threshold: 0.1 });
   items.forEach(function(item) { observer.observe(item); });
+})();
+
+
+// Scroll reveal for all key elements
+(function() {
+  // Tag elements for reveal
+  var selectors = [
+    'h1', 'h2', 'h3',
+    '.section-label',
+    '.service-card',
+    '.portfolio-card',
+    '.review-card',
+    '.credential-item',
+    '.blog-preview-card',
+    '.pricing-grid > div',
+    '#hero .hero-content > *',
+    '#about .photo-wrap',
+    '#about .credentials',
+    '.stat-item',
+    '.calc-steps',
+    '.calc-grid',
+    '.booking-info',
+    '.booking-form',
+    '.contact-item',
+    '.port-carousel',
+    '#blog-preview h2',
+    '#blog-preview a[href]'
+  ];
+
+  selectors.forEach(function(sel) {
+    document.querySelectorAll(sel).forEach(function(el, i) {
+      if (!el.classList.contains('reveal') && !el.classList.contains('price-item')) {
+        el.classList.add('reveal');
+        el.style.transitionDelay = (i % 4) * 0.1 + 's';
+      }
+    });
+  });
+
+  var observer = new IntersectionObserver(function(entries) {
+    entries.forEach(function(entry) {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('visible');
+        observer.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.12, rootMargin: '0px 0px -40px 0px' });
+
+  document.querySelectorAll('.reveal').forEach(function(el) {
+    observer.observe(el);
+  });
 })();
 
 </script>
