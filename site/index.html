@@ -2,6 +2,7 @@
 <html lang="ru">
 <head>
 <meta charset="UTF-8">
+<meta name="format-detection" content="telephone=no, date=no, address=no, email=no, url=no">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Казилова Муминат Ахмедовна — Пластический хирург</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -1087,6 +1088,18 @@ document.addEventListener('DOMContentLoaded', function() {
 </section>
 
 <style>
+
+  /* Price item slide-in animation */
+  .price-item {
+    opacity: 0;
+    transform: translateX(-24px);
+    transition: opacity 0.5s ease, transform 0.5s ease;
+  }
+  .price-item.visible {
+    opacity: 1;
+    transform: translateX(0);
+  }
+
   .price-item { display:flex;justify-content:space-between;align-items:baseline;padding:14px 0;border-bottom:1px solid var(--border);font-size:14px;gap:16px; }
   .price-item span:first-child { color:var(--text-muted); }
   .price-item span:last-child { color:var(--gold);white-space:nowrap;font-family:'Cormorant Garamond',serif;font-size:16px; }
@@ -1343,6 +1356,24 @@ window.addEventListener('scroll', function() {
   var nav = document.querySelector('nav');
   nav.style.background = window.scrollY > 50 ? 'rgba(8,8,8,0.98)' : 'rgba(8,8,8,0.92)';
 });
+
+// Price items slide-in on scroll
+(function() {
+  var items = document.querySelectorAll('.price-item');
+  if (!items.length) return;
+  var observer = new IntersectionObserver(function(entries) {
+    entries.forEach(function(entry, i) {
+      if (entry.isIntersecting) {
+        setTimeout(function() {
+          entry.target.classList.add('visible');
+        }, Array.from(items).indexOf(entry.target) * 40);
+        observer.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.1 });
+  items.forEach(function(item) { observer.observe(item); });
+})();
+
 </script>
 
 <section id="blog-preview" style="background:var(--bg2);padding:100px 48px 80px;">
