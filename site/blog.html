@@ -108,6 +108,35 @@
     transform: translateY(0);
   }
 
+
+  @keyframes slideUp {
+    from { opacity: 0; transform: translateY(30px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+  .article-card {
+    animation: slideUp 0.6s ease both;
+  }
+  .article-card:nth-child(1) { animation-delay: 0.1s; }
+  .article-card:nth-child(2) { animation-delay: 0.2s; }
+  .article-card:nth-child(3) { animation-delay: 0.3s; }
+  .article-card:nth-child(4) { animation-delay: 0.4s; }
+  .article-card:nth-child(5) { animation-delay: 0.5s; }
+  .article-card:nth-child(6) { animation-delay: 0.6s; }
+
+  @keyframes slideUpSlow {
+    from { opacity: 0; transform: translateY(20px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+  .article-content.active h1 { animation: slideUpSlow 0.5s ease 0.05s both; }
+  .article-content.active .article-meta { animation: slideUpSlow 0.5s ease 0.1s both; }
+  .article-content.active h2 { animation: slideUpSlow 0.5s ease 0.1s both; }
+  .article-content.active p  { animation: slideUpSlow 0.5s ease 0.15s both; }
+  .article-content.active ul { animation: slideUpSlow 0.5s ease 0.2s both; }
+  .article-content.active .back-btn { animation: slideUpSlow 0.4s ease 0s both; }
+  
+  .blog-hero h1 { animation: slideUp 0.7s ease 0.1s both; }
+  .blog-hero .section-label { animation: slideUp 0.6s ease 0s both; }
+
 </style>
 </head>
 <body>
@@ -340,42 +369,7 @@ function closeArticle() {
 <script>
 (function() {
   // Animate article cards on scroll
-  var cards = document.querySelectorAll('.article-card');
-  cards.forEach(function(el, i) {
-    el.style.opacity = '0';
-    el.style.transform = 'translateY(24px)';
-    el.style.transition = 'opacity 0.6s ease ' + (i * 0.1) + 's, transform 0.6s ease ' + (i * 0.1) + 's';
-  });
-  var obs = new IntersectionObserver(function(entries) {
-    entries.forEach(function(e) {
-      if (e.isIntersecting) {
-        e.target.style.opacity = '1';
-        e.target.style.transform = 'translateY(0)';
-        obs.unobserve(e.target);
-      }
-    });
-  }, { threshold: 0 });
-  cards.forEach(function(el) { obs.observe(el); });
 
-  // When article opens — animate its paragraphs and headings
-  var origOpen = window.openArticle;
-  window.openArticle = function(id) {
-    if (origOpen) origOpen(id);
-    setTimeout(function() {
-      var active = document.querySelector('.article-content.active');
-      if (!active) return;
-      var els = active.querySelectorAll('h1,h2,p,li,.article-meta,.back-btn');
-      els.forEach(function(el, i) {
-        el.style.opacity = '0';
-        el.style.transform = 'translateY(20px)';
-        el.style.transition = 'opacity 0.5s ease ' + (i * 0.06) + 's, transform 0.5s ease ' + (i * 0.06) + 's';
-        setTimeout(function() {
-          el.style.opacity = '1';
-          el.style.transform = 'translateY(0)';
-        }, 50);
-      });
-    }, 30);
-  };
 })();
 </script>
 
