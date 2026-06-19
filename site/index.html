@@ -1447,149 +1447,7 @@ function calcTotal() {
 
 <div class="toast" id="toast">✓ Заявка отправлена! Мы скоро свяжемся с вами.</div>
 
-<script>
-(function() {
-  var allSlides = Array.from(document.querySelectorAll('.port-slide'));
-  var dots = Array.from(document.querySelectorAll('.port-dot'));
-  var counter = document.getElementById('portCounter');
-  var activeSlides = allSlides.slice();
-  var current = 0;
-  var timer;
 
-  function stopAllVideos() {
-    allSlides.forEach(function(s) {
-      var v = s.querySelector('video');
-      if (v) { v.pause(); v.currentTime = 0; }
-      s.classList.remove('playing');
-    });
-  }
-
-  function playActiveVideo(slide) {
-    var v = slide && slide.querySelector('video');
-    if (!v) return;
-    var p = v.play();
-    if (p && p.catch) p.catch(function(){});
-    slide.classList.add('playing');
-  }
-
-  function showSlide(idx) {
-    idx = ((idx % activeSlides.length) + activeSlides.length) % activeSlides.length;
-    var exiting = activeSlides[current];
-    if (exiting) {
-      exiting.classList.remove('active');
-      exiting.classList.add('exit');
-      var exitEl = exiting;
-      setTimeout(function() { exitEl.classList.remove('exit'); }, 650);
-      var v = exiting.querySelector('video');
-      if (v) { v.pause(); v.currentTime = 0; }
-    }
-    current = idx;
-    var entering = activeSlides[current];
-    if (entering) {
-      entering.classList.add('active');
-      // Auto-play video if it's a video slide
-      if (entering.dataset.type === 'video') {
-        setTimeout(function() { playActiveVideo(entering); }, 100);
-      }
-    }
-    dots.forEach(function(d, i) { d.classList.toggle('active', i === current); });
-    if (counter) counter.textContent = (current+1) + ' / ' + activeSlides.length;
-    resetTimer();
-  }
-
-  function resetTimer() {
-    clearInterval(timer);
-    var cur = activeSlides[current];
-    if (cur && cur.dataset.type === 'video') {
-      // For videos: don't set timer, let 'ended' event handle it
-      return;
-    }
-    timer = setInterval(function() { showSlide(current + 1); }, 5000);
-  }, 5000);
-  }
-
-  // Tab filter
-  document.querySelectorAll('.port-tab').forEach(function(tab) {
-    tab.addEventListener('click', function() {
-      document.querySelectorAll('.port-tab').forEach(function(t) { t.classList.remove('active'); });
-      tab.classList.add('active');
-      stopAllVideos();
-      allSlides.forEach(function(s) { s.classList.remove('active','exit'); });
-      var filter = tab.dataset.filter;
-      activeSlides = filter === 'all' ? allSlides : allSlides.filter(function(s) { return s.dataset.group === filter; });
-      current = 0;
-      if (activeSlides[0]) {
-        activeSlides[0].classList.add('active');
-        if (activeSlides[0].dataset.type === 'video') {
-          setTimeout(function() { playActiveVideo(activeSlides[0]); }, 150);
-        }
-      }
-      if (counter) counter.textContent = '1 / ' + activeSlides.length;
-      resetTimer();
-    });
-  });
-
-  // Play buttons (manual toggle)
-  allSlides.forEach(function(slide) {
-    var btn = slide.querySelector('.port-play-btn');
-    if (!btn) return;
-    btn.addEventListener('click', function(e) {
-      e.stopPropagation();
-      var v = slide.querySelector('video');
-      if (!v) return;
-      if (v.paused) {
-        var p = v.play(); if (p&&p.catch) p.catch(function(){});
-        slide.classList.add('playing'); clearInterval(timer);
-      } else {
-        v.pause(); slide.classList.remove('playing'); resetTimer();
-      }
-    });
-  });
-
-  
-  // Auto-advance when video ends
-  allSlides.forEach(function(slide) {
-    if (slide.dataset.type !== 'video') return;
-    var v = slide.querySelector('video');
-    if (!v) return;
-    v.addEventListener('ended', function() {
-      showSlide(current + 1);
-    });
-  });
-
-  // Arrows
-  var btnPrev = document.getElementById('portPrev');
-  var btnNext = document.getElementById('portNext');
-  if (btnPrev) btnPrev.addEventListener('click', function(e) { e.stopPropagation(); showSlide(current-1); });
-  if (btnNext) btnNext.addEventListener('click', function(e) { e.stopPropagation(); showSlide(current+1); });
-  dots.forEach(function(d,i) { d.addEventListener('click', function() { showSlide(i); }); });
-
-  // Swipe
-  var slider = document.getElementById('portSlider');
-  var tx = 0;
-  if (slider) {
-    slider.addEventListener('touchstart', function(e) { tx = e.touches[0].clientX; }, {passive:true});
-    slider.addEventListener('touchend', function(e) {
-      var dx = e.changedTouches[0].clientX - tx;
-      if (Math.abs(dx) > 40) showSlide(current + (dx < 0 ? 1 : -1));
-    }, {passive:true});
-  }
-
-  resetTimer();
-
-  // Mute toggle buttons
-  document.querySelectorAll('.mute-btn').forEach(function(btn) {
-    btn.addEventListener('click', function(e) {
-      e.stopPropagation();
-      var slide = btn.closest('.port-slide');
-      var v = slide && slide.querySelector('video');
-      if (!v) return;
-      v.muted = !v.muted;
-      btn.textContent = v.muted ? '🔇' : '🔊';
-    });
-  });
-})();
-</script>
 
 <section id="blog-preview" style="background:var(--bg2);padding:100px 48px 80px;">
   <div style="max-width:1140px;margin:0 auto;">
@@ -1623,6 +1481,23 @@ function calcTotal() {
 
 
 
+
+<script>
+(function() {
+  var revealObserver = new IntersectionObserver(function(entries) {
+    entries.forEach(function(entry) {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('visible');
+        revealObserver.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.12 });
+
+  document.querySelectorAll('.reveal').forEach(function(el) {
+    revealObserver.observe(el);
+  });
+})();
+</script>
 <script>
 (function() {
   var allSlides = Array.from(document.querySelectorAll('.port-slide'));
@@ -1632,67 +1507,59 @@ function calcTotal() {
   var current = 0;
   var timer;
 
-  function stopAllVideos() {
-    allSlides.forEach(function(s) {
-      var v = s.querySelector('video');
-      if (v) { v.pause(); v.currentTime = 0; }
-      s.classList.remove('playing');
-    });
-  }
-
   function showSlide(idx) {
-    activeSlides.forEach(function(s, i) {
-      s.classList.remove('active', 'exit');
-      if (i !== idx) s.classList.remove('active');
-    });
-    if (activeSlides[current]) {
-      activeSlides[current].classList.add('exit');
-      var exiting = activeSlides[current];
-      setTimeout(function() { exiting.classList.remove('exit'); }, 650);
+    idx = ((idx % activeSlides.length) + activeSlides.length) % activeSlides.length;
+    // Pause current video
+    var curSlide = activeSlides[current];
+    if (curSlide) {
+      curSlide.classList.remove('active');
+      curSlide.classList.add('exit');
+      var v = curSlide.querySelector('video');
+      if (v) { v.pause(); v.currentTime = 0; }
+      var exEl = curSlide;
+      setTimeout(function() { exEl.classList.remove('exit'); }, 650);
     }
-    stopAllVideos();
-    current = ((idx % activeSlides.length) + activeSlides.length) % activeSlides.length;
-    activeSlides[current].classList.add('active');
-    // Update dots
+    current = idx;
+    var nextSlide = activeSlides[current];
+    if (nextSlide) nextSlide.classList.add('active');
     dots.forEach(function(d, i) { d.classList.toggle('active', i === current); });
-    if (counter) counter.textContent = (current+1) + ' / ' + activeSlides.length;
-    resetTimer();
+    if (counter) counter.textContent = (current + 1) + ' / ' + activeSlides.length;
+    startTimer();
   }
 
-  function resetTimer() {
+  function startTimer() {
     clearInterval(timer);
+    var cur = activeSlides[current];
+    // If current slide is video — wait for 'ended' event, no timer
+    if (cur && cur.dataset.type === 'video') return;
+    // Photo slides: auto-advance after 5s
     timer = setInterval(function() { showSlide(current + 1); }, 5000);
   }
 
-  // Tab filter
+  // When video ends — go to next slide
+  allSlides.forEach(function(slide) {
+    if (slide.dataset.type !== 'video') return;
+    var v = slide.querySelector('video');
+    if (!v) return;
+    v.addEventListener('ended', function() { showSlide(current + 1); });
+  });
+
+  // Tabs
   document.querySelectorAll('.port-tab').forEach(function(tab) {
     tab.addEventListener('click', function() {
       document.querySelectorAll('.port-tab').forEach(function(t) { t.classList.remove('active'); });
       tab.classList.add('active');
+      allSlides.forEach(function(s) {
+        s.classList.remove('active', 'exit');
+        var v = s.querySelector('video');
+        if (v) { v.pause(); v.currentTime = 0; }
+      });
       var filter = tab.dataset.filter;
-      stopAllVideos();
-      allSlides.forEach(function(s) { s.classList.remove('active','exit'); });
-      activeSlides = filter === 'all' ? allSlides : allSlides.filter(function(s) { return s.dataset.group === filter; });
+      activeSlides = filter === 'all' ? allSlides.slice() : allSlides.filter(function(s) { return s.dataset.group === filter; });
       current = 0;
       if (activeSlides[0]) activeSlides[0].classList.add('active');
       if (counter) counter.textContent = '1 / ' + activeSlides.length;
-      resetTimer();
-    });
-  });
-
-  // Play buttons
-  allSlides.forEach(function(slide) {
-    var btn = slide.querySelector('.port-play-btn');
-    if (!btn) return;
-    btn.addEventListener('click', function(e) {
-      e.stopPropagation();
-      var v = slide.querySelector('video');
-      if (!v) return;
-      if (v.paused) {
-        v.play(); slide.classList.add('playing'); clearInterval(timer);
-      } else {
-        v.pause(); slide.classList.remove('playing'); resetTimer();
-      }
+      startTimer();
     });
   });
 
@@ -1716,23 +1583,7 @@ function calcTotal() {
     }, {passive:true});
   }
 
-  resetTimer();
-})();
-</script>
-<script>
-(function() {
-  var revealObserver = new IntersectionObserver(function(entries) {
-    entries.forEach(function(entry) {
-      if (entry.isIntersecting) {
-        entry.target.classList.add('visible');
-        revealObserver.unobserve(entry.target);
-      }
-    });
-  }, { threshold: 0.12 });
-
-  document.querySelectorAll('.reveal').forEach(function(el) {
-    revealObserver.observe(el);
-  });
+  startTimer();
 })();
 </script>
 </body>
