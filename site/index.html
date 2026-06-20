@@ -1257,6 +1257,24 @@ document.addEventListener('DOMContentLoaded', function() {
   .calc-item { display:flex;align-items:center;gap:12px;padding:10px 0;border-bottom:1px solid rgba(201,169,110,0.08);cursor:pointer;font-size:14px;color:var(--text-muted);transition:color 0.2s; }
   .calc-item:hover { color:var(--text); }
   .calc-item input[type=checkbox] { width:16px;height:16px;cursor:pointer;accent-color:var(--gold);flex-shrink:0; }
+  .calc-item .calc-name { flex:1; }
+  .calc-price-tag {
+    font-family:'Cormorant Garamond',serif;
+    font-size:15px;
+    color:var(--gold);
+    -webkit-text-fill-color:var(--gold);
+    white-space:nowrap;
+    margin-left:auto;
+    opacity:0;
+    transform:translateX(18px);
+    transition:opacity 0.35s ease, transform 0.35s ease;
+    pointer-events:none;
+  }
+  .calc-item.is-checked .calc-price-tag {
+    opacity:1;
+    transform:translateX(0);
+  }
+  .calc-item.is-checked { color:var(--text); }
 </style>
 
 <!-- CALCULATOR -->
@@ -1327,15 +1345,45 @@ function updateCalcSteps() {
   document.getElementById('cstep2').className = 'calc-step' + (anest ? ' done' : (zones.length > 0 ? ' active' : ''));
   document.getElementById('cstep3').className = 'calc-step' + (hasResult ? ' active' : '');
 }
+function fmtPrice(n) { return n.toLocaleString("ru-RU") + " ₽"; }
+
+// Init: wrap label text in .calc-name and add .calc-price-tag span
+document.querySelectorAll(".calc-item").forEach(function(label) {
+  var cb = label.querySelector("input[type=checkbox]");
+  if (!cb) return;
+  // wrap text node in span.calc-name
+  label.childNodes.forEach(function(node) {
+    if (node.nodeType === 3 && node.textContent.trim()) {
+      var span = document.createElement("span");
+      span.className = "calc-name";
+      span.textContent = node.textContent;
+      label.replaceChild(span, node);
+    }
+  });
+  // add price tag
+  var minV = parseInt(cb.dataset.min);
+  var maxV = parseInt(cb.dataset.max);
+  var priceText = minV === maxV ? fmtPrice(minV) : fmtPrice(minV) + " – " + fmtPrice(maxV);
+  var tag = document.createElement("span");
+  tag.className = "calc-price-tag";
+  tag.textContent = priceText;
+  label.appendChild(tag);
+});
+
 function calcTotal() {
   updateCalcSteps();
+  // Update per-item animation
+  document.querySelectorAll(".calc-item").forEach(function(label) {
+    var cb = label.querySelector("input[type=checkbox]");
+    if (!cb) return;
+    label.classList.toggle("is-checked", cb.checked);
+  });
   var checks = document.querySelectorAll("#calculator input[type=checkbox]:checked");
   if (!checks.length) { document.getElementById("calc-result").style.display="none"; return; }
   var min=0, max=0;
   checks.forEach(function(c){ min+=parseInt(c.dataset.min); max+=parseInt(c.dataset.max); });
   document.getElementById("calc-result").style.display="block";
-  var fmt=function(n){ return n.toLocaleString("ru-RU")+" ₽"; };
-  document.getElementById("calc-total").textContent = min===max ? fmt(min) : "от "+fmt(min)+" до "+fmt(max);
+  document.getElementById("calc-total").textContent = min===max ? fmtPrice(min) : "от "+fmtPrice(min)+" до "+fmtPrice(max);
 }
 </script>
 <section id="reviews">
