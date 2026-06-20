@@ -1799,13 +1799,13 @@ function calcTotal() {
     0%,87%,100% { transform: scaleY(1); }
     93%         { transform: scaleY(0.06); }
   }
-  #p-tail   { animation: p-tail-sway 2.6s ease-in-out infinite; transform-origin: 168px 88px; }
-  #p-leg-fl { animation: p-leg-a 0.75s ease-in-out infinite; transform-origin: 56px 102px; }
-  #p-leg-fr { animation: p-leg-b 0.75s ease-in-out infinite; transform-origin: 68px 102px; }
-  #p-leg-bl { animation: p-leg-a 0.75s ease-in-out 0.375s infinite; transform-origin: 142px 102px; }
-  #p-leg-br { animation: p-leg-b 0.75s ease-in-out 0.375s infinite; transform-origin: 154px 102px; }
-  #p-head   { animation: p-nod 0.75s ease-in-out infinite; transform-origin: 42px 60px; }
-  #p-eyes   { animation: p-blink 5s ease-in-out 2s infinite; transform-origin: 44px 60px; }
+  #p-tail   { animation: p-tail-sway 2.6s ease-in-out infinite; transform-box: fill-box; transform-origin: 0% 100%; }
+  #p-leg-fl { animation: p-leg-a 0.75s ease-in-out infinite; transform-box: fill-box; transform-origin: 50% 0%; }
+  #p-leg-fr { animation: p-leg-b 0.75s ease-in-out infinite; transform-box: fill-box; transform-origin: 50% 0%; }
+  #p-leg-bl { animation: p-leg-a 0.75s ease-in-out 0.375s infinite; transform-box: fill-box; transform-origin: 50% 0%; }
+  #p-leg-br { animation: p-leg-b 0.75s ease-in-out 0.375s infinite; transform-box: fill-box; transform-origin: 50% 0%; }
+  #p-head   { animation: p-nod 0.75s ease-in-out infinite; transform-box: fill-box; transform-origin: 50% 100%; }
+  #p-eyes   { animation: p-blink 5s ease-in-out 2s infinite; transform-box: fill-box; transform-origin: 50% 50%; }
 </style>
 
 <div id="mascot-wrap">
@@ -1851,6 +1851,17 @@ function calcTotal() {
         <feGaussianBlur stdDeviation="0.8" result="b"/>
         <feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge>
       </filter>
+      <!-- Fur texture filter -->
+      <filter id="pg-fur" x="-5%" y="-5%" width="110%" height="110%">
+        <feTurbulence type="fractalNoise" baseFrequency="0.9 0.4" numOctaves="4" seed="8" result="noise"/>
+        <feDisplacementMap in="SourceGraphic" in2="noise" scale="2.5" xChannelSelector="R" yChannelSelector="G"/>
+      </filter>
+      <!-- Highlight gradient for top lighting -->
+      <linearGradient id="pg-light" x1="30%" y1="0%" x2="70%" y2="100%">
+        <stop offset="0%"   stop-color="rgba(255,200,100,0.18)"/>
+        <stop offset="40%"  stop-color="rgba(255,160,60,0.08)"/>
+        <stop offset="100%" stop-color="rgba(0,0,0,0)"/>
+      </linearGradient>
     </defs>
 
     <!-- Ground shadow -->
@@ -1881,9 +1892,15 @@ function calcTotal() {
     </g>
 
     <!-- BODY -->
-    <ellipse cx="108" cy="92" rx="62" ry="28" fill="url(#pg-body)" filter="url(#pg-soft)"/>
+    <ellipse cx="108" cy="92" rx="62" ry="28" fill="url(#pg-body)" filter="url(#pg-fur)"/>
     <!-- Underbelly (slightly lighter) -->
     <ellipse cx="108" cy="101" rx="46" ry="17" fill="url(#pg-belly)" opacity="0.55"/>
+    <!-- Top light highlight (makes body look 3D) -->
+    <ellipse cx="100" cy="80" rx="55" ry="18" fill="url(#pg-light)" opacity="0.9"/>
+    <!-- Shoulder muscle highlight -->
+    <ellipse cx="72" cy="84" rx="18" ry="12" fill="rgba(200,130,40,0.12)"/>
+    <!-- Haunch muscle highlight -->
+    <ellipse cx="148" cy="84" rx="16" ry="11" fill="rgba(200,130,40,0.10)"/>
 
     <!-- BODY SPOTS (orange-gold rosettes) -->
     <path d="M78,82 Q82,74 90,76 Q95,82 91,90 Q84,93 78,87 Z" fill="#CA7422" opacity="0.7" filter="url(#pg-soft)"/>
