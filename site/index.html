@@ -1345,6 +1345,11 @@ function updateCalcSteps() {
   document.getElementById('cstep2').className = 'calc-step' + (anest ? ' done' : (zones.length > 0 ? ' active' : ''));
   document.getElementById('cstep3').className = 'calc-step' + (hasResult ? ' active' : '');
 }
+// Break iOS phone-number detection on prices by splitting digit groups with an invisible element
+document.querySelectorAll('#pricing .price-item span:last-child').forEach(function(el) {
+  el.innerHTML = el.textContent.replace(/(\d)\s(\d)/g, '$1<i style="font-style:normal"> </i>$2');
+});
+
 function fmtPrice(n) { return n.toLocaleString("ru-RU") + " ₽"; }
 
 // Init: wrap label text in .calc-name and add .calc-price-tag span
