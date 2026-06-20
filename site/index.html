@@ -1707,23 +1707,24 @@ function calcTotal() {
 })();
 </script>
 
-<!-- GOLD CAT MASCOT -->
+<!-- REALISTIC GOLD CAT MASCOT -->
 <style>
   #mascot-wrap {
-    position: fixed; bottom: 24px; right: 20px;
-    z-index: 9999; display: flex; flex-direction: column; align-items: flex-end; gap: 14px;
+    position: fixed; bottom: 0; right: 24px;
+    z-index: 9999; display: flex; flex-direction: column; align-items: flex-end; gap: 12px;
+    pointer-events: none;
   }
   #mascot-bubble {
     background: #0d0d0d; border: 1px solid var(--gold);
     padding: 18px 20px 16px; max-width: 210px; position: relative;
-    opacity: 0; transform: translateY(12px) scale(0.95);
+    opacity: 0; transform: translateY(10px) scale(0.95);
     transition: opacity 0.35s ease, transform 0.35s ease;
     pointer-events: none;
-    box-shadow: 0 0 20px rgba(212,170,95,0.2);
+    box-shadow: 0 0 24px rgba(212,170,95,0.2);
   }
   #mascot-bubble.show { opacity: 1; transform: translateY(0) scale(1); pointer-events: auto; }
   #mascot-bubble::after {
-    content: ''; position: absolute; bottom: -9px; right: 26px;
+    content: ''; position: absolute; bottom: -9px; right: 30px;
     width: 16px; height: 16px; background: #0d0d0d;
     border-right: 1px solid var(--gold); border-bottom: 1px solid var(--gold);
     transform: rotate(45deg);
@@ -1735,7 +1736,7 @@ function calcTotal() {
   #mascot-close {
     position: absolute; top: 8px; right: 10px;
     background: none; border: none; color: var(--text-muted);
-    cursor: pointer; font-size: 14px; line-height: 1; padding: 2px 4px;
+    cursor: pointer; font-size: 14px; line-height: 1; padding: 2px 4px; pointer-events: auto;
   }
   .mascot-btn {
     display: block; width: 100%; padding: 9px 12px; margin-bottom: 8px;
@@ -1747,24 +1748,39 @@ function calcTotal() {
   }
   .mascot-btn:last-of-type { margin-bottom: 0; }
   .mascot-btn:hover { background: var(--gold); color: var(--bg); -webkit-text-fill-color: var(--bg); }
+
+  /* Cat */
   #mascot-cat {
-    width: 76px; height: 76px; cursor: pointer;
-    filter: drop-shadow(0 0 10px rgba(212,170,95,0.5));
-    transition: transform 0.2s; flex-shrink: 0;
+    width: 100px; height: 130px; cursor: pointer; pointer-events: auto;
+    filter: drop-shadow(0 8px 20px rgba(0,0,0,0.6)) drop-shadow(0 0 14px rgba(212,170,95,0.25));
+    transform: translateX(160px);
+    transition: transform 0.2s;
   }
-  #mascot-cat:hover { transform: scale(1.12); }
-  @keyframes cat-idle { 0%,100%{transform:translateY(0)} 50%{transform:translateY(-5px)} }
-  @keyframes tail-wag {
-    0%,100%{transform-origin:74% 85%;transform:rotate(0deg)}
-    30%{transform-origin:74% 85%;transform:rotate(18deg)}
-    70%{transform-origin:74% 85%;transform:rotate(-12deg)}
+  #mascot-cat:hover { transform: scale(1.05); }
+  #mascot-cat.walked-in { transform: translateX(0); }
+
+  @keyframes walk-in {
+    0%   { transform: translateX(160px); opacity: 0; }
+    15%  { opacity: 1; }
+    100% { transform: translateX(0); opacity: 1; }
   }
-  @keyframes cat-blink {
-    0%,92%,100%{transform:scaleY(1)} 96%{transform:scaleY(0.1)}
+  @keyframes cat-breathe {
+    0%,100% { transform: translateY(0); }
+    50%     { transform: translateY(-4px); }
   }
-  #mascot-cat { animation: cat-idle 2.2s ease-in-out infinite; }
-  #cat-tail { animation: tail-wag 1.8s ease-in-out infinite; }
-  #cat-eyes { animation: cat-blink 4s ease-in-out infinite; }
+  @keyframes tail-sway {
+    0%,100% { transform: rotate(0deg);   transform-origin: 78% 88%; }
+    35%     { transform: rotate(14deg);  transform-origin: 78% 88%; }
+    75%     { transform: rotate(-10deg); transform-origin: 78% 88%; }
+  }
+  @keyframes eye-blink {
+    0%,88%,100% { transform: scaleY(1); }
+    94%         { transform: scaleY(0.06); }
+  }
+  #mascot-cat.animating { animation: walk-in 2s cubic-bezier(0.25,0.46,0.45,0.94) forwards; }
+  #mascot-cat.idle      { animation: cat-breathe 3.5s ease-in-out infinite; }
+  #m-tail  { animation: tail-sway 2.8s ease-in-out infinite; }
+  #m-eyes  { animation: eye-blink 5s ease-in-out 3s infinite; }
 </style>
 
 <div id="mascot-wrap">
@@ -1774,69 +1790,164 @@ function calcTotal() {
     <a class="mascot-btn" href="https://wa.me/79995160389" target="_blank">Написать в WhatsApp</a>
     <a class="mascot-btn" href="tel:+79995160389">Позвонить</a>
   </div>
-  <svg id="mascot-cat" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
-    <!-- Tail -->
-    <path id="cat-tail" d="M72,80 Q92,62 84,42 Q80,30 86,20" stroke="#D4A843" stroke-width="7" fill="none" stroke-linecap="round"/>
-    <!-- Body -->
-    <ellipse cx="48" cy="73" rx="27" ry="22" fill="#D4A843"/>
-    <!-- Head -->
-    <circle cx="48" cy="38" r="24" fill="#D4A843"/>
-    <!-- Ears -->
-    <polygon points="26,18 15,1 37,13" fill="#D4A843"/>
-    <polygon points="70,18 81,1 63,13" fill="#D4A843"/>
-    <polygon points="26,16 19,5 34,13" fill="#C8981A" opacity="0.55"/>
-    <polygon points="70,16 77,5 66,13" fill="#C8981A" opacity="0.55"/>
-    <!-- Eyes -->
-    <g id="cat-eyes">
-      <ellipse cx="38" cy="36" rx="5" ry="6" fill="#111"/>
-      <ellipse cx="58" cy="36" rx="5" ry="6" fill="#111"/>
-      <circle cx="40" cy="34" r="1.8" fill="white"/>
-      <circle cx="60" cy="34" r="1.8" fill="white"/>
+
+  <svg id="mascot-cat" viewBox="0 0 160 200" xmlns="http://www.w3.org/2000/svg" style="overflow:visible">
+    <defs>
+      <radialGradient id="mg-body" cx="38%" cy="28%" r="72%">
+        <stop offset="0%"   stop-color="#FFF0B0"/>
+        <stop offset="35%"  stop-color="#ECC84A"/>
+        <stop offset="70%"  stop-color="#C8A030"/>
+        <stop offset="100%" stop-color="#8C6818"/>
+      </radialGradient>
+      <radialGradient id="mg-head" cx="45%" cy="32%" r="65%">
+        <stop offset="0%"   stop-color="#FFF8D0"/>
+        <stop offset="40%"  stop-color="#F0D870"/>
+        <stop offset="80%"  stop-color="#C8A030"/>
+        <stop offset="100%" stop-color="#9A7020"/>
+      </radialGradient>
+      <radialGradient id="mg-belly" cx="50%" cy="40%" r="60%">
+        <stop offset="0%"   stop-color="#FFFAE8"/>
+        <stop offset="100%" stop-color="#F0D870"/>
+      </radialGradient>
+      <radialGradient id="mg-eye" cx="32%" cy="30%" r="70%">
+        <stop offset="0%"   stop-color="#B8F0B0"/>
+        <stop offset="40%"  stop-color="#40C040"/>
+        <stop offset="75%"  stop-color="#108820"/>
+        <stop offset="100%" stop-color="#043008"/>
+      </radialGradient>
+      <radialGradient id="mg-inner-ear" cx="50%" cy="60%" r="60%">
+        <stop offset="0%"   stop-color="#F8C0B0"/>
+        <stop offset="100%" stop-color="#D09080"/>
+      </radialGradient>
+      <filter id="mf-soft">
+        <feGaussianBlur stdDeviation="1.2" result="b"/>
+        <feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge>
+      </filter>
+      <filter id="mf-glow">
+        <feGaussianBlur stdDeviation="2" result="b"/>
+        <feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge>
+      </filter>
+    </defs>
+
+    <!-- Ground shadow -->
+    <ellipse cx="78" cy="198" rx="44" ry="5" fill="rgba(0,0,0,0.25)"/>
+
+    <!-- TAIL (behind body) -->
+    <g id="m-tail">
+      <path d="M116,172 Q148,148 140,112 Q136,88 144,68 Q148,56 142,46"
+            stroke="url(#mg-body)" stroke-width="14" fill="none" stroke-linecap="round"
+            filter="url(#mf-soft)"/>
+      <path d="M140,52 Q146,40 138,34"
+            stroke="#FFF8D0" stroke-width="9" fill="none" stroke-linecap="round"/>
     </g>
-    <!-- Nose -->
-    <polygon points="48,46 45,49 51,49" fill="#C07030"/>
+
+    <!-- BODY -->
+    <ellipse cx="76" cy="158" rx="46" ry="38" fill="url(#mg-body)" filter="url(#mf-soft)"/>
+    <!-- Belly lighter area -->
+    <ellipse cx="76" cy="162" rx="28" ry="26" fill="url(#mg-belly)" opacity="0.55"/>
+    <!-- Chest -->
+    <ellipse cx="76" cy="115" rx="34" ry="36" fill="url(#mg-body)" filter="url(#mf-soft)"/>
+    <!-- Chest white/cream fur -->
+    <ellipse cx="76" cy="118" rx="20" ry="24" fill="url(#mg-belly)" opacity="0.5"/>
+
+    <!-- HEAD -->
+    <circle cx="76" cy="66" r="40" fill="url(#mg-head)" filter="url(#mf-soft)"/>
+
+    <!-- Forehead darker marking -->
+    <ellipse cx="76" cy="46" rx="22" ry="14" fill="rgba(180,130,20,0.2)"/>
+
+    <!-- EARS -->
+    <path d="M42,36 Q30,6 52,18" fill="url(#mg-body)" filter="url(#mf-soft)"/>
+    <path d="M110,36 Q122,6 100,18" fill="url(#mg-body)" filter="url(#mf-soft)"/>
+    <!-- Inner ear -->
+    <path d="M43,33 Q34,10 50,20" fill="url(#mg-inner-ear)" opacity="0.8"/>
+    <path d="M109,33 Q118,10 102,20" fill="url(#mg-inner-ear)" opacity="0.8"/>
+    <!-- Ear fur tufts -->
+    <path d="M34,8 Q30,0 38,6" stroke="#C8A030" stroke-width="2" fill="none" stroke-linecap="round"/>
+    <path d="M38,4 Q35,-4 44,2" stroke="#C8A030" stroke-width="1.5" fill="none" stroke-linecap="round"/>
+    <path d="M118,8 Q122,0 114,6" stroke="#C8A030" stroke-width="2" fill="none" stroke-linecap="round"/>
+
+    <!-- EYES -->
+    <g id="m-eyes">
+      <!-- Eye white base -->
+      <ellipse cx="58" cy="64" rx="13" ry="14" fill="#E8F8E0" opacity="0.3"/>
+      <ellipse cx="94" cy="64" rx="13" ry="14" fill="#E8F8E0" opacity="0.3"/>
+      <!-- Iris -->
+      <ellipse cx="58" cy="64" rx="12" ry="13" fill="url(#mg-eye)"/>
+      <ellipse cx="94" cy="64" rx="12" ry="13" fill="url(#mg-eye)"/>
+      <!-- Pupil (vertical slit) -->
+      <ellipse cx="58" cy="64" rx="4" ry="11" fill="#050505"/>
+      <ellipse cx="94" cy="64" rx="4" ry="11" fill="#050505"/>
+      <!-- Highlights -->
+      <circle cx="53" cy="58" r="4" fill="white" opacity="0.88"/>
+      <circle cx="89" cy="58" r="4" fill="white" opacity="0.88"/>
+      <circle cx="62" cy="70" r="1.5" fill="white" opacity="0.45"/>
+      <circle cx="98" cy="70" r="1.5" fill="white" opacity="0.45"/>
+      <!-- Eye outline -->
+      <ellipse cx="58" cy="64" rx="12" ry="13" fill="none" stroke="#806820" stroke-width="1.5"/>
+      <ellipse cx="94" cy="64" rx="12" ry="13" fill="none" stroke="#806820" stroke-width="1.5"/>
+    </g>
+
+    <!-- NOSE (flat Persian type) -->
+    <path d="M70,80 Q76,77 82,80 Q78,85 76,85 Q74,85 70,80 Z" fill="#D08888"/>
+    <!-- Philtrum -->
+    <line x1="76" y1="85" x2="76" y2="90" stroke="#C07878" stroke-width="1.2"/>
     <!-- Mouth -->
-    <path d="M45,49 Q48,53 51,49" stroke="#C07030" stroke-width="1.5" fill="none" stroke-linecap="round"/>
-    <!-- Whiskers -->
-    <line x1="20" y1="44" x2="40" y2="45" stroke="#B89020" stroke-width="1.2" opacity="0.7"/>
-    <line x1="20" y1="48" x2="40" y2="48" stroke="#B89020" stroke-width="1.2" opacity="0.7"/>
-    <line x1="56" y1="45" x2="76" y2="44" stroke="#B89020" stroke-width="1.2" opacity="0.7"/>
-    <line x1="56" y1="48" x2="76" y2="48" stroke="#B89020" stroke-width="1.2" opacity="0.7"/>
-    <!-- Paws -->
-    <ellipse cx="32" cy="92" rx="10" ry="6" fill="#C8981A"/>
-    <ellipse cx="64" cy="92" rx="10" ry="6" fill="#C8981A"/>
-    <!-- Glow ring -->
-    <circle cx="48" cy="38" r="27" fill="none" stroke="rgba(212,170,95,0.25)" stroke-width="2"/>
+    <path d="M70,90 Q76,95 82,90" stroke="#C07878" stroke-width="1.5" fill="none" stroke-linecap="round"/>
+
+    <!-- WHISKERS -->
+    <line x1="18" y1="78" x2="62" y2="79" stroke="#F8F0D8" stroke-width="1.2" opacity="0.85"/>
+    <line x1="16" y1="83" x2="62" y2="83" stroke="#F8F0D8" stroke-width="1.2" opacity="0.85"/>
+    <line x1="18" y1="88" x2="62" y2="87" stroke="#F8F0D8" stroke-width="1.2" opacity="0.85"/>
+    <line x1="90" y1="79" x2="134" y2="78" stroke="#F8F0D8" stroke-width="1.2" opacity="0.85"/>
+    <line x1="90" y1="83" x2="136" y2="83" stroke="#F8F0D8" stroke-width="1.2" opacity="0.85"/>
+    <line x1="90" y1="87" x2="134" y2="88" stroke="#F8F0D8" stroke-width="1.2" opacity="0.85"/>
+
+    <!-- Chin cream fur -->
+    <ellipse cx="76" cy="96" rx="18" ry="12" fill="#FFF8E8" opacity="0.6"/>
+
+    <!-- FRONT PAWS -->
+    <ellipse cx="52" cy="190" rx="18" ry="9" fill="url(#mg-body)" filter="url(#mf-soft)"/>
+    <ellipse cx="100" cy="190" rx="18" ry="9" fill="url(#mg-body)" filter="url(#mf-soft)"/>
+    <!-- Toe lines -->
+    <path d="M42,187 Q48,192 54,187" stroke="#A07020" stroke-width="1" fill="none" opacity="0.5"/>
+    <path d="M90,187 Q96,192 102,187" stroke="#A07020" stroke-width="1" fill="none" opacity="0.5"/>
+
+    <!-- Silver chinchilla tipping (light overlay on tips of fur) -->
+    <ellipse cx="76" cy="52" rx="30" ry="20" fill="rgba(240,240,220,0.12)" filter="url(#mf-glow)"/>
+    <ellipse cx="76" cy="148" rx="42" ry="32" fill="rgba(240,240,220,0.10)" filter="url(#mf-glow)"/>
   </svg>
 </div>
 
 <script>
 (function(){
+  var wrap   = document.getElementById('mascot-wrap');
   var bubble = document.getElementById('mascot-bubble');
-  var closeBtn = document.getElementById('mascot-close');
-  var cat = document.getElementById('mascot-cat');
-  var shown = false; var dismissed = false; var timer;
+  var close  = document.getElementById('mascot-close');
+  var cat    = document.getElementById('mascot-cat');
+  var shown = false, dismissed = false, bubbleTimer;
 
-  function show(){ if(dismissed) return; bubble.classList.add('show'); shown=true; }
-  function hide(){ bubble.classList.remove('show'); shown=false; }
+  // Walk in after 1 second
+  setTimeout(function(){
+    cat.classList.add('animating');
+    cat.addEventListener('animationend', function(){
+      cat.classList.remove('animating');
+      cat.classList.add('idle');
+    }, {once: true});
+  }, 1000);
 
-  function resetTimer(){
-    clearTimeout(timer);
-    if(!shown && !dismissed) timer = setTimeout(show, 8000);
-  }
+  function showBubble(){ if(dismissed) return; bubble.classList.add('show'); shown=true; }
+  function hideBubble(){ bubble.classList.remove('show'); shown=false; }
 
-  ['scroll','mousemove','touchstart','keydown'].forEach(function(ev){
-    window.addEventListener(ev, resetTimer, {passive:true});
-  });
+  // Auto-show bubble 5 seconds after cat arrives
+  setTimeout(showBubble, 6000);
 
   cat.addEventListener('click', function(){
-    if(shown){ hide(); dismissed=true; } else { dismissed=false; show(); }
+    if(shown){ hideBubble(); dismissed=true; } else { dismissed=false; showBubble(); }
   });
-  closeBtn.addEventListener('click', function(e){
-    e.stopPropagation(); hide(); dismissed=true;
+  close.addEventListener('click', function(e){
+    e.stopPropagation(); hideBubble(); dismissed=true;
   });
-
-  resetTimer();
 })();
 </script>
 
