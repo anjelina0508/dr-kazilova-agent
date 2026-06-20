@@ -1749,39 +1749,22 @@ function calcTotal() {
   .mascot-btn:last-of-type { margin-bottom: 0; }
   .mascot-btn:hover { background: var(--gold); color: var(--bg); -webkit-text-fill-color: var(--bg); }
 
-  /* Cat */
+  /* Cat mascot */
   #mascot-cat {
-    width: 100px; height: 130px; cursor: pointer; pointer-events: auto;
-    filter: drop-shadow(0 8px 20px rgba(0,0,0,0.6)) drop-shadow(0 0 14px rgba(212,170,95,0.25));
-    transform: translateX(160px);
-    transition: transform 0.2s;
+    width: 130px; height: 130px; cursor: pointer; pointer-events: auto; display: block;
+    filter: drop-shadow(0 8px 20px rgba(0,0,0,0.6)) drop-shadow(0 0 16px rgba(212,170,95,0.3));
+    transform: translateX(200px);
+    opacity: 0;
+    transition: transform 2s cubic-bezier(0.25,0.46,0.45,0.94), opacity 0.6s ease;
   }
-  #mascot-cat:hover { transform: scale(1.05); }
-  #mascot-cat.walked-in { transform: translateX(0); }
-
-  @keyframes walk-in {
-    0%   { transform: translateX(160px); opacity: 0; }
-    15%  { opacity: 1; }
-    100% { transform: translateX(0); opacity: 1; }
+  #mascot-cat.visible {
+    transform: translateX(0);
+    opacity: 1;
   }
-  @keyframes cat-breathe {
-    0%,100% { transform: translateY(0); }
-    50%     { transform: translateY(-4px); }
-  }
-  @keyframes tail-sway {
-    0%,100% { transform: rotate(0deg);   transform-origin: 78% 88%; }
-    35%     { transform: rotate(14deg);  transform-origin: 78% 88%; }
-    75%     { transform: rotate(-10deg); transform-origin: 78% 88%; }
-  }
-  @keyframes eye-blink {
-    0%,88%,100% { transform: scaleY(1); }
-    94%         { transform: scaleY(0.06); }
-  }
-  #mascot-cat.animating { animation: walk-in 2s cubic-bezier(0.25,0.46,0.45,0.94) forwards; }
-  #mascot-cat.idle      { animation: cat-breathe 3.5s ease-in-out infinite; }
-  #m-tail  { animation: tail-sway 2.8s ease-in-out infinite; }
-  #m-eyes  { animation: eye-blink 5s ease-in-out 3s infinite; }
+  #mascot-cat:hover { filter: drop-shadow(0 8px 20px rgba(0,0,0,0.7)) drop-shadow(0 0 22px rgba(212,170,95,0.5)); }
 </style>
+
+<script type="module" src="https://cdn.jsdelivr.net/npm/@lottiefiles/dotlottie-wc@0.9.16/dist/dotlottie-wc.js"></script>
 
 <div id="mascot-wrap">
   <div id="mascot-bubble">
@@ -1791,132 +1774,12 @@ function calcTotal() {
     <a class="mascot-btn" href="tel:+79995160389">Позвонить</a>
   </div>
 
-  <svg id="mascot-cat" viewBox="0 0 160 200" xmlns="http://www.w3.org/2000/svg" style="overflow:visible">
-    <defs>
-      <radialGradient id="mg-body" cx="38%" cy="28%" r="72%">
-        <stop offset="0%"   stop-color="#FFF0B0"/>
-        <stop offset="35%"  stop-color="#ECC84A"/>
-        <stop offset="70%"  stop-color="#C8A030"/>
-        <stop offset="100%" stop-color="#8C6818"/>
-      </radialGradient>
-      <radialGradient id="mg-head" cx="45%" cy="32%" r="65%">
-        <stop offset="0%"   stop-color="#FFF8D0"/>
-        <stop offset="40%"  stop-color="#F0D870"/>
-        <stop offset="80%"  stop-color="#C8A030"/>
-        <stop offset="100%" stop-color="#9A7020"/>
-      </radialGradient>
-      <radialGradient id="mg-belly" cx="50%" cy="40%" r="60%">
-        <stop offset="0%"   stop-color="#FFFAE8"/>
-        <stop offset="100%" stop-color="#F0D870"/>
-      </radialGradient>
-      <radialGradient id="mg-eye" cx="32%" cy="30%" r="70%">
-        <stop offset="0%"   stop-color="#B8F0B0"/>
-        <stop offset="40%"  stop-color="#40C040"/>
-        <stop offset="75%"  stop-color="#108820"/>
-        <stop offset="100%" stop-color="#043008"/>
-      </radialGradient>
-      <radialGradient id="mg-inner-ear" cx="50%" cy="60%" r="60%">
-        <stop offset="0%"   stop-color="#F8C0B0"/>
-        <stop offset="100%" stop-color="#D09080"/>
-      </radialGradient>
-      <filter id="mf-soft">
-        <feGaussianBlur stdDeviation="1.2" result="b"/>
-        <feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge>
-      </filter>
-      <filter id="mf-glow">
-        <feGaussianBlur stdDeviation="2" result="b"/>
-        <feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge>
-      </filter>
-    </defs>
-
-    <!-- Ground shadow -->
-    <ellipse cx="78" cy="198" rx="44" ry="5" fill="rgba(0,0,0,0.25)"/>
-
-    <!-- TAIL (behind body) -->
-    <g id="m-tail">
-      <path d="M116,172 Q148,148 140,112 Q136,88 144,68 Q148,56 142,46"
-            stroke="url(#mg-body)" stroke-width="14" fill="none" stroke-linecap="round"
-            filter="url(#mf-soft)"/>
-      <path d="M140,52 Q146,40 138,34"
-            stroke="#FFF8D0" stroke-width="9" fill="none" stroke-linecap="round"/>
-    </g>
-
-    <!-- BODY -->
-    <ellipse cx="76" cy="158" rx="46" ry="38" fill="url(#mg-body)" filter="url(#mf-soft)"/>
-    <!-- Belly lighter area -->
-    <ellipse cx="76" cy="162" rx="28" ry="26" fill="url(#mg-belly)" opacity="0.55"/>
-    <!-- Chest -->
-    <ellipse cx="76" cy="115" rx="34" ry="36" fill="url(#mg-body)" filter="url(#mf-soft)"/>
-    <!-- Chest white/cream fur -->
-    <ellipse cx="76" cy="118" rx="20" ry="24" fill="url(#mg-belly)" opacity="0.5"/>
-
-    <!-- HEAD -->
-    <circle cx="76" cy="66" r="40" fill="url(#mg-head)" filter="url(#mf-soft)"/>
-
-    <!-- Forehead darker marking -->
-    <ellipse cx="76" cy="46" rx="22" ry="14" fill="rgba(180,130,20,0.2)"/>
-
-    <!-- EARS -->
-    <path d="M42,36 Q30,6 52,18" fill="url(#mg-body)" filter="url(#mf-soft)"/>
-    <path d="M110,36 Q122,6 100,18" fill="url(#mg-body)" filter="url(#mf-soft)"/>
-    <!-- Inner ear -->
-    <path d="M43,33 Q34,10 50,20" fill="url(#mg-inner-ear)" opacity="0.8"/>
-    <path d="M109,33 Q118,10 102,20" fill="url(#mg-inner-ear)" opacity="0.8"/>
-    <!-- Ear fur tufts -->
-    <path d="M34,8 Q30,0 38,6" stroke="#C8A030" stroke-width="2" fill="none" stroke-linecap="round"/>
-    <path d="M38,4 Q35,-4 44,2" stroke="#C8A030" stroke-width="1.5" fill="none" stroke-linecap="round"/>
-    <path d="M118,8 Q122,0 114,6" stroke="#C8A030" stroke-width="2" fill="none" stroke-linecap="round"/>
-
-    <!-- EYES -->
-    <g id="m-eyes">
-      <!-- Eye white base -->
-      <ellipse cx="58" cy="64" rx="13" ry="14" fill="#E8F8E0" opacity="0.3"/>
-      <ellipse cx="94" cy="64" rx="13" ry="14" fill="#E8F8E0" opacity="0.3"/>
-      <!-- Iris -->
-      <ellipse cx="58" cy="64" rx="12" ry="13" fill="url(#mg-eye)"/>
-      <ellipse cx="94" cy="64" rx="12" ry="13" fill="url(#mg-eye)"/>
-      <!-- Pupil (vertical slit) -->
-      <ellipse cx="58" cy="64" rx="4" ry="11" fill="#050505"/>
-      <ellipse cx="94" cy="64" rx="4" ry="11" fill="#050505"/>
-      <!-- Highlights -->
-      <circle cx="53" cy="58" r="4" fill="white" opacity="0.88"/>
-      <circle cx="89" cy="58" r="4" fill="white" opacity="0.88"/>
-      <circle cx="62" cy="70" r="1.5" fill="white" opacity="0.45"/>
-      <circle cx="98" cy="70" r="1.5" fill="white" opacity="0.45"/>
-      <!-- Eye outline -->
-      <ellipse cx="58" cy="64" rx="12" ry="13" fill="none" stroke="#806820" stroke-width="1.5"/>
-      <ellipse cx="94" cy="64" rx="12" ry="13" fill="none" stroke="#806820" stroke-width="1.5"/>
-    </g>
-
-    <!-- NOSE (flat Persian type) -->
-    <path d="M70,80 Q76,77 82,80 Q78,85 76,85 Q74,85 70,80 Z" fill="#D08888"/>
-    <!-- Philtrum -->
-    <line x1="76" y1="85" x2="76" y2="90" stroke="#C07878" stroke-width="1.2"/>
-    <!-- Mouth -->
-    <path d="M70,90 Q76,95 82,90" stroke="#C07878" stroke-width="1.5" fill="none" stroke-linecap="round"/>
-
-    <!-- WHISKERS -->
-    <line x1="18" y1="78" x2="62" y2="79" stroke="#F8F0D8" stroke-width="1.2" opacity="0.85"/>
-    <line x1="16" y1="83" x2="62" y2="83" stroke="#F8F0D8" stroke-width="1.2" opacity="0.85"/>
-    <line x1="18" y1="88" x2="62" y2="87" stroke="#F8F0D8" stroke-width="1.2" opacity="0.85"/>
-    <line x1="90" y1="79" x2="134" y2="78" stroke="#F8F0D8" stroke-width="1.2" opacity="0.85"/>
-    <line x1="90" y1="83" x2="136" y2="83" stroke="#F8F0D8" stroke-width="1.2" opacity="0.85"/>
-    <line x1="90" y1="87" x2="134" y2="88" stroke="#F8F0D8" stroke-width="1.2" opacity="0.85"/>
-
-    <!-- Chin cream fur -->
-    <ellipse cx="76" cy="96" rx="18" ry="12" fill="#FFF8E8" opacity="0.6"/>
-
-    <!-- FRONT PAWS -->
-    <ellipse cx="52" cy="190" rx="18" ry="9" fill="url(#mg-body)" filter="url(#mf-soft)"/>
-    <ellipse cx="100" cy="190" rx="18" ry="9" fill="url(#mg-body)" filter="url(#mf-soft)"/>
-    <!-- Toe lines -->
-    <path d="M42,187 Q48,192 54,187" stroke="#A07020" stroke-width="1" fill="none" opacity="0.5"/>
-    <path d="M90,187 Q96,192 102,187" stroke="#A07020" stroke-width="1" fill="none" opacity="0.5"/>
-
-    <!-- Silver chinchilla tipping (light overlay on tips of fur) -->
-    <ellipse cx="76" cy="52" rx="30" ry="20" fill="rgba(240,240,220,0.12)" filter="url(#mf-glow)"/>
-    <ellipse cx="76" cy="148" rx="42" ry="32" fill="rgba(240,240,220,0.10)" filter="url(#mf-glow)"/>
-  </svg>
+  <dotlottie-wc
+    id="mascot-cat"
+    src="https://raw.githubusercontent.com/xvrh/lottie-flutter/master/example/assets/cat.lottie"
+    autoplay
+    loop
+  ></dotlottie-wc>
 </div>
 
 <script>
@@ -1927,20 +1790,14 @@ function calcTotal() {
   var cat    = document.getElementById('mascot-cat');
   var shown = false, dismissed = false, bubbleTimer;
 
-  // Walk in after 1 second
-  setTimeout(function(){
-    cat.classList.add('animating');
-    cat.addEventListener('animationend', function(){
-      cat.classList.remove('animating');
-      cat.classList.add('idle');
-    }, {once: true});
-  }, 1000);
+  // Walk in after 1 second (CSS transition handles the animation)
+  setTimeout(function(){ cat.classList.add('visible'); }, 1000);
 
   function showBubble(){ if(dismissed) return; bubble.classList.add('show'); shown=true; }
   function hideBubble(){ bubble.classList.remove('show'); shown=false; }
 
-  // Auto-show bubble 5 seconds after cat arrives
-  setTimeout(showBubble, 6000);
+  // Auto-show bubble: 1s delay + 2s walk-in + 5s idle = 8s total
+  setTimeout(showBubble, 8000);
 
   cat.addEventListener('click', function(){
     if(shown){ hideBubble(); dismissed=true; } else { dismissed=false; showBubble(); }
