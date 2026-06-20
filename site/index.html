@@ -1038,10 +1038,10 @@
         </div>
         <button class="port-arrow-left" id="portPrev">&#8592;</button>
         <button class="port-arrow-right" id="portNext">&#8594;</button>
-        <div class="port-counter" id="portCounter">1 / 14</div>
+        <div class="port-counter" id="portCounter">1 / 19</div>
       </div>
     </div>
-    <div class="port-dots" id="portDots"><button class="port-dot active" data-idx="0"></button><button class="port-dot" data-idx="1"></button><button class="port-dot" data-idx="2"></button><button class="port-dot" data-idx="3"></button><button class="port-dot" data-idx="4"></button><button class="port-dot" data-idx="5"></button><button class="port-dot" data-idx="6"></button><button class="port-dot" data-idx="7"></button><button class="port-dot" data-idx="8"></button><button class="port-dot" data-idx="9"></button><button class="port-dot" data-idx="10"></button><button class="port-dot" data-idx="11"></button><button class="port-dot" data-idx="12"></button><button class="port-dot" data-idx="13"></button></div>
+    <div class="port-dots" id="portDots"></div>
   </div>
 
   <div style="text-align:center;margin-top:40px;">
@@ -1540,15 +1540,24 @@ function calcTotal() {
 <script>
 (function() {
   var allSlides = Array.from(document.querySelectorAll('.port-slide'));
-  var dots = Array.from(document.querySelectorAll('.port-dot'));
+  var dotsContainer = document.getElementById('portDots');
   var counter = document.getElementById('portCounter');
   var activeSlides = allSlides.slice();
   var current = 0;
   var timer;
 
+  function buildDots() {
+    dotsContainer.innerHTML = '';
+    activeSlides.forEach(function(_, i) {
+      var d = document.createElement('button');
+      d.className = 'port-dot' + (i === 0 ? ' active' : '');
+      d.addEventListener('click', function() { showSlide(i); });
+      dotsContainer.appendChild(d);
+    });
+  }
+
   function showSlide(idx) {
     idx = ((idx % activeSlides.length) + activeSlides.length) % activeSlides.length;
-    // Pause current video
     var curSlide = activeSlides[current];
     if (curSlide) {
       curSlide.classList.remove('active');
@@ -1561,7 +1570,8 @@ function calcTotal() {
     current = idx;
     var nextSlide = activeSlides[current];
     if (nextSlide) nextSlide.classList.add('active');
-    dots.forEach(function(d, i) { d.classList.toggle('active', i === current); });
+    var dotEls = dotsContainer.querySelectorAll('.port-dot');
+    dotEls.forEach(function(d, i) { d.classList.toggle('active', i === current); });
     if (counter) counter.textContent = (current + 1) + ' / ' + activeSlides.length;
     startTimer();
   }
@@ -1569,9 +1579,7 @@ function calcTotal() {
   function startTimer() {
     clearInterval(timer);
     var cur = activeSlides[current];
-    // If current slide is video — wait for 'ended' event, no timer
     if (cur && cur.dataset.type === 'video') return;
-    // Photo slides: auto-advance after 5s
     timer = setInterval(function() { showSlide(current + 1); }, 5000);
   }
 
@@ -1596,6 +1604,7 @@ function calcTotal() {
       var filter = tab.dataset.filter;
       activeSlides = filter === 'all' ? allSlides.slice() : allSlides.filter(function(s) { return s.dataset.group === filter; });
       current = 0;
+      buildDots();
       if (activeSlides[0]) activeSlides[0].classList.add('active');
       if (counter) counter.textContent = '1 / ' + activeSlides.length;
       startTimer();
@@ -1608,8 +1617,8 @@ function calcTotal() {
   if (btnPrev) btnPrev.addEventListener('click', function(e) { e.stopPropagation(); showSlide(current - 1); });
   if (btnNext) btnNext.addEventListener('click', function(e) { e.stopPropagation(); showSlide(current + 1); });
 
-  // Dots
-  dots.forEach(function(d, i) { d.addEventListener('click', function() { showSlide(i); }); });
+  // Init dots
+  buildDots();
 
   // Swipe
   var slider = document.getElementById('portSlider');
