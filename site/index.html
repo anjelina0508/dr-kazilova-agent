@@ -1706,5 +1706,139 @@ function calcTotal() {
   startTimer();
 })();
 </script>
+
+<!-- GOLD CAT MASCOT -->
+<style>
+  #mascot-wrap {
+    position: fixed; bottom: 24px; right: 20px;
+    z-index: 9999; display: flex; flex-direction: column; align-items: flex-end; gap: 14px;
+  }
+  #mascot-bubble {
+    background: #0d0d0d; border: 1px solid var(--gold);
+    padding: 18px 20px 16px; max-width: 210px; position: relative;
+    opacity: 0; transform: translateY(12px) scale(0.95);
+    transition: opacity 0.35s ease, transform 0.35s ease;
+    pointer-events: none;
+    box-shadow: 0 0 20px rgba(212,170,95,0.2);
+  }
+  #mascot-bubble.show { opacity: 1; transform: translateY(0) scale(1); pointer-events: auto; }
+  #mascot-bubble::after {
+    content: ''; position: absolute; bottom: -9px; right: 26px;
+    width: 16px; height: 16px; background: #0d0d0d;
+    border-right: 1px solid var(--gold); border-bottom: 1px solid var(--gold);
+    transform: rotate(45deg);
+  }
+  #mascot-bubble p {
+    font-family: 'Cormorant Garamond', serif; font-size: 17px;
+    color: #fff; margin-bottom: 14px; line-height: 1.45;
+  }
+  #mascot-close {
+    position: absolute; top: 8px; right: 10px;
+    background: none; border: none; color: var(--text-muted);
+    cursor: pointer; font-size: 14px; line-height: 1; padding: 2px 4px;
+  }
+  .mascot-btn {
+    display: block; width: 100%; padding: 9px 12px; margin-bottom: 8px;
+    background: none; border: 1px solid var(--gold);
+    color: var(--gold); -webkit-text-fill-color: var(--gold);
+    font-size: 11px; letter-spacing: 0.14em; text-transform: uppercase;
+    text-decoration: none; text-align: center; cursor: pointer;
+    transition: background 0.2s, color 0.2s, -webkit-text-fill-color 0.2s;
+  }
+  .mascot-btn:last-of-type { margin-bottom: 0; }
+  .mascot-btn:hover { background: var(--gold); color: var(--bg); -webkit-text-fill-color: var(--bg); }
+  #mascot-cat {
+    width: 76px; height: 76px; cursor: pointer;
+    filter: drop-shadow(0 0 10px rgba(212,170,95,0.5));
+    transition: transform 0.2s; flex-shrink: 0;
+  }
+  #mascot-cat:hover { transform: scale(1.12); }
+  @keyframes cat-idle { 0%,100%{transform:translateY(0)} 50%{transform:translateY(-5px)} }
+  @keyframes tail-wag {
+    0%,100%{transform-origin:74% 85%;transform:rotate(0deg)}
+    30%{transform-origin:74% 85%;transform:rotate(18deg)}
+    70%{transform-origin:74% 85%;transform:rotate(-12deg)}
+  }
+  @keyframes cat-blink {
+    0%,92%,100%{transform:scaleY(1)} 96%{transform:scaleY(0.1)}
+  }
+  #mascot-cat { animation: cat-idle 2.2s ease-in-out infinite; }
+  #cat-tail { animation: tail-wag 1.8s ease-in-out infinite; }
+  #cat-eyes { animation: cat-blink 4s ease-in-out infinite; }
+</style>
+
+<div id="mascot-wrap">
+  <div id="mascot-bubble">
+    <button id="mascot-close">✕</button>
+    <p>Могу я вам помочь?</p>
+    <a class="mascot-btn" href="https://wa.me/79995160389" target="_blank">Написать в WhatsApp</a>
+    <a class="mascot-btn" href="tel:+79995160389">Позвонить</a>
+  </div>
+  <svg id="mascot-cat" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+    <!-- Tail -->
+    <path id="cat-tail" d="M72,80 Q92,62 84,42 Q80,30 86,20" stroke="#D4A843" stroke-width="7" fill="none" stroke-linecap="round"/>
+    <!-- Body -->
+    <ellipse cx="48" cy="73" rx="27" ry="22" fill="#D4A843"/>
+    <!-- Head -->
+    <circle cx="48" cy="38" r="24" fill="#D4A843"/>
+    <!-- Ears -->
+    <polygon points="26,18 15,1 37,13" fill="#D4A843"/>
+    <polygon points="70,18 81,1 63,13" fill="#D4A843"/>
+    <polygon points="26,16 19,5 34,13" fill="#C8981A" opacity="0.55"/>
+    <polygon points="70,16 77,5 66,13" fill="#C8981A" opacity="0.55"/>
+    <!-- Eyes -->
+    <g id="cat-eyes">
+      <ellipse cx="38" cy="36" rx="5" ry="6" fill="#111"/>
+      <ellipse cx="58" cy="36" rx="5" ry="6" fill="#111"/>
+      <circle cx="40" cy="34" r="1.8" fill="white"/>
+      <circle cx="60" cy="34" r="1.8" fill="white"/>
+    </g>
+    <!-- Nose -->
+    <polygon points="48,46 45,49 51,49" fill="#C07030"/>
+    <!-- Mouth -->
+    <path d="M45,49 Q48,53 51,49" stroke="#C07030" stroke-width="1.5" fill="none" stroke-linecap="round"/>
+    <!-- Whiskers -->
+    <line x1="20" y1="44" x2="40" y2="45" stroke="#B89020" stroke-width="1.2" opacity="0.7"/>
+    <line x1="20" y1="48" x2="40" y2="48" stroke="#B89020" stroke-width="1.2" opacity="0.7"/>
+    <line x1="56" y1="45" x2="76" y2="44" stroke="#B89020" stroke-width="1.2" opacity="0.7"/>
+    <line x1="56" y1="48" x2="76" y2="48" stroke="#B89020" stroke-width="1.2" opacity="0.7"/>
+    <!-- Paws -->
+    <ellipse cx="32" cy="92" rx="10" ry="6" fill="#C8981A"/>
+    <ellipse cx="64" cy="92" rx="10" ry="6" fill="#C8981A"/>
+    <!-- Glow ring -->
+    <circle cx="48" cy="38" r="27" fill="none" stroke="rgba(212,170,95,0.25)" stroke-width="2"/>
+  </svg>
+</div>
+
+<script>
+(function(){
+  var bubble = document.getElementById('mascot-bubble');
+  var closeBtn = document.getElementById('mascot-close');
+  var cat = document.getElementById('mascot-cat');
+  var shown = false; var dismissed = false; var timer;
+
+  function show(){ if(dismissed) return; bubble.classList.add('show'); shown=true; }
+  function hide(){ bubble.classList.remove('show'); shown=false; }
+
+  function resetTimer(){
+    clearTimeout(timer);
+    if(!shown && !dismissed) timer = setTimeout(show, 8000);
+  }
+
+  ['scroll','mousemove','touchstart','keydown'].forEach(function(ev){
+    window.addEventListener(ev, resetTimer, {passive:true});
+  });
+
+  cat.addEventListener('click', function(){
+    if(shown){ hide(); dismissed=true; } else { dismissed=false; show(); }
+  });
+  closeBtn.addEventListener('click', function(e){
+    e.stopPropagation(); hide(); dismissed=true;
+  });
+
+  resetTimer();
+})();
+</script>
+
 </body>
 </html>
