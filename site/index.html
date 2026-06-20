@@ -1749,21 +1749,16 @@ function calcTotal() {
   .mascot-btn:last-of-type { margin-bottom: 0; }
   .mascot-btn:hover { background: var(--gold); color: var(--bg); -webkit-text-fill-color: var(--bg); }
 
-  /* Leopard mascot */
+  /* Walking cat mascot */
   #mascot-cat {
-    width: 170px; height: 110px; cursor: pointer; pointer-events: auto; display: block;
-    filter: drop-shadow(0 10px 24px rgba(0,0,0,0.7)) drop-shadow(0 0 18px rgba(200,120,32,0.25));
-    transform: translateX(300px) translateY(-60px);
+    width: 160px; height: 160px; cursor: pointer; pointer-events: auto;
+    transform: translateX(280px);
     opacity: 0;
   }
-  #mascot-cat.animating {
-    animation: p-pounce 1.6s cubic-bezier(0.22,1,0.36,1) forwards;
-  }
-  #mascot-cat.idle {
-    animation: p-breathe 3.8s ease-in-out infinite;
-    transform: translateX(0) translateY(0);
-  }
-  #mascot-cat:hover { filter: drop-shadow(0 10px 24px rgba(0,0,0,0.8)) drop-shadow(0 0 26px rgba(200,120,32,0.5)); }
+  #mascot-cat iframe { display: block; width: 100%; height: 100%; border: none; }
+  #mascot-cat.animating { animation: p-pounce 1.6s cubic-bezier(0.22,1,0.36,1) forwards; }
+  #mascot-cat.idle { animation: p-breathe 3s ease-in-out infinite; }
+  #mascot-cat:hover { filter: drop-shadow(0 0 18px rgba(212,170,95,0.4)); }
 
   @keyframes p-pounce {
     0%   { transform: translateX(300px) translateY(-60px) rotate(-8deg); opacity: 0; }
@@ -1816,8 +1811,21 @@ function calcTotal() {
     <a class="mascot-btn" href="tel:+79995160389">Позвонить</a>
   </div>
 
-  <!-- BLACK LEOPARD MASCOT: side profile, head left, tail right -->
-  <svg id="mascot-cat" viewBox="0 0 200 128" xmlns="http://www.w3.org/2000/svg" style="overflow:visible">
+  <!-- WALKING CAT from LottieFiles via iframe embed -->
+  <div id="mascot-cat">
+    <iframe
+      id="mascot-iframe"
+      src="https://embed.lottiefiles.com/animation/walking-cat-animation_9417369?background=transparent&loop=true&autoplay=true&controls=false"
+      width="160" height="160"
+      frameborder="0"
+      scrolling="no"
+      allowtransparency="true"
+      allow="autoplay"
+      style="border:none;background:transparent;display:block;"
+    ></iframe>
+  </div>
+  <!-- SVG fallback hidden inside (shown if iframe fails) -->
+  <svg id="mascot-svg-fallback" viewBox="0 0 200 128" xmlns="http://www.w3.org/2000/svg" style="overflow:visible;display:none">
     <defs>
       <radialGradient id="pg-body" cx="38%" cy="28%" r="72%">
         <stop offset="0%"   stop-color="#201408"/>
