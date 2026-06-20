@@ -1749,10 +1749,10 @@ function calcTotal() {
   .mascot-btn:last-of-type { margin-bottom: 0; }
   .mascot-btn:hover { background: var(--gold); color: var(--bg); -webkit-text-fill-color: var(--bg); }
 
-  /* Leopard mascot */
+  /* Gold cat mascot */
   #mascot-cat {
-    width: 170px; height: 110px; cursor: pointer; pointer-events: auto; display: block;
-    filter: drop-shadow(0 10px 24px rgba(0,0,0,0.7)) drop-shadow(0 0 18px rgba(200,120,32,0.25));
+    width: 180px; height: 135px; cursor: pointer; pointer-events: auto; display: block;
+    filter: drop-shadow(0 8px 20px rgba(0,0,0,0.6)) drop-shadow(0 0 16px rgba(212,170,95,0.3));
     transform: translateX(300px) translateY(-60px);
     opacity: 0;
   }
@@ -1811,185 +1811,101 @@ function calcTotal() {
     <a class="mascot-btn" href="tel:+79995160389">Позвонить</a>
   </div>
 
-  <!-- BLACK LEOPARD MASCOT: side profile, head left, tail right -->
-  <svg id="mascot-cat" viewBox="0 0 200 128" xmlns="http://www.w3.org/2000/svg" style="overflow:visible">
+  <!-- GOLD CAT MASCOT: clean side-profile walking cat -->
+  <svg id="mascot-cat" viewBox="0 0 210 155" xmlns="http://www.w3.org/2000/svg" style="overflow:visible">
     <defs>
-      <radialGradient id="pg-body" cx="38%" cy="28%" r="72%">
-        <stop offset="0%"   stop-color="#201408"/>
-        <stop offset="48%"  stop-color="#100A04"/>
-        <stop offset="100%" stop-color="#060402"/>
-      </radialGradient>
-      <radialGradient id="pg-head" cx="44%" cy="36%" r="65%">
-        <stop offset="0%"   stop-color="#1C1208"/>
-        <stop offset="52%"  stop-color="#0E0904"/>
-        <stop offset="100%" stop-color="#050302"/>
-      </radialGradient>
-      <radialGradient id="pg-belly" cx="50%" cy="48%" r="58%">
-        <stop offset="0%"   stop-color="#281C0A"/>
-        <stop offset="100%" stop-color="#130D05"/>
-      </radialGradient>
-      <radialGradient id="pg-eye" cx="30%" cy="28%" r="70%">
-        <stop offset="0%"   stop-color="#F4DC60"/>
-        <stop offset="38%"  stop-color="#D4A828"/>
-        <stop offset="76%"  stop-color="#A07818"/>
-        <stop offset="100%" stop-color="#604008"/>
-      </radialGradient>
-      <radialGradient id="pg-ear" cx="50%" cy="56%" r="58%">
-        <stop offset="0%"   stop-color="#A03018"/>
-        <stop offset="100%" stop-color="#5C1008"/>
-      </radialGradient>
-      <filter id="pg-glow" x="-60%" y="-60%" width="220%" height="220%">
-        <feGaussianBlur stdDeviation="2" result="g"/>
-        <feMerge><feMergeNode in="g"/><feMergeNode in="SourceGraphic"/></feMerge>
-      </filter>
-      <filter id="pg-soft">
-        <feGaussianBlur stdDeviation="0.8" result="b"/>
-        <feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge>
-      </filter>
-      <!-- Fur texture filter -->
-      <filter id="pg-fur" x="-5%" y="-5%" width="110%" height="110%">
-        <feTurbulence type="fractalNoise" baseFrequency="0.9 0.4" numOctaves="4" seed="8" result="noise"/>
-        <feDisplacementMap in="SourceGraphic" in2="noise" scale="2.5" xChannelSelector="R" yChannelSelector="G"/>
-      </filter>
-      <!-- Highlight gradient for top lighting -->
-      <linearGradient id="pg-light" x1="30%" y1="0%" x2="70%" y2="100%">
-        <stop offset="0%"   stop-color="rgba(255,200,100,0.18)"/>
-        <stop offset="40%"  stop-color="rgba(255,160,60,0.08)"/>
-        <stop offset="100%" stop-color="rgba(0,0,0,0)"/>
+      <linearGradient id="cg-top" x1="50%" y1="0%" x2="50%" y2="100%">
+        <stop offset="0%" stop-color="#E8C46A"/>
+        <stop offset="100%" stop-color="#C08A28"/>
+      </linearGradient>
+      <linearGradient id="cg-side" x1="0%" y1="0%" x2="100%" y2="0%">
+        <stop offset="0%" stop-color="#D4A040"/>
+        <stop offset="100%" stop-color="#B87820"/>
       </linearGradient>
     </defs>
 
     <!-- Ground shadow -->
-    <ellipse cx="100" cy="126" rx="72" ry="5" fill="rgba(0,0,0,0.45)"/>
+    <ellipse cx="108" cy="152" rx="70" ry="5" fill="rgba(0,0,0,0.38)"/>
 
-    <!-- TAIL (behind body) -->
+    <!-- TAIL (behind body, goes up) -->
     <g id="p-tail">
-      <path d="M168,88 Q186,72 190,50 Q194,30 182,18 Q175,10 168,14"
-            stroke="url(#pg-body)" stroke-width="14" fill="none" stroke-linecap="round"/>
-      <!-- Orange rings on tail -->
-      <ellipse cx="185" cy="60" rx="4" ry="6" fill="#C87820" opacity="0.6" transform="rotate(-15 185 60)"/>
-      <ellipse cx="180" cy="38" rx="3.5" ry="5" fill="#B86818" opacity="0.5" transform="rotate(-25 180 38)"/>
-      <!-- Tail tip (white/cream tip like real leopards) -->
-      <path d="M169,13 Q163,6 166,2" stroke="#1A1008" stroke-width="12" fill="none" stroke-linecap="round"/>
-      <path d="M169,13 Q163,6 166,2" stroke="#C8B870" stroke-width="4" fill="none" stroke-linecap="round" opacity="0.6"/>
+      <path d="M164,96 Q182,74 192,48 Q198,22 184,10 Q178,4 172,9"
+            stroke="#D4AA5F" stroke-width="12" fill="none" stroke-linecap="round"/>
+      <path d="M172,9 Q168,2 173,6"
+            stroke="#E8C870" stroke-width="8" fill="none" stroke-linecap="round"/>
     </g>
 
     <!-- BACK RIGHT LEG (farther, darker) -->
     <g id="p-leg-br">
-      <path d="M152,102 Q156,116 160,124" stroke="#0A0704" stroke-width="11" fill="none" stroke-linecap="round" opacity="0.65"/>
-      <ellipse cx="161" cy="125" rx="9" ry="4" fill="#080504" opacity="0.65"/>
+      <line x1="150" y1="116" x2="142" y2="146" stroke="#B07820" stroke-width="11" stroke-linecap="round"/>
+      <path d="M142,146 Q134,150 128,148" stroke="#B07820" stroke-width="9" fill="none" stroke-linecap="round"/>
     </g>
 
-    <!-- BACK LEFT LEG (closer, fuller) -->
+    <!-- BACK LEFT LEG (closer, brighter) -->
     <g id="p-leg-bl">
-      <path d="M142,102 Q145,116 148,124" stroke="url(#pg-body)" stroke-width="12" fill="none" stroke-linecap="round"/>
-      <ellipse cx="149" cy="125" rx="10" ry="4.5" fill="#0E0906" filter="url(#pg-soft)"/>
+      <line x1="160" y1="116" x2="172" y2="146" stroke="#D4AA5F" stroke-width="13" stroke-linecap="round"/>
+      <path d="M172,146 Q180,150 186,148" stroke="#D4AA5F" stroke-width="11" fill="none" stroke-linecap="round"/>
     </g>
 
     <!-- BODY -->
-    <ellipse cx="108" cy="92" rx="62" ry="28" fill="url(#pg-body)" filter="url(#pg-fur)"/>
-    <!-- Underbelly (slightly lighter) -->
-    <ellipse cx="108" cy="101" rx="46" ry="17" fill="url(#pg-belly)" opacity="0.55"/>
-    <!-- Top light highlight (makes body look 3D) -->
-    <ellipse cx="100" cy="80" rx="55" ry="18" fill="url(#pg-light)" opacity="0.9"/>
-    <!-- Shoulder muscle highlight -->
-    <ellipse cx="72" cy="84" rx="18" ry="12" fill="rgba(200,130,40,0.12)"/>
-    <!-- Haunch muscle highlight -->
-    <ellipse cx="148" cy="84" rx="16" ry="11" fill="rgba(200,130,40,0.10)"/>
-
-    <!-- BODY SPOTS (orange-gold rosettes) -->
-    <path d="M78,82 Q82,74 90,76 Q95,82 91,90 Q84,93 78,87 Z" fill="#CA7422" opacity="0.7" filter="url(#pg-soft)"/>
-    <ellipse cx="87" cy="83" rx="4.5" ry="5.5" fill="#080504" opacity="0.65"/>
-
-    <path d="M102,78 Q106,70 114,72 Q119,78 115,86 Q108,89 102,83 Z" fill="#C07020" opacity="0.65" filter="url(#pg-soft)"/>
-    <ellipse cx="111" cy="79" rx="4" ry="5" fill="#080504" opacity="0.6"/>
-
-    <path d="M126,82 Q130,75 138,77 Q143,83 139,91 Q132,94 126,88 Z" fill="#B86820" opacity="0.6" filter="url(#pg-soft)"/>
-    <ellipse cx="134" cy="83" rx="4" ry="5" fill="#080504" opacity="0.55"/>
-
-    <!-- Scatter spots (small) -->
-    <circle cx="96" cy="100" r="4" fill="#A85E18" opacity="0.45"/>
-    <circle cx="118" cy="105" r="3.5" fill="#A05A14" opacity="0.42"/>
-    <circle cx="140" cy="100" r="4" fill="#9E5A14" opacity="0.4"/>
+    <ellipse cx="108" cy="102" rx="64" ry="27" fill="url(#cg-top)"/>
+    <!-- Belly (lighter underside) -->
+    <ellipse cx="108" cy="116" rx="50" ry="15" fill="#F0D080" opacity="0.35"/>
+    <!-- Back muscle curve -->
+    <path d="M48,88 Q80,74 120,80 Q155,82 170,96" stroke="#E8C060" stroke-width="3" fill="none" opacity="0.5" stroke-linecap="round"/>
 
     <!-- FRONT RIGHT LEG (farther, darker) -->
     <g id="p-leg-fr">
-      <path d="M66,102 Q69,116 72,124" stroke="#0A0704" stroke-width="11" fill="none" stroke-linecap="round" opacity="0.65"/>
-      <ellipse cx="73" cy="125" rx="9" ry="4" fill="#080504" opacity="0.65"/>
+      <line x1="72" y1="116" x2="58" y2="146" stroke="#B07820" stroke-width="11" stroke-linecap="round"/>
+      <path d="M58,146 Q50,150 44,148" stroke="#B07820" stroke-width="9" fill="none" stroke-linecap="round"/>
     </g>
 
-    <!-- FRONT LEFT LEG (closer, fuller) -->
+    <!-- FRONT LEFT LEG (closer, brighter) -->
     <g id="p-leg-fl">
-      <path d="M54,102 Q57,116 60,124" stroke="url(#pg-body)" stroke-width="13" fill="none" stroke-linecap="round"/>
-      <ellipse cx="61" cy="125" rx="10" ry="4.5" fill="#0E0906" filter="url(#pg-soft)"/>
+      <line x1="82" y1="116" x2="90" y2="146" stroke="#D4AA5F" stroke-width="13" stroke-linecap="round"/>
+      <path d="M90,146 Q98,150 104,148" stroke="#D4AA5F" stroke-width="11" fill="none" stroke-linecap="round"/>
     </g>
 
-    <!-- NECK (connects body to head) -->
-    <ellipse cx="56" cy="88" rx="20" ry="16" fill="url(#pg-body)" filter="url(#pg-soft)"/>
-    <ellipse cx="56" cy="94" rx="12" ry="10" fill="url(#pg-belly)" opacity="0.5"/>
+    <!-- NECK -->
+    <ellipse cx="52" cy="93" rx="18" ry="22" fill="#D4AA5F"/>
+    <ellipse cx="52" cy="106" rx="12" ry="11" fill="#F0D080" opacity="0.3"/>
 
     <!-- HEAD GROUP -->
     <g id="p-head">
-      <!-- Head base -->
-      <circle cx="42" cy="60" r="28" fill="url(#pg-head)" filter="url(#pg-soft)"/>
+      <!-- Head -->
+      <ellipse cx="34" cy="64" rx="28" ry="25" fill="#D4AA5F"/>
 
-      <!-- LEFT EAR -->
-      <path d="M22,40 Q16,20 32,30" fill="#0E0904"/>
-      <path d="M24,39 Q20,23 32,30" fill="url(#pg-ear)" opacity="0.85"/>
-      <path d="M18,22 Q14,12 22,18" stroke="#181008" stroke-width="2" fill="none" stroke-linecap="round"/>
+      <!-- Left ear (back, slightly darker) -->
+      <polygon points="14,48 7,22 30,42" fill="#B88820"/>
+      <polygon points="16,48 11,27 28,42" fill="#E8C060" opacity="0.25"/>
 
-      <!-- RIGHT EAR -->
-      <path d="M58,38 Q66,18 50,28" fill="#0E0904"/>
-      <path d="M56,38 Q62,20 50,28" fill="url(#pg-ear)" opacity="0.85"/>
-      <path d="M66,18 Q70,8 62,15" stroke="#181008" stroke-width="2" fill="none" stroke-linecap="round"/>
+      <!-- Right ear (front) -->
+      <polygon points="48,46 58,20 68,44" fill="#D4AA5F"/>
+      <polygon points="50,46 59,25 65,44" fill="#C08828" opacity="0.55"/>
 
-      <!-- Forehead spot -->
-      <circle cx="42" cy="42" r="6" fill="#9E5E15" opacity="0.5" filter="url(#pg-soft)"/>
-
-      <!-- EYES (gold, glowing) -->
+      <!-- Eye (side profile: almond) -->
       <g id="p-eyes">
-        <!-- Glow -->
-        <circle cx="30" cy="58" r="10" fill="#7A5E10" opacity="0.4" filter="url(#pg-glow)"/>
-        <circle cx="54" cy="58" r="10" fill="#7A5E10" opacity="0.4" filter="url(#pg-glow)"/>
-        <!-- Iris -->
-        <circle cx="30" cy="58" r="8.5" fill="url(#pg-eye)"/>
-        <circle cx="54" cy="58" r="8.5" fill="url(#pg-eye)"/>
-        <!-- Pupil slit -->
-        <ellipse cx="30" cy="58" rx="2.5" ry="6.5" fill="#040302"/>
-        <ellipse cx="54" cy="58" rx="2.5" ry="6.5" fill="#040302"/>
-        <!-- Highlights -->
-        <circle cx="27" cy="54" r="2.5" fill="white" opacity="0.92"/>
-        <circle cx="51" cy="54" r="2.5" fill="white" opacity="0.92"/>
-        <circle cx="33" cy="63" r="1.2" fill="white" opacity="0.4"/>
-        <circle cx="57" cy="63" r="1.2" fill="white" opacity="0.4"/>
-        <!-- Eye rim -->
-        <circle cx="30" cy="58" r="8.5" fill="none" stroke="#5A3808" stroke-width="1.2"/>
-        <circle cx="54" cy="58" r="8.5" fill="none" stroke="#5A3808" stroke-width="1.2"/>
+        <ellipse cx="52" cy="62" rx="9" ry="7" fill="#0C0800"/>
+        <ellipse cx="54" cy="60" rx="3.5" ry="3" fill="#D4A830"/>
+        <circle cx="56" cy="59" r="2" fill="white" opacity="0.9"/>
       </g>
 
-      <!-- NOSE -->
-      <path d="M36,71 Q42,68 48,71 Q44,76 42,76 Q40,76 36,71 Z" fill="#8C2018"/>
-      <line x1="42" y1="76" x2="42" y2="80" stroke="#6E1408" stroke-width="1.2"/>
-      <path d="M36,80 Q42,84 48,80" stroke="#6E1408" stroke-width="1.4" fill="none" stroke-linecap="round"/>
+      <!-- Nose -->
+      <ellipse cx="14" cy="70" rx="4" ry="3" fill="#8A3010"/>
+      <path d="M10,71 Q14,69 18,71" stroke="#6A2008" stroke-width="1.5" fill="none" stroke-linecap="round"/>
 
-      <!-- Chin lighter -->
-      <ellipse cx="42" cy="80" rx="12" ry="7" fill="#1C1208" opacity="0.5"/>
+      <!-- Mouth -->
+      <path d="M14,72 Q17,76 20,72" stroke="#6A2008" stroke-width="1.5" fill="none" stroke-linecap="round"/>
 
-      <!-- Cheek spots -->
-      <circle cx="20" cy="66" r="4" fill="#8A5010" opacity="0.5" filter="url(#pg-soft)"/>
-      <circle cx="64" cy="66" r="4" fill="#8A5010" opacity="0.5" filter="url(#pg-soft)"/>
+      <!-- Chin highlight -->
+      <ellipse cx="22" cy="78" rx="10" ry="6" fill="#E8C060" opacity="0.2"/>
 
-      <!-- WHISKERS -->
-      <line x1="-4" y1="68" x2="33" y2="69" stroke="#C8B870" stroke-width="0.9" opacity="0.82"/>
-      <line x1="-6" y1="73" x2="33" y2="73" stroke="#C8B870" stroke-width="0.9" opacity="0.82"/>
-      <line x1="-4" y1="78" x2="33" y2="77" stroke="#C8B870" stroke-width="0.9" opacity="0.82"/>
-      <line x1="51" y1="69" x2="88" y2="68" stroke="#C8B870" stroke-width="0.9" opacity="0.82"/>
-      <line x1="51" y1="73" x2="90" y2="73" stroke="#C8B870" stroke-width="0.9" opacity="0.82"/>
-      <line x1="51" y1="77" x2="88" y2="78" stroke="#C8B870" stroke-width="0.9" opacity="0.82"/>
-
-      <!-- Eyebrow ridge marks (leopard face pattern) -->
-      <circle cx="24" cy="48" r="3" fill="#8A5510" opacity="0.5"/>
-      <circle cx="60" cy="48" r="3" fill="#8A5510" opacity="0.5"/>
+      <!-- Whiskers -->
+      <line x1="-12" y1="68" x2="10" y2="70" stroke="#F0E098" stroke-width="1.3" opacity="0.9"/>
+      <line x1="-10" y1="73" x2="10" y2="73" stroke="#F0E098" stroke-width="1.3" opacity="0.9"/>
+      <line x1="-8"  y1="78" x2="10" y2="77" stroke="#F0E098" stroke-width="1.1" opacity="0.7"/>
+      <line x1="20"  y1="69" x2="44" y2="65" stroke="#F0E098" stroke-width="1.1" opacity="0.65"/>
+      <line x1="20"  y1="73" x2="45" y2="71" stroke="#F0E098" stroke-width="1.1" opacity="0.65"/>
     </g>
   </svg>
 </div>
