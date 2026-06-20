@@ -1260,21 +1260,33 @@ document.addEventListener('DOMContentLoaded', function() {
   .calc-item .calc-name { flex:1; }
   .calc-price-tag {
     font-family:'Cormorant Garamond',serif;
-    font-size:15px;
-    color:var(--gold);
-    -webkit-text-fill-color:var(--gold);
+    font-size:17px;
+    font-weight:500;
+    color:var(--bg);
+    -webkit-text-fill-color:var(--bg);
+    background: linear-gradient(135deg, #D4A843, #C49A30);
     white-space:nowrap;
-    margin-left:auto;
+    padding:4px 12px 4px 14px;
+    border-radius:20px;
+    letter-spacing:0.03em;
+    box-shadow:0 0 14px rgba(212,170,95,0.5);
     opacity:0;
-    transform:translateX(18px);
-    transition:opacity 0.35s ease, transform 0.35s ease;
+    transform:translateX(60px) scale(0.85);
+    transition:opacity 0.4s cubic-bezier(0.34,1.56,0.64,1), transform 0.4s cubic-bezier(0.34,1.56,0.64,1);
     pointer-events:none;
+    flex-shrink:0;
   }
   .calc-item.is-checked .calc-price-tag {
     opacity:1;
-    transform:translateX(0);
+    transform:translateX(0) scale(1);
   }
-  .calc-item.is-checked { color:var(--text); }
+  .calc-item.is-checked {
+    color:var(--text);
+  }
+  .calc-item.is-checked .calc-name {
+    color:var(--gold);
+    -webkit-text-fill-color:var(--gold);
+  }
 </style>
 
 <!-- CALCULATOR -->
