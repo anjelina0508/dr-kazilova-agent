@@ -1707,7 +1707,7 @@ function calcTotal() {
 })();
 </script>
 
-<!-- STYLISH GIRL MASCOT -->
+<!-- GOLD BUTTERFLY MASCOT -->
 <style>
   #mascot-wrap {
     position: fixed; bottom: 0; right: 24px;
@@ -1749,59 +1749,50 @@ function calcTotal() {
   .mascot-btn:last-of-type { margin-bottom: 0; }
   .mascot-btn:hover { background: var(--gold); color: var(--bg); -webkit-text-fill-color: var(--bg); }
 
-  /* Stylish girl mascot */
-  #mascot-girl {
-    width: 100px; height: 200px; cursor: pointer; pointer-events: auto; display: block;
-    filter: drop-shadow(0 8px 24px rgba(0,0,0,0.65)) drop-shadow(0 0 20px rgba(212,170,95,0.35));
-    transform: translateY(280px);
+  /* Gold butterfly mascot */
+  #mascot-icon {
+    width: 90px; height: 90px; cursor: pointer; pointer-events: auto; display: block;
+    filter: drop-shadow(0 4px 14px rgba(0,0,0,0.5)) drop-shadow(0 0 22px rgba(212,170,95,0.5));
+    transform: scale(0) rotate(-12deg);
     opacity: 0;
   }
-  #mascot-girl.animating { animation: g-enter 1.8s cubic-bezier(0.22,1,0.36,1) forwards; }
-  #mascot-girl.idle { animation: g-breathe 4s ease-in-out infinite; transform: translateY(0); }
-  #mascot-girl:hover { filter: drop-shadow(0 10px 28px rgba(0,0,0,0.85)) drop-shadow(0 0 28px rgba(200,160,32,0.6)); }
+  #mascot-icon.animating { animation: ic-enter 1.1s cubic-bezier(0.34,1.56,0.64,1) forwards; }
+  #mascot-icon.idle { animation: ic-float 3.8s ease-in-out infinite; transform: scale(1) rotate(0deg); opacity: 1; }
+  #mascot-icon:hover { filter: drop-shadow(0 6px 20px rgba(0,0,0,0.7)) drop-shadow(0 0 32px rgba(212,170,95,0.75)); }
 
-  @keyframes g-enter {
-    0%   { transform: translateY(280px); opacity: 0; }
-    15%  { opacity: 1; }
-    68%  { transform: translateY(-10px); }
-    82%  { transform: translateY(6px); }
-    91%  { transform: translateY(-3px); }
-    100% { transform: translateY(0); opacity: 1; }
+  @keyframes ic-enter {
+    0%   { transform: scale(0) rotate(-12deg); opacity: 0; }
+    55%  { opacity: 1; }
+    80%  { transform: scale(1.1) rotate(2deg); }
+    100% { transform: scale(1) rotate(0deg); opacity: 1; }
   }
-  @keyframes g-breathe {
+  @keyframes ic-float {
     0%, 100% { transform: translateY(0); }
-    50%       { transform: translateY(-6px); }
+    50%       { transform: translateY(-9px); }
   }
-  @keyframes g-blink {
-    0%,85%,100% { transform: scaleY(1); }
-    90%          { transform: scaleY(0.06); }
+  @keyframes ic-wing-l {
+    0%   { transform: scaleX(1);    filter: brightness(1)   saturate(1.2) sepia(0); }
+    22%  { transform: scaleX(0.18); filter: brightness(2.4) saturate(0.2) sepia(0); }
+    50%  { transform: scaleX(1);    filter: brightness(0.6) saturate(1.6) sepia(0.45); }
+    72%  { transform: scaleX(0.18); filter: brightness(2.4) saturate(0.2) sepia(0); }
+    100% { transform: scaleX(1);    filter: brightness(1)   saturate(1.2) sepia(0); }
   }
-  @keyframes g-walk-bob {
-    0%, 100% { transform: translateY(0); }
-    25%, 75%  { transform: translateY(-3px); }
+  @keyframes ic-wing-r {
+    0%   { transform: scaleX(1);    filter: brightness(1)   saturate(1.2) sepia(0); }
+    22%  { transform: scaleX(0.18); filter: brightness(2.4) saturate(0.2) sepia(0); }
+    50%  { transform: scaleX(1);    filter: brightness(0.6) saturate(1.6) sepia(0.45); }
+    72%  { transform: scaleX(0.18); filter: brightness(2.4) saturate(0.2) sepia(0); }
+    100% { transform: scaleX(1);    filter: brightness(1)   saturate(1.2) sepia(0); }
   }
-  @keyframes g-leg-fwd {
-    0%, 100% { transform: rotate(-13deg); }
-    50%       { transform: rotate(13deg); }
+  @keyframes ic-sparkle {
+    0%, 100% { opacity: 0; transform: scale(0.3) rotate(0deg); }
+    50%       { opacity: 1; transform: scale(1.15) rotate(20deg); }
   }
-  @keyframes g-leg-bwd {
-    0%, 100% { transform: rotate(13deg); }
-    50%       { transform: rotate(-13deg); }
-  }
-  @keyframes g-arm-fwd {
-    0%, 100% { transform: rotate(-9deg); }
-    50%       { transform: rotate(9deg); }
-  }
-  @keyframes g-arm-bwd {
-    0%, 100% { transform: rotate(9deg); }
-    50%       { transform: rotate(-9deg); }
-  }
-  #mg-body  { animation: g-walk-bob 0.72s ease-in-out infinite; transform-box: fill-box; transform-origin: 50% 100%; }
-  #mg-leg-l { animation: g-leg-fwd 0.72s ease-in-out infinite; transform-box: fill-box; transform-origin: 50% 0%; }
-  #mg-leg-r { animation: g-leg-bwd 0.72s ease-in-out 0.36s infinite; transform-box: fill-box; transform-origin: 50% 0%; }
-  #mg-arm-l { animation: g-arm-bwd 0.72s ease-in-out infinite; transform-box: fill-box; transform-origin: 50% 0%; }
-  #mg-arm-r { animation: g-arm-fwd 0.72s ease-in-out 0.36s infinite; transform-box: fill-box; transform-origin: 50% 0%; }
-  #mg-eyes  { animation: g-blink 6s ease-in-out 2.5s infinite; transform-box: fill-box; transform-origin: 50% 50%; }
+  #ic-wl  { animation: ic-wing-l 2.2s ease-in-out infinite; transform-box: fill-box; transform-origin: 100% 50%; }
+  #ic-wr  { animation: ic-wing-r 2.2s ease-in-out infinite; transform-box: fill-box; transform-origin: 0% 50%; }
+  #ic-sp1 { animation: ic-sparkle 2.6s ease-in-out 0.4s infinite; transform-box: fill-box; transform-origin: 50% 50%; }
+  #ic-sp2 { animation: ic-sparkle 2.6s ease-in-out 1.5s infinite; transform-box: fill-box; transform-origin: 50% 50%; }
+  #ic-sp3 { animation: ic-sparkle 2.6s ease-in-out 0.95s infinite; transform-box: fill-box; transform-origin: 50% 50%; }
 </style>
 
 <div id="mascot-wrap">
@@ -1812,147 +1803,80 @@ function calcTotal() {
     <a class="mascot-btn" href="tel:+79995160389">Позвонить</a>
   </div>
 
-  <!-- STYLISH GIRL MASCOT: front-facing, gold dress, hourglass silhouette -->
-  <svg id="mascot-girl" viewBox="0 0 100 200" xmlns="http://www.w3.org/2000/svg" style="overflow:visible">
+  <!-- GOLD BUTTERFLY: symbol of transformation -->
+  <svg id="mascot-icon" viewBox="0 0 120 110" xmlns="http://www.w3.org/2000/svg" style="overflow:visible">
     <defs>
-      <linearGradient id="mg-skin" x1="0%" y1="0%" x2="80%" y2="100%">
-        <stop offset="0%" stop-color="#F8D0A0"/>
-        <stop offset="100%" stop-color="#E4A870"/>
+      <linearGradient id="ic-g-top" x1="0%" y1="0%" x2="100%" y2="100%">
+        <stop offset="0%" stop-color="#F4E080"/>
+        <stop offset="45%" stop-color="#D4A838"/>
+        <stop offset="100%" stop-color="#A07018"/>
       </linearGradient>
-      <linearGradient id="mg-dress-top" x1="20%" y1="0%" x2="80%" y2="100%">
-        <stop offset="0%" stop-color="#F0D070"/>
-        <stop offset="50%" stop-color="#D4A840"/>
-        <stop offset="100%" stop-color="#AA7818"/>
+      <linearGradient id="ic-g-bot" x1="0%" y1="0%" x2="100%" y2="100%">
+        <stop offset="0%" stop-color="#E0B840"/>
+        <stop offset="100%" stop-color="#8A5C10"/>
       </linearGradient>
-      <linearGradient id="mg-dress-skirt" x1="30%" y1="0%" x2="70%" y2="100%">
-        <stop offset="0%" stop-color="#D4A840"/>
-        <stop offset="60%" stop-color="#B88020"/>
-        <stop offset="100%" stop-color="#906010"/>
-      </linearGradient>
-      <linearGradient id="mg-hair" x1="10%" y1="0%" x2="60%" y2="100%">
-        <stop offset="0%" stop-color="#280C02"/>
-        <stop offset="100%" stop-color="#0C0400"/>
-      </linearGradient>
+      <radialGradient id="ic-g-eye" cx="40%" cy="40%" r="60%">
+        <stop offset="0%" stop-color="#F8E898"/>
+        <stop offset="60%" stop-color="#C89020"/>
+        <stop offset="100%" stop-color="#7A5010"/>
+      </radialGradient>
     </defs>
 
-    <!-- Ground shadow -->
-    <ellipse cx="50" cy="197" rx="28" ry="3.5" fill="rgba(0,0,0,0.38)"/>
-
-    <!-- ── HAIR BACK LAYERS ── -->
-    <path d="M26,36 Q14,65 16,92 Q18,100 24,96 Q20,72 30,50" fill="url(#mg-hair)"/>
-    <path d="M74,36 Q86,65 84,92 Q82,100 76,96 Q80,72 70,50" fill="url(#mg-hair)"/>
-
-    <!-- ── LEGS ── -->
-    <!-- Left leg (viewer's left) -->
-    <g id="mg-leg-l">
-      <path d="M38,162 Q36,175 35,188 Q35,193 40,193 Q44,193 45,188 Q46,175 44,162 Z" fill="#F0BC88"/>
-      <!-- Stiletto heel left -->
-      <path d="M35,191 Q33,197 36,197 L45,197 Q47,197 46,193 L45,188" fill="#1A0E06"/>
-      <line x1="33.5" y1="196" x2="33.5" y2="199" stroke="#1A0E06" stroke-width="1.8" stroke-linecap="round"/>
-      <!-- Toe cap -->
-      <path d="M45,197 Q48,198 50,196" stroke="#C08A28" stroke-width="1.2" fill="none" stroke-linecap="round"/>
-      <!-- Shoe gold trim -->
-      <path d="M36,192 Q40,190 44,192" stroke="#D4AA5F" stroke-width="1" fill="none" stroke-linecap="round" opacity="0.9"/>
-    </g>
-    <!-- Right leg (viewer's right) -->
-    <g id="mg-leg-r">
-      <path d="M56,162 Q54,175 55,188 Q55,193 60,193 Q65,193 65,188 Q63,175 62,162 Z" fill="#E8A878"/>
-      <!-- Stiletto heel right -->
-      <path d="M55,191 Q53,197 56,197 L65,197 Q67,197 66,193 L65,188" fill="#1A0E06"/>
-      <line x1="53.5" y1="196" x2="53.5" y2="199" stroke="#1A0E06" stroke-width="1.8" stroke-linecap="round"/>
-      <!-- Toe cap -->
-      <path d="M65,197 Q68,198 70,196" stroke="#D4AA5F" stroke-width="1.2" fill="none" stroke-linecap="round"/>
-      <!-- Shoe gold trim -->
-      <path d="M56,192 Q60,190 64,192" stroke="#E8C46A" stroke-width="1" fill="none" stroke-linecap="round" opacity="0.9"/>
+    <!-- LEFT WINGS -->
+    <g id="ic-wl">
+      <!-- upper left -->
+      <path d="M60,52 C50,34 24,16 8,26 C0,40 10,56 28,60 C44,63 56,56 60,52Z"
+            fill="url(#ic-g-top)"/>
+      <!-- wing vein -->
+      <path d="M60,52 C44,40 22,32 10,34" stroke="rgba(255,248,180,0.28)" stroke-width="1.2" fill="none"/>
+      <path d="M60,52 C46,48 30,50 18,54" stroke="rgba(255,248,180,0.18)" stroke-width="0.8" fill="none"/>
+      <!-- eye spot upper left -->
+      <circle cx="28" cy="36" r="6" fill="url(#ic-g-eye)" opacity="0.85"/>
+      <circle cx="28" cy="36" r="3" fill="#1A0A02" opacity="0.7"/>
+      <circle cx="26" cy="34" r="1.2" fill="white" opacity="0.7"/>
+      <!-- lower left -->
+      <path d="M60,56 C46,66 20,74 12,86 C6,96 16,104 32,98 C50,90 58,72 60,56Z"
+            fill="url(#ic-g-bot)"/>
+      <path d="M60,56 C44,68 26,78 16,88" stroke="rgba(255,248,180,0.2)" stroke-width="0.8" fill="none"/>
     </g>
 
-    <!-- Body group with sway animation -->
-    <g id="mg-body">
-      <!-- ── DRESS SKIRT (A-line) ── -->
-      <path d="M34,110 Q22,135 20,162 Q20,170 50,170 Q80,170 80,162 Q78,135 66,110 Z" fill="url(#mg-dress-skirt)"/>
-      <path d="M26,138 Q36,132 44,142" stroke="rgba(255,248,200,0.22)" stroke-width="3.5" fill="none" stroke-linecap="round"/>
-      <path d="M62,125 Q68,142 66,162" stroke="rgba(0,0,0,0.12)" stroke-width="4" fill="none" stroke-linecap="round"/>
-      <path d="M42,125 Q38,145 40,165" stroke="rgba(0,0,0,0.08)" stroke-width="3" fill="none" stroke-linecap="round"/>
-      <path d="M20,162 Q50,168 80,162" stroke="#E8C460" stroke-width="1.5" fill="none" stroke-linecap="round" opacity="0.6"/>
+    <!-- RIGHT WINGS -->
+    <g id="ic-wr">
+      <!-- upper right -->
+      <path d="M60,52 C70,34 96,16 112,26 C120,40 110,56 92,60 C76,63 64,56 60,52Z"
+            fill="url(#ic-g-top)"/>
+      <path d="M60,52 C76,40 98,32 110,34" stroke="rgba(255,248,180,0.28)" stroke-width="1.2" fill="none"/>
+      <path d="M60,52 C74,48 90,50 102,54" stroke="rgba(255,248,180,0.18)" stroke-width="0.8" fill="none"/>
+      <!-- eye spot upper right -->
+      <circle cx="92" cy="36" r="6" fill="url(#ic-g-eye)" opacity="0.85"/>
+      <circle cx="92" cy="36" r="3" fill="#1A0A02" opacity="0.7"/>
+      <circle cx="90" cy="34" r="1.2" fill="white" opacity="0.7"/>
+      <!-- lower right -->
+      <path d="M60,56 C74,66 100,74 108,86 C114,96 104,104 88,98 C70,90 62,72 60,56Z"
+            fill="url(#ic-g-bot)"/>
+      <path d="M60,56 C76,68 94,78 104,88" stroke="rgba(255,248,180,0.2)" stroke-width="0.8" fill="none"/>
+    </g>
 
-      <!-- ── BODICE ── -->
-      <path d="M35,78 Q28,90 28,104 Q28,114 34,118 Q42,122 50,122 Q58,122 66,118 Q72,114 72,104 Q72,90 65,78 Q58,72 50,72 Q42,72 35,78 Z" fill="url(#mg-dress-top)"/>
-      <path d="M36,84 Q44,80 48,90" stroke="rgba(255,248,200,0.32)" stroke-width="2.5" fill="none" stroke-linecap="round"/>
-      <path d="M38,78 Q44,74 50,77 Q56,74 62,78 Q57,82 50,80 Q43,82 38,78 Z" fill="#E8A070" opacity="0.32"/>
-      <!-- Waist belt -->
-      <path d="M29,108 Q50,114 71,108" stroke="#E8C46A" stroke-width="2.5" fill="none" stroke-linecap="round" opacity="0.9"/>
-      <circle cx="50" cy="112" r="3" fill="#E8C46A"/>
+    <!-- BODY -->
+    <ellipse cx="60" cy="58" rx="4.5" ry="18" fill="#140802"/>
+    <ellipse cx="60" cy="58" rx="2.5" ry="16" fill="#2A1006" opacity="0.55"/>
+    <!-- Head -->
+    <circle cx="60" cy="38" r="5.5" fill="#140802"/>
+    <!-- Antennae -->
+    <path d="M57,33 C52,22 46,14 42,9" stroke="#D4AA5F" stroke-width="1.5" fill="none" stroke-linecap="round"/>
+    <circle cx="42" cy="8.5" r="3" fill="#E8C46A"/>
+    <path d="M63,33 C68,22 74,14 78,9" stroke="#D4AA5F" stroke-width="1.5" fill="none" stroke-linecap="round"/>
+    <circle cx="78" cy="8.5" r="3" fill="#E8C46A"/>
 
-      <!-- ── ARMS ── -->
-      <g id="mg-arm-l">
-        <path d="M35,82 Q22,100 20,122 Q20,128 25,128 Q29,128 31,122 Q33,104 40,88" fill="#E0A060"/>
-        <ellipse cx="24" cy="129" rx="5.5" ry="4.5" fill="#F0BC88"/>
-      </g>
-      <g id="mg-arm-r">
-        <path d="M65,82 Q78,100 80,122 Q80,128 75,128 Q71,128 69,122 Q67,104 60,88" fill="#F0BC88"/>
-        <ellipse cx="76" cy="129" rx="5.5" ry="4.5" fill="#F8CC9A"/>
-      </g>
-
-      <!-- ── NECK ── -->
-      <path d="M44,64 Q42,72 42,78 Q46,80 50,80 Q54,80 58,78 Q58,72 56,64 Z" fill="url(#mg-skin)"/>
-
-      <!-- ── HEAD ── -->
-      <ellipse cx="50" cy="40" rx="24" ry="28" fill="url(#mg-skin)"/>
-      <ellipse cx="50" cy="60" rx="14" ry="10" fill="#F0C090" opacity="0.45"/>
-
-      <!-- ── HAIR FRONT ── -->
-      <path d="M26,36 Q27,8 50,5 Q73,8 74,36 Q68,25 60,22 Q50,20 40,22 Q32,25 26,36 Z" fill="url(#mg-hair)"/>
-      <path d="M26,36 Q21,45 23,60 Q27,44 32,38" fill="#1C0804"/>
-      <path d="M74,36 Q79,45 77,60 Q73,44 68,38" fill="#1C0804"/>
-      <path d="M38,10 Q50,6 62,12" stroke="rgba(110,50,15,0.42)" stroke-width="2.5" fill="none" stroke-linecap="round"/>
-
-      <!-- ── FACE ── -->
-      <!-- Eyebrows -->
-      <path d="M32,26 Q39,21 45,24" stroke="#180802" stroke-width="2.2" fill="none" stroke-linecap="round"/>
-      <path d="M55,24 Q61,21 68,26" stroke="#180802" stroke-width="2.2" fill="none" stroke-linecap="round"/>
-
-      <!-- Eyes (blinking group) -->
-      <g id="mg-eyes">
-        <ellipse cx="38" cy="34" rx="7.5" ry="8" fill="white"/>
-        <ellipse cx="62" cy="34" rx="7.5" ry="8" fill="white"/>
-        <ellipse cx="38" cy="36" rx="5.5" ry="6.5" fill="#1A0802"/>
-        <ellipse cx="62" cy="36" rx="5.5" ry="6.5" fill="#1A0802"/>
-        <ellipse cx="38" cy="36" rx="3" ry="3.5" fill="#4A1E0A"/>
-        <ellipse cx="62" cy="36" rx="3" ry="3.5" fill="#4A1E0A"/>
-        <circle cx="38" cy="36" r="1.8" fill="#080200"/>
-        <circle cx="62" cy="36" r="1.8" fill="#080200"/>
-        <circle cx="40" cy="33" r="2" fill="white" opacity="0.95"/>
-        <circle cx="64" cy="33" r="2" fill="white" opacity="0.95"/>
-        <circle cx="36" cy="38" r="1" fill="white" opacity="0.4"/>
-        <circle cx="60" cy="38" r="1" fill="white" opacity="0.4"/>
-      </g>
-      <!-- Lashes -->
-      <path d="M30,28 Q38,23 46,28" stroke="#100402" stroke-width="2.8" fill="none" stroke-linecap="round"/>
-      <path d="M54,28 Q62,23 70,28" stroke="#100402" stroke-width="2.8" fill="none" stroke-linecap="round"/>
-      <path d="M31,41 Q38,44 45,41" stroke="#1A0802" stroke-width="1.2" fill="none" stroke-linecap="round" opacity="0.5"/>
-      <path d="M55,41 Q62,44 69,41" stroke="#1A0802" stroke-width="1.2" fill="none" stroke-linecap="round" opacity="0.5"/>
-
-      <!-- Nose -->
-      <path d="M46,48 Q50,52 54,48" stroke="#CA8858" stroke-width="1.6" fill="none" stroke-linecap="round"/>
-      <circle cx="45.5" cy="47" r="1.2" fill="#CA8858" opacity="0.48"/>
-      <circle cx="54.5" cy="47" r="1.2" fill="#CA8858" opacity="0.48"/>
-
-      <!-- Lips -->
-      <path d="M39,57 Q44,53 50,55 Q56,53 61,57 Q57,59 50,58 Q43,59 39,57 Z" fill="#C04040"/>
-      <path d="M39,57 Q44,63 50,64 Q56,63 61,57 Q57,60 50,61 Q43,60 39,57 Z" fill="#D05050"/>
-      <path d="M44,56 Q50,54 56,56" stroke="rgba(255,180,180,0.32)" stroke-width="1.5" fill="none" stroke-linecap="round"/>
-
-      <!-- Blush -->
-      <ellipse cx="31" cy="44" rx="7" ry="4" fill="#F07860" opacity="0.17"/>
-      <ellipse cx="69" cy="44" rx="7" ry="4" fill="#F07860" opacity="0.17"/>
-
-      <!-- ── GOLD DROP EARRINGS ── -->
-      <circle cx="26" cy="40" r="3.5" fill="#D4AA5F"/>
-      <line x1="26" y1="43.5" x2="26" y2="50" stroke="#D4AA5F" stroke-width="1.5"/>
-      <ellipse cx="26" cy="53" rx="2.5" ry="4" fill="#B88020" stroke="#E8C46A" stroke-width="0.8"/>
-      <circle cx="74" cy="40" r="3.5" fill="#D4AA5F"/>
-      <line x1="74" y1="43.5" x2="74" y2="50" stroke="#D4AA5F" stroke-width="1.5"/>
-      <ellipse cx="74" cy="53" rx="2.5" ry="4" fill="#B88020" stroke="#E8C46A" stroke-width="0.8"/>
+    <!-- GOLD SPARKLES -->
+    <g id="ic-sp1" opacity="0">
+      <path d="M16,18 L17.2,13 L18.4,18 L23.4,19.2 L18.4,20.4 L17.2,25.4 L16,20.4 L11,19.2Z" fill="#E8C46A"/>
+    </g>
+    <g id="ic-sp2" opacity="0">
+      <path d="M104,88 L105,84 L106,88 L110,89 L106,90 L105,94 L104,90 L100,89Z" fill="#E8C46A"/>
+    </g>
+    <g id="ic-sp3" opacity="0">
+      <path d="M10,76 L11,72.5 L12,76 L15.5,77 L12,78 L11,81.5 L10,78 L6.5,77Z" fill="#F0D060"/>
     </g>
   </svg>
 </div>
@@ -1962,7 +1886,7 @@ function calcTotal() {
   var wrap   = document.getElementById('mascot-wrap');
   var bubble = document.getElementById('mascot-bubble');
   var close  = document.getElementById('mascot-close');
-  var cat    = document.getElementById('mascot-girl');
+  var cat    = document.getElementById('mascot-icon');
   var shown = false, dismissed = false, bubbleTimer;
 
   // Girl slides up from below after 1s, then breathes idle
