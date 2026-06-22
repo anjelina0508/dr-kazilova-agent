@@ -1,0 +1,9 @@
+node_modules/
+.env
+*.env
+deploy_auth.js
+upload_lesson3.js
+__pycache__/
+*.pyc
+venv/
+topics.json
