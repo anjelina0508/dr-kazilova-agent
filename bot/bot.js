@@ -38,7 +38,6 @@ function askClaude(message, userId) {
       '-p', message,
       '--output-format', 'text',
       '--max-turns', '3',
-      '--dangerously-skip-permissions',
       '--append-system-prompt', systemPrompt,
     ];
 
