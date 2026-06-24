@@ -57,6 +57,21 @@ async def setup(update: Update, context: ContextTypes.DEFAULT_TYPE):
     )
 
 
+def truncate(text, limit=4000):
+    if len(text) <= limit:
+        return text
+    return text[:limit] + '...'
+
+
+async def send_long(bot, chat_id, text, thread_id=None):
+    chunks = [text[i:i+4000] for i in range(0, len(text), 4000)]
+    for chunk in chunks:
+        kwargs = {'chat_id': chat_id, 'text': chunk}
+        if thread_id:
+            kwargs['message_thread_id'] = thread_id
+        await bot.send_message(**kwargs)
+
+
 async def handle_message(update: Update, context: ContextTypes.DEFAULT_TYPE):
     task = update.message.text
     chat_id = update.effective_chat.id
@@ -67,15 +82,13 @@ async def handle_message(update: Update, context: ContextTypes.DEFAULT_TYPE):
     try:
         results = await run_orchestrator(task)
 
-        if topics:
+        if 'secretary' in results:
+            await status_msg.edit_text(truncate(results['secretary']))
+        elif topics:
             for key, thread_id in topics.items():
                 if results.get(key):
                     try:
-                        await context.bot.send_message(
-                            chat_id,
-                            results[key],
-                            message_thread_id=thread_id
-                        )
+                        await send_long(context.bot, chat_id, results[key], thread_id)
                     except TelegramError as e:
                         logger.error(f'Ошибка отправки в ветку {key}: {e}')
 
@@ -88,7 +101,7 @@ async def handle_message(update: Update, context: ContextTypes.DEFAULT_TYPE):
                 f'✍️ КОПИРАЙТЕР\n{results["copywriter"]}\n\n'
                 f'🎨 ДИЗАЙНЕР (промпт для картинки)\n{results["designer"]}'
             )
-            await status_msg.edit_text(response)
+            await status_msg.edit_text(truncate(response))
 
     except Exception as e:
         logger.error(f'Ошибка оркестратора: {e}')

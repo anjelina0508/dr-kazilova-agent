@@ -1,7 +1,7 @@
 import asyncio
 import subprocess
 from config import CLAUDE_MODEL
-from prompts import MARKETER_PROMPT, COPYWRITER_PROMPT, DESIGNER_PROMPT
+from prompts import MARKETER_PROMPT, COPYWRITER_PROMPT, DESIGNER_PROMPT, SECRETARY_PROMPT
 
 
 def run_claude(message, system_prompt, tools=None):
@@ -32,6 +32,17 @@ def run_claude(message, system_prompt, tools=None):
         return f"Ошибка запуска агента: {e}"
 
 
+CONTENT_KEYWORDS = ['пост', 'сделай', 'напиши пост', 'контент', 'reels', 'рилс', 'сториз', 'instagram', 'инстаграм', 'публикац', 'текст для', 'создай пост']
+
+def is_content_request(message: str) -> bool:
+    text = message.lower()
+    return any(kw in text for kw in CONTENT_KEYWORDS)
+
+
+def run_secretary(message):
+    return run_claude(message, SECRETARY_PROMPT)
+
+
 def run_marketer(task):
     return run_claude(f"Задача: {task}", MARKETER_PROMPT, tools="WebSearch")
 
@@ -47,6 +58,10 @@ def run_designer(task, post_text):
 
 
 async def run_orchestrator(task):
+    if not is_content_request(task):
+        answer = await asyncio.to_thread(run_secretary, task)
+        return {'secretary': answer}
+
     marketer = await asyncio.to_thread(run_marketer, task)
     copywriter = await asyncio.to_thread(run_copywriter, task, marketer)
     designer = await asyncio.to_thread(run_designer, task, copywriter)
