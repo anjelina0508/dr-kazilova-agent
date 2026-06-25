@@ -802,8 +802,8 @@
 
 
 
-  /* Kill iOS blue detection on prices */
-  #pricing .price-item { -webkit-user-select: none; }
+  /* Kill iOS/Android blue auto-link detection on prices */
+  #pricing .price-item { -webkit-user-select: none; user-select: none; }
   #pricing .price-item span {
     color: #C4B8AC !important;
     -webkit-text-fill-color: #C4B8AC !important;
@@ -815,13 +815,18 @@
     color: #D4A843 !important;
     -webkit-text-fill-color: #D4A843 !important;
   }
-  #pricing a {
-    color: #C4B8AC !important;
-    -webkit-text-fill-color: #C4B8AC !important;
+  /* Target auto-inserted <a> tags inside price spans */
+  #pricing .price-item a,
+  #pricing .price-item span a {
+    color: inherit !important;
+    -webkit-text-fill-color: inherit !important;
     text-decoration: none !important;
+    -webkit-text-decoration: none !important;
+    pointer-events: none !important;
+    border-bottom: none !important;
+    box-shadow: none !important;
   }
-  #pricing a span:last-child,
-  #pricing a .price-val {
+  #pricing .price-item span:last-child a {
     color: #D4A843 !important;
     -webkit-text-fill-color: #D4A843 !important;
   }
