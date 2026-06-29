@@ -97,6 +97,7 @@
 | `content-creator` | Писатель | `.claude/skills/content-creator/` | Создание контента: посты, тексты, сценарии Reels |
 | `fullstack-developer` | Разработчик | `.claude/skills/fullstack-developer/` | Fullstack разработка: сайты, боты, API |
 | `discovery-interview` | Интервьюер | `.claude/skills/discovery-interview/` | Структурированное интервью по проекту, генерация ТЗ |
+| `prompt-analyzer` | Аналитик промптов | `.claude/skills/prompt-analyzer/` | Изучает официальную документацию нейросети, синтезирует формулы промптов |
 
 Скиллы активируются командой `/название` в начале сообщения.
 
